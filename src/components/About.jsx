@@ -468,10 +468,11 @@ function About() {
                   </p>
 
                   <div className="certificate-tech-chips">
+                    <span className="cert-tech-chip">Prompt Engineering</span>
                     <span className="cert-tech-chip">Prompt Design</span>
-                    <span className="cert-tech-chip">Few-Shot Conditioning</span>
+                    <span className="cert-tech-chip">Few-Shot Prompting</span>
                     <span className="cert-tech-chip">AI Orchestration</span>
-                    <span className="cert-tech-chip">API Integrations</span>
+                    <span className="cert-tech-chip">API Integration Fundamentals</span>
                   </div>
 
                   <span>
