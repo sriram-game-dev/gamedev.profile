@@ -407,7 +407,7 @@ function About() {
                   <div className="certificate-tech-chips">
                     <span className="cert-tech-chip">LLMs</span>
                     <span className="cert-tech-chip">Generative AI</span>
-                    <span className="cert-tech-chip">OpenAI</span>
+                    <span className="cert-tech-chip">Conversational AI</span>
                     <span className="cert-tech-chip">Prompt Workflows</span>
                   </div>
 
