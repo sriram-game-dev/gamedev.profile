@@ -315,8 +315,8 @@ function About() {
                   <div className="certificate-description">
 
                     <p>
-                      Explored industry production pipelines, gameplay system design, performance
-                      profiling, and optimization strategies for real-time interactive titles.
+                      Hands-on implementation of Claude IDE integration with the Unity Engine, exploring AI-assisted
+                      game architecture, AI-accelerated C# coding pipelines, and modern production workflow enhancements.
                     </p>
 
                   </div>
@@ -342,10 +342,10 @@ function About() {
                   </p>
 
                   <div className="certificate-tech-chips">
-                    <span className="cert-tech-chip">Game Design</span>
-                    <span className="cert-tech-chip">Systems Architecture</span>
-                    <span className="cert-tech-chip">Profiling</span>
-                    <span className="cert-tech-chip">Optimization</span>
+                    <span className="cert-tech-chip">Claude IDE Integration with Unity</span>
+                    <span className="cert-tech-chip">AI-Assisted Game Development</span>
+                    <span className="cert-tech-chip">AI-Powered C# Coding Workflow</span>
+                    <span className="cert-tech-chip">Game Development Workflow Enhancement</span>
                   </div>
 
                   <span>
