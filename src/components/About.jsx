@@ -307,7 +307,7 @@ function About() {
                 <div className="certificate-image-wrapper">
 
                   <img
-                    src={`${BASE}/images/webinar.svg`}
+                    src={`${BASE}/images/webinar.svg?v=2`}
                     alt="Game Development Webinar"
                     onError={handleImageError}
                   />
