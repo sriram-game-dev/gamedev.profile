@@ -244,7 +244,7 @@ function About() {
                 <div className="certificate-image-wrapper">
 
                   <img
-                    src={`${BASE}/images/certification2.svg`}
+                    src={`${BASE}/images/certification2.svg?v=2`}
                     alt="Diploma in 3D Game Development With Unity Engine"
                     onError={handleImageError}
                   />
