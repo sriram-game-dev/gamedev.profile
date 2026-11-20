@@ -244,7 +244,7 @@ function About() {
                 <div className="certificate-image-wrapper">
 
                   <img
-                    src={`${BASE}/images/workshop.svg?v=1`}
+                    src={`${BASE}/images/workshop.svg?v=2`}
                     alt="2D Character Design & Concept Art Workshop"
                     onError={handleImageError}
                   />
@@ -279,6 +279,7 @@ function About() {
                   </p>
 
                   <div className="certificate-tech-chips">
+                    <span className="cert-tech-chip">Adobe Photoshop</span>
                     <span className="cert-tech-chip">2D Character Design</span>
                     <span className="cert-tech-chip">Concept Art</span>
                     <span className="cert-tech-chip">Game Character Design</span>
