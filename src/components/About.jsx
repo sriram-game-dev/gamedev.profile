@@ -623,11 +623,7 @@ function About() {
                     Gen Z Level Up Laptop Gaming Championship
                   </p>
 
-                  <div className="certificate-tech-chips">
-                    <span className="cert-tech-chip">EA Sports FC</span>
-                    <span className="cert-tech-chip">Competitive Esports</span>
-                    <span className="cert-tech-chip">High-Pressure Strategy</span>
-                  </div>
+
 
                   <span>
                     2026
