@@ -4102,6 +4102,16 @@ section {
   transition: opacity 0.2s ease;
 }
 
+.backstory-rayen-btn .btn-text {
+  color: #0b1120 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+
 .backstory-rayen-btn .btn-arrow {
   display: none;
   font-size: 0.85rem;
@@ -4119,6 +4129,10 @@ section {
 
 .backstory-rayen-btn:hover .btn-icon {
   display: none;
+}
+
+.backstory-rayen-btn:hover .btn-text {
+  color: #ffffff !important;
 }
 
 .backstory-rayen-btn:hover .btn-arrow {
