@@ -623,7 +623,49 @@ function About() {
                     Gen Z Level Up Laptop Gaming Championship
                   </p>
 
+                  <span>
+                    2026
+                  </span>
 
+                </div>
+
+              </div>
+
+
+              {/* ========================================
+                  ACHIEVEMENT 2
+              ======================================== */}
+
+              <div className="achievement-item">
+
+                <div className="achievement-image-wrapper">
+
+                  <img
+                    src={`${BASE}/images/award2.svg?v=1`}
+                    alt="Neo Rift EAFC 26 Esports Tournament - Round of 16"
+                    onError={handleImageError}
+                  />
+
+                  <div className="achievement-description">
+
+                    <p>
+                      Competed in Neo Rift Chennai's 64-player straight knockout EA FC 26 tournament on PS5, advancing through competitive brackets to secure a top Round of 16 finish.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div className="achievement-info">
+
+                  <h3>
+                    Esports Tournament — Round of 16
+                  </h3>
+
+                  <p>
+                    Neo Rift Chennai — EAFC 26 Cyber-Pitch Tournament (Season 1)
+                  </p>
 
                   <span>
                     2026
