@@ -236,6 +236,70 @@ function About() {
 
 
               {/* ========================================
+                  WORKSHOP (RECENT)
+              ======================================== */}
+
+              <div className="certificate-item">
+
+                <div className="certificate-image-wrapper">
+
+                  <img
+                    src={`${BASE}/images/workshop.svg?v=1`}
+                    alt="2D Character Design & Concept Art Workshop"
+                    onError={handleImageError}
+                  />
+
+                  <div className="certificate-description">
+
+                    <p>
+                      Hands-on workshop in 2D character design, silhouette exploration, anatomy stylization, and concept art pipelines for game assets, animation, and digital production.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div className="certificate-info">
+
+                  <h3>
+                    2D Character Design & Concept Art
+                  </h3>
+
+                  <p>
+                    Attended through:{" "}
+                    <a
+                      href="https://www.image.edu.in/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      IMAGE Creative Education
+                    </a>{" "}
+                    (Cuddalore)
+                  </p>
+
+                  <div className="certificate-tech-chips">
+                    <span className="cert-tech-chip">2D Character Design</span>
+                    <span className="cert-tech-chip">Concept Art</span>
+                    <span className="cert-tech-chip">Game Character Design</span>
+                    <span className="cert-tech-chip">Digital Illustration</span>
+                    <span className="cert-tech-chip">Visual Development</span>
+                  </div>
+
+                  <span>
+                    2026
+                  </span>
+
+                  <small>
+                    Workshop
+                  </small>
+
+                </div>
+
+              </div>
+
+
+              {/* ========================================
                   COURSE 1
               ======================================== */}
 
