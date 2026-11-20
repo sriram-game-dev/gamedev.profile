@@ -3645,6 +3645,7 @@ section {
   flex-direction: column;
   align-items: center;
   position: relative;
+  overflow: hidden;
 }
 
 /* Volumetric ambient background glow */
@@ -3654,18 +3655,55 @@ section {
   top: 25%;
   left: 50%;
   transform: translate(-50%, -20%);
-  width: 700px;
-  height: 450px;
-  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.12) 0%, rgba(245, 158, 11, 0.08) 50%, transparent 75%);
+  width: 750px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(20, 184, 166, 0.12) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 75%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
+  filter: blur(50px);
+}
+
+/* Floating ambient dust particles (Gerlogu atmospheric style) */
+.backstory-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.backstory-particles .particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(1px);
+  animation: floatBackstoryParticle 16s infinite ease-in-out;
+}
+
+.backstory-particles .p1 { width: 4px; height: 4px; background: rgba(45, 212, 191, 0.75); left: 18%; top: 15%; animation-duration: 14s; animation-delay: 0s; }
+.backstory-particles .p2 { width: 3px; height: 3px; background: rgba(56, 189, 248, 0.65); left: 78%; top: 28%; animation-duration: 18s; animation-delay: 2s; }
+.backstory-particles .p3 { width: 5px; height: 5px; background: rgba(45, 212, 191, 0.55); left: 30%; top: 48%; animation-duration: 15s; animation-delay: 4s; }
+.backstory-particles .p4 { width: 3px; height: 3px; background: rgba(245, 158, 11, 0.5); left: 84%; top: 62%; animation-duration: 20s; animation-delay: 1s; }
+.backstory-particles .p5 { width: 4px; height: 4px; background: rgba(45, 212, 191, 0.65); left: 22%; top: 78%; animation-duration: 16s; animation-delay: 3s; }
+.backstory-particles .p6 { width: 3px; height: 3px; background: rgba(139, 92, 246, 0.5); left: 68%; top: 12%; animation-duration: 19s; animation-delay: 5s; }
+.backstory-particles .p7 { width: 4px; height: 4px; background: rgba(45, 212, 191, 0.45); left: 42%; top: 88%; animation-duration: 17s; animation-delay: 2.5s; }
+.backstory-particles .p8 { width: 3px; height: 3px; background: rgba(56, 189, 248, 0.6); left: 52%; top: 38%; animation-duration: 21s; animation-delay: 6s; }
+
+@keyframes floatBackstoryParticle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-45px) translateX(25px);
+    opacity: 0.85;
+  }
 }
 
 /* Header */
 .experience-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   position: relative;
   z-index: 1;
 }
@@ -3678,62 +3716,17 @@ section {
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: capitalize;
 }
 
 .experience-header-line {
-  width: 120px;
-  height: 3px;
-  margin: 20px auto 0;
-  background: linear-gradient(90deg, #f59e0b 0%, #8b5cf6 100%);
-  border-radius: 2px;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
-}
-
-/* ========================================
-   STUDIO PARTNERS / TECH RIBBON (GERLOGU STYLE)
-======================================== */
-
-.backstory-partners-ribbon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 60px;
-  position: relative;
-  z-index: 1;
-}
-
-.partner-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  width: 100px;
+  height: 2px;
+  margin: 18px auto 0;
+  background: #ffffff;
   border-radius: 9999px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #cbd5e1;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: all 0.25s ease;
-}
-
-.partner-badge:hover {
-  border-color: #f59e0b;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
-}
-
-.partner-icon {
-  color: #f59e0b;
-  font-size: 0.85rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7), 0 0 20px rgba(45, 212, 191, 0.4);
 }
 
 /* ========================================
@@ -3754,7 +3747,7 @@ section {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 55px;
+  gap: 65px;
 }
 
 /* Central vertical timeline track (rail) */
@@ -3764,14 +3757,14 @@ section {
   top: 15px;
   bottom: 15px;
   width: 2px;
-  background: rgba(148, 163, 184, 0.12);
+  background: rgba(255, 255, 255, 0.12);
   transform: translateX(-50%);
   border-radius: 9999px;
   z-index: 1;
 }
 
 .experience-line-track {
-  background: rgba(148, 163, 184, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   box-shadow: none;
 }
 
@@ -3780,16 +3773,16 @@ section {
   position: absolute;
   left: 50%;
   top: 15px;
-  width: 3px;
+  width: 2px;
   height: 0%;
-  background: linear-gradient(180deg, #f59e0b 0%, #fbbf24 35%, #8b5cf6 75%, #a855f7 100%);
+  background: linear-gradient(180deg, rgba(20, 184, 166, 0.15) 0%, #14b8a6 35%, #2dd4bf 75%, #ffffff 100%);
   transform: translateX(-50%);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.9), 0 0 24px rgba(139, 92, 246, 0.7);
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.95), 0 0 22px rgba(20, 184, 166, 0.65);
   z-index: 2;
   border-radius: 9999px;
   pointer-events: none;
   will-change: height;
-  transition: height 0.08s ease-out;
+  transition: height 0.06s ease-out;
 }
 
 /* Traveling photon spark at the leading edge of the beam */
@@ -3802,7 +3795,7 @@ section {
   height: 10px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 0 10px #ffffff, 0 0 20px #f59e0b, 0 0 35px #8b5cf6;
+  box-shadow: 0 0 10px #ffffff, 0 0 20px #2dd4bf, 0 0 35px #14b8a6;
   opacity: 0;
   transition: opacity 0.2s ease;
   pointer-events: none;
@@ -3814,13 +3807,12 @@ section {
   position: relative;
   width: 50%;
   display: flex;
-  transition: transform 0.3s ease;
 }
 
 /* Right side item */
 .experience-right {
   align-self: flex-end;
-  padding-left: 50px;
+  padding-left: 55px;
   justify-content: flex-start;
   text-align: left;
 }
@@ -3828,26 +3820,71 @@ section {
 /* Left side item */
 .experience-left {
   align-self: flex-start;
-  padding-right: 50px;
+  padding-right: 55px;
   justify-content: flex-end;
-  text-align: left;
+  text-align: right;
+}
+
+/* Alignment specifics for left items */
+.experience-left .card-badge-row {
+  justify-content: flex-end;
+}
+
+.experience-left .backstory-tech-tags {
+  justify-content: flex-end;
+}
+
+/* Alternating Card Reveal on Scroll (Gerlogu Smooth Slide & Fade) */
+.experience-left .backstory-card {
+  opacity: 0;
+  transform: translateX(-45px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.experience-right .backstory-card {
+  opacity: 0;
+  transform: translateX(45px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.experience-item.in-view .backstory-card {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* Timeline Dots / Reticles */
 .experience-dot {
   position: absolute;
-  top: 28px;
-  width: 18px;
-  height: 18px;
-  background: #0f172a;
-  border: 3px solid rgba(148, 163, 184, 0.4);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  top: 24px;
+  width: 16px;
+  height: 16px;
+  background: #090e1a;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-right .experience-dot {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.experience-left .experience-dot {
+  right: 0;
+  transform: translateX(50%);
 }
 
 .dot-pulse {
@@ -3869,70 +3906,57 @@ section {
 
 /* Energized / Active Milestone State (When Beam Passes Node) */
 .experience-item.node-energized .experience-dot {
-  border-color: #f59e0b;
-  background: rgba(15, 23, 42, 0.95);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.95), inset 0 0 8px rgba(245, 158, 11, 0.5);
-  transform: scale(1.18);
+  border-color: #ffffff;
+  background: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.95), 0 0 32px rgba(45, 212, 191, 0.85);
+  transform: scale(1.25);
 }
 
 .experience-right.node-energized .experience-dot {
   left: 0;
-  transform: translateX(-50%) scale(1.18);
+  transform: translateX(-50%) scale(1.25);
 }
 
 .experience-left.node-energized .experience-dot {
   right: 0;
-  transform: translateX(50%) scale(1.18);
+  transform: translateX(50%) scale(1.25);
 }
 
 .experience-item.node-energized .dot-pulse {
-  background-color: #f59e0b;
-  animation: pulseGreen 1.8s infinite ease-in-out;
+  background-color: #14b8a6;
 }
 
 .experience-item.node-energized .dot-energy-ring {
-  border-color: rgba(245, 158, 11, 0.6);
+  border-color: rgba(45, 212, 191, 0.65);
   animation: energyRingPulse 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 
 @keyframes energyRingPulse {
   0% { transform: scale(0.9); opacity: 0.9; }
-  100% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
 }
 
 .experience-item.node-energized .backstory-card {
-  border-color: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(245, 158, 11, 0.08);
+  border-color: rgba(45, 212, 191, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(45, 212, 191, 0.1);
 }
 
 .experience-item.node-energized .backstory-role-tag {
-  background: rgba(245, 158, 11, 0.18);
-  border-color: rgba(245, 158, 11, 0.4);
-  color: #f59e0b;
-}
-
-.experience-item:hover .experience-dot {
-  transform: scale(1.3);
-  border-color: #8b5cf6;
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.9);
-}
-
-.experience-right .experience-dot {
-  left: 0;
-  transform: translateX(-50%);
+  background: rgba(20, 184, 166, 0.18);
+  border-color: rgba(45, 212, 191, 0.45);
+  color: #2dd4bf;
 }
 
 .experience-item.experience-right:hover .experience-dot {
-  transform: translateX(-50%) scale(1.3);
-}
-
-.experience-left .experience-dot {
-  right: 0;
-  transform: translateX(50%);
+  transform: translateX(-50%) scale(1.35);
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.9);
 }
 
 .experience-item.experience-left:hover .experience-dot {
-  transform: translateX(50%) scale(1.3);
+  transform: translateX(50%) scale(1.35);
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.9);
 }
 
 /* ========================================
@@ -3941,13 +3965,13 @@ section {
 
 .backstory-card {
   width: 100%;
-  background: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: rgba(13, 18, 30, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 30px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
   transition:
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.3s ease,
@@ -3955,11 +3979,11 @@ section {
 }
 
 .backstory-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(245, 158, 11, 0.5);
+  transform: translateY(-4px);
+  border-color: rgba(45, 212, 191, 0.45);
   box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.6),
-    0 0 25px rgba(139, 92, 246, 0.25);
+    0 18px 45px rgba(0, 0, 0, 0.65),
+    0 0 25px rgba(20, 184, 166, 0.2);
 }
 
 .card-badge-row {
@@ -3974,9 +3998,9 @@ section {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
   font-weight: 700;
-  color: #c084fc;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #2dd4bf;
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.3);
   padding: 3px 9px;
   border-radius: 4px;
   letter-spacing: 0.08em;
@@ -4034,31 +4058,33 @@ section {
 }
 
 .backstory-card:hover .backstory-tech-tags span {
-  border-color: rgba(139, 92, 246, 0.35);
+  border-color: rgba(45, 212, 191, 0.35);
   color: #f1f5f9;
 }
 
 /* ========================================
-   GERLOGU RAYEN-STYLE VIEW DETAILS BUTTON
+   GERLOGU PILL BUTTON (VIEW DETAILS / ARROW)
 ======================================== */
 
 .backstory-rayen-btn {
   display: inline-flex;
   align-items: center;
-  background: rgba(139, 92, 246, 0.12);
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  border-radius: 6px;
-  padding: 8px 18px;
-  color: #f8fafc;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 9999px;
+  padding: 8px 22px;
+  color: #0b1120;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
 .backstory-rayen-btn .btn-inner {
@@ -4072,31 +4098,39 @@ section {
 .backstory-rayen-btn .btn-icon {
   display: inline-flex;
   align-items: center;
-  color: #f59e0b;
+  color: #0b1120;
+  transition: opacity 0.2s ease;
 }
 
 .backstory-rayen-btn .btn-arrow {
-  color: #c084fc;
-  transition: transform 0.25s ease, color 0.25s ease;
+  display: none;
+  font-size: 0.85rem;
+  color: #ffffff;
+  transition: transform 0.25s ease;
 }
 
 .backstory-rayen-btn:hover {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(139, 92, 246, 0.3) 100%);
-  border-color: #f59e0b;
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-  transform: translateY(-2px);
+  background: #14b8a6;
+  border-color: #2dd4bf;
+  color: #ffffff;
+  box-shadow: 0 6px 22px rgba(20, 184, 166, 0.55);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.backstory-rayen-btn:hover .btn-icon {
+  display: none;
 }
 
 .backstory-rayen-btn:hover .btn-arrow {
-  transform: translateX(4px);
-  color: #f59e0b;
+  display: inline-flex;
+  transform: translateX(2px);
 }
 
 /* Popup footer CTA */
 .popup-footer-actions {
   margin-top: 32px;
   padding-top: 20px;
-  border-top: 1px solid rgba(139, 92, 246, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: flex-end;
 }
@@ -4106,10 +4140,10 @@ section {
   align-items: center;
   gap: 8px;
   padding: 9px 20px;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  border: 1px solid #f59e0b;
-  border-radius: 6px;
-  color: #0f172a;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  border: 1px solid #2dd4bf;
+  border-radius: 9999px;
+  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.82rem;
   font-weight: 800;
@@ -4117,13 +4151,13 @@ section {
   text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 15px rgba(20, 184, 166, 0.35);
 }
 
 .popup-cta-btn:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
+  box-shadow: 0 6px 20px rgba(20, 184, 166, 0.55);
 }
 
 /* ========================================
@@ -4155,9 +4189,25 @@ section {
   .experience-item {
     width: 100%;
     align-self: flex-start;
-    padding-left: 20px;
+    padding-left: 25px;
     padding-right: 0;
     text-align: left;
+  }
+
+  .experience-left .card-badge-row,
+  .experience-left .backstory-tech-tags {
+    justify-content: flex-start;
+  }
+
+  .experience-left .backstory-card,
+  .experience-right .backstory-card {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+
+  .experience-item.in-view .backstory-card {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   /* Dots anchor to the left vertical line */
@@ -4172,12 +4222,12 @@ section {
   .experience-left.node-energized .experience-dot {
     left: -35px;
     right: auto;
-    transform: translateX(-50%) scale(1.18);
+    transform: translateX(-50%) scale(1.25);
   }
 
   .experience-item.experience-right:hover .experience-dot,
   .experience-item.experience-left:hover .experience-dot {
-    transform: translateX(-50%) scale(1.3);
+    transform: translateX(-50%) scale(1.35);
   }
 
   .backstory-card {
