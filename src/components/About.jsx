@@ -596,7 +596,7 @@ function About() {
                 <div className="achievement-image-wrapper">
 
                   <img
-                    src={`${BASE}/images/award.svg`}
+                    src={`${BASE}/images/award.svg?v=2`}
                     alt="Esports Tournament Participation Certificate"
                     onError={handleImageError}
                   />
