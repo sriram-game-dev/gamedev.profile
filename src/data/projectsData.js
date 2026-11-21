@@ -463,46 +463,44 @@ export const personalProjects = [
     isNda: false,
     studio: 'Personal Project · 3D Showcase',
     platforms: ['PC', 'VR', 'XR'],
-    techList: ['Unity', 'C#', 'XR'],
+    techList: ['Unity URP', 'C#', 'Shader Graph', 'XR'],
     type: 'Virtual Showroom',
 
     caseStudy: {
-      problem: 'Motorsport showcases require interactive inspection of high-poly racing vehicles with realistic lighting, materials, and part breakdowns.',
+      problem: 'Motorsport showcases require interactive inspection of high-poly racing vehicles with realistic lighting, PBR materials, and part breakdowns.',
       role: 'Prototype & Systems Developer',
-      tech: 'Unity, C#, XR',
-      challenge: 'Balancing detailed 3D vehicle polycounts with interactive orbital camera navigation and animated sub-assembly inspections.',
-      result: 'Created a high-fidelity interactive showroom prototype featuring detailed 3D vehicle inspection and smooth navigation.'
+      tech: 'Unity URP, C#, Shader Graph, XR',
+      challenge: 'Balancing detailed 3D vehicle polycounts and custom car paint shaders in Unity Universal Render Pipeline (URP) while maintaining smooth real-time framerates across PC and VR.',
+      result: 'Created a high-fidelity interactive showroom prototype featuring detailed 3D vehicle inspection, custom URP shaders, and smooth orbital camera navigation.'
     },
 
-    description: 'Interactive virtual showroom prototype developed using Unity.',
+    description: 'Interactive virtual showroom prototype developed using Unity Universal Render Pipeline (URP).',
 
     overview: [
-      'Developed an interactive virtual showroom prototype using Unity and C#.',
-      'Created a detailed F1-inspired environment for exploring vehicles and showroom elements.',
-      'Designed the experience to allow users to explore and interact with different elements within the virtual environment.',
-      'Integrated environmental assets, interactive objects, and navigation systems to create an engaging showroom experience.'
+      'Developed an interactive virtual showroom prototype using Unity Universal Render Pipeline (URP) and C#.',
+      'Created a detailed F1-inspired environment with custom PBR car paint shaders, reflections, and showroom lighting.',
+      'Designed the experience to allow users to explore and interact with vehicle sub-assemblies and telemetry diagnostics.',
+      'Integrated environmental assets, interactive objects, and orbital camera navigation to create an engaging real-time showcase.'
     ],
 
     feature: [
-      'Developed interactive showroom elements and 3D object interactions.',
-      'Implemented user navigation and interaction systems.',
-      'Created gameplay logic for interactive showroom features.',
-      'Integrated environmental assets and scene elements.',
-      'Implemented UI elements to support navigation and user interaction.',
-      'Added animations and interactive events to enhance the showroom experience.',
-      'Optimized scene elements and interactions for a smooth real-time experience.'
+      'Authored custom car paint and carbon fiber materials using Unity URP Shader Graph.',
+      'Developed interactive showroom elements, orbital camera controls, and 3D object inspection.',
+      'Implemented user navigation and real-time interaction systems with smooth state transitions.',
+      'Integrated realistic studio lighting, reflection probes, and post-processing in URP.',
+      'Implemented clean telemetry UI overlays to support component inspection and part breakdowns.',
+      'Optimized geometry, draw calls, and textures for high framerate real-time performance.'
     ],
 
     contribution: [
-      'Developed the virtual showroom environment using Unity.',
-      'Implemented interactive elements and object interactions.',
-      'Developed gameplay logic for showroom interactions.',
-      'Integrated 3D assets and environmental elements into the scene.',
-      'Implemented user navigation and interaction systems.',
-      'Created supporting UI and interactive feedback elements.'
+      'Engineered the virtual showroom architecture in Unity URP using C#.',
+      'Created and calibrated custom PBR shader graphs for racing livery and metallic finishes.',
+      'Developed orbital camera controllers, turntable mechanics, and smooth interaction flows.',
+      'Implemented real-time lighting setup, lightmaps, and optimized URP post-processing pipeline.',
+      'Structured clean codebase for component selection, UI feedback, and cross-platform compatibility.'
     ],
 
-    technologies: 'UNITY · C# · XR',
+    technologies: 'UNITY URP · C# · SHADER GRAPH · XR',
     link: '/projects/f1-showroom'
   }
 
