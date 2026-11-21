@@ -2529,16 +2529,17 @@ section {
 .v2-nda-compliance-notice {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 14px 18px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid rgba(245, 158, 11, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .notice-lock-icon {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   line-height: 1;
   flex-shrink: 0;
   margin-top: 2px;
@@ -2546,12 +2547,8 @@ section {
 
 .notice-text {
   font-size: 0.84rem;
-  color: #e2e8f0;
+  color: #cbd5e1;
   line-height: 1.55;
-}
-
-.notice-text strong {
-  color: #fbbf24;
 }
 
 .v2-personal-banner-notice {
@@ -3435,25 +3432,15 @@ section {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 14px 18px;
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid rgba(245, 158, 11, 0.8);
   border-radius: 8px;
-  color: #fde68a;
+  color: #cbd5e1;
   font-size: 0.84rem;
   line-height: 1.5;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.drawer-nda-icon {
-  font-size: 1.2rem;
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.drawer-nda-disclaimer strong {
-  color: #fbbf24;
 }
 
 .case-study-title {

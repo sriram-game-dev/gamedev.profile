@@ -239,7 +239,7 @@ function Projects({
             <div className="v2-nda-compliance-notice">
               <div className="notice-lock-icon" aria-hidden="true">🔒</div>
               <div className="notice-text">
-                <strong>Enterprise Client NDA Compliance Notice:</strong> Engineered for commercial clients at <strong>Hema Enterprises (HEPL) · Digifox Studio</strong>. Proprietary CAD drawings, client blueprints, and manufacturing schematics have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
+                Client NDA Notice: Proprietary CAD drawings, blueprints, and manufacturing schematics have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
               </div>
             </div>
           </div>

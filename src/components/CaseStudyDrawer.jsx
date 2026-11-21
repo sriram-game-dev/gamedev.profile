@@ -76,7 +76,7 @@ function CaseStudyDrawer({ project, onClose }) {
             <div className="drawer-nda-disclaimer">
               <span className="drawer-nda-icon">🔒</span>
               <div>
-                <strong>Client NDA Protected:</strong> Commercial VR training application delivered for Hema Enterprises (HEPL) · Digifox Studio. Proprietary machinery schematics have been redacted or anonymized in compliance with enterprise NDAs.
+                Client NDA Notice: Proprietary machinery schematics, CAD models, and sensitive client data have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
               </div>
             </div>
           )}
