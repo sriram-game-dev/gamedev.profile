@@ -1,12 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { route, navigateTo } from '../utils/asset';
-import { allProjects } from '../data/projectsData';
+import { projects, personalProjects, allProjects } from '../data/projectsData';
 import ProjectCard from './ProjectCard';
 import CaseStudyDrawer from './CaseStudyDrawer';
 
 const PLATFORMS = ['All', 'Meta Quest', 'Android', 'PC', 'WebGL'];
-const TECHS = ['All', 'Unity', 'C#', 'Meta SDK', 'AR Foundation', 'Shader Graph'];
-const TYPES = ['All', 'Training Simulation', 'Game', 'AR Experience', 'Virtual Showroom'];
 
 function Projects({
   activeAudience = 'all',
@@ -14,141 +12,24 @@ function Projects({
   skillFilter = '',
   onClearSkillFilter = () => {}
 }) {
-  const [categoryTab, setCategoryTab] = useState('all'); // 'all' | 'professional' | 'personal'
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeDeck, setActiveDeck] = useState('professional'); // 'professional' | 'personal' | 'all'
   const [selectedPlatform, setSelectedPlatform] = useState('All');
-  const [selectedTech, setSelectedTech] = useState('All');
-  const [selectedType, setSelectedType] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const focusLabels = {
-    games: 'Games & Gameplay Prototypes',
-    'game-design': 'Game Design, Mechanics & Systems Architecture',
-    xr: 'Spatial Computing, AR & Meta Quest VR',
-    industrial: 'Industrial Training Simulations & Enterprise LOTO'
-  };
-
-  // Base counts for filter chips
-  const platformCounts = useMemo(() => {
-    const counts = { All: allProjects.length };
-    PLATFORMS.forEach((plat) => {
-      if (plat === 'All') return;
-      counts[plat] = allProjects.filter((p) =>
-        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase()))
-      ).length;
-    });
-    return counts;
-  }, []);
-
-  const typeCounts = useMemo(() => {
-    const counts = { All: allProjects.length };
-    TYPES.forEach((type) => {
-      if (type === 'All') return;
-      counts[type] = allProjects.filter((p) => p.type === type).length;
-    });
-    return counts;
-  }, []);
-
-  const techCounts = useMemo(() => {
-    const counts = { All: allProjects.length };
-    TECHS.forEach((tech) => {
-      if (tech === 'All') return;
-      counts[tech] = allProjects.filter((p) =>
-        p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
-        p.technologies?.toLowerCase().includes(tech.toLowerCase())
-      ).length;
-    });
-    return counts;
-  }, []);
-
-  // SMART AUTO-RECONCILING HANDLERS
-  // When a user selects a chip that would conflict with current selections,
-  // automatically reconcile the conflicting other row to 'All' rather than stranding the user on 0 results.
-  const handleSelectPlatform = (plat) => {
-    if (plat === selectedPlatform) {
-      setSelectedPlatform('All');
-      return;
-    }
-    setSelectedPlatform(plat);
-    if (plat !== 'All') {
-      // If current type has 0 matches with this new platform, reset type to 'All'
-      const hasTypeMatch = selectedType === 'All' || allProjects.some((p) =>
-        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase())) &&
-        p.type === selectedType
-      );
-      if (!hasTypeMatch) setSelectedType('All');
-
-      // If current tech has 0 matches with this new platform, reset tech to 'All'
-      const hasTechMatch = selectedTech === 'All' || allProjects.some((p) =>
-        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase())) &&
-        (p.techList?.some((t) => t.toLowerCase().includes(selectedTech.toLowerCase())) ||
-         p.technologies?.toLowerCase().includes(selectedTech.toLowerCase()))
-      );
-      if (!hasTechMatch) setSelectedTech('All');
-    }
-  };
-
-  const handleSelectType = (type) => {
-    if (type === selectedType) {
-      setSelectedType('All');
-      return;
-    }
-    setSelectedType(type);
-    if (type !== 'All') {
-      // If current platform has 0 matches with this new type, reset platform to 'All'
-      const hasPlatMatch = selectedPlatform === 'All' || allProjects.some((p) =>
-        p.type === type &&
-        p.platforms?.some((pl) => pl.toLowerCase().includes(selectedPlatform.toLowerCase()))
-      );
-      if (!hasPlatMatch) setSelectedPlatform('All');
-
-      // If current tech has 0 matches with this new type, reset tech to 'All'
-      const hasTechMatch = selectedTech === 'All' || allProjects.some((p) =>
-        p.type === type &&
-        (p.techList?.some((t) => t.toLowerCase().includes(selectedTech.toLowerCase())) ||
-         p.technologies?.toLowerCase().includes(selectedTech.toLowerCase()))
-      );
-      if (!hasTechMatch) setSelectedTech('All');
-    }
-  };
-
-  const handleSelectTech = (tech) => {
-    if (tech === selectedTech) {
-      setSelectedTech('All');
-      return;
-    }
-    setSelectedTech(tech);
-    if (tech !== 'All') {
-      // If current platform has 0 matches with this new tech, reset platform to 'All'
-      const hasPlatMatch = selectedPlatform === 'All' || allProjects.some((p) =>
-        (p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
-         p.technologies?.toLowerCase().includes(tech.toLowerCase())) &&
-        p.platforms?.some((pl) => pl.toLowerCase().includes(selectedPlatform.toLowerCase()))
-      );
-      if (!hasPlatMatch) setSelectedPlatform('All');
-
-      // If current type has 0 matches with this new tech, reset type to 'All'
-      const hasTypeMatch = selectedType === 'All' || allProjects.some((p) =>
-        (p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
-         p.technologies?.toLowerCase().includes(tech.toLowerCase())) &&
-        p.type === selectedType
-      );
-      if (!hasTypeMatch) setSelectedType('All');
-    }
-  };
-
-  // Reordering & filtering pipeline
-  const filteredProjects = useMemo(() => {
-    return allProjects.filter((p) => {
-      // Primary category tab filter
-      if (categoryTab === 'professional' && !p.isNda && p.category !== 'professional') {
-        return false;
-      }
-      if (categoryTab === 'personal' && (p.isNda || p.category === 'professional')) {
-        return false;
+  // Filter logic across projects
+  const filterList = useCallback((list) => {
+    return list.filter((p) => {
+      // Platform filter
+      if (selectedPlatform !== 'All') {
+        const hasPlatform = p.platforms?.some((plat) =>
+          plat.toLowerCase().includes(selectedPlatform.toLowerCase())
+        );
+        if (!hasPlatform) return false;
       }
 
-      // Direct skill filter from Skills section click
+      // Skill filter
       if (skillFilter) {
         const sf = skillFilter.toLowerCase();
         const matchesSkill =
@@ -163,225 +44,108 @@ function Projects({
         const q = searchQuery.toLowerCase();
         const matchesTitle = p.title.toLowerCase().includes(q);
         const matchesDesc = p.description.toLowerCase().includes(q);
-        const matchesTech = p.technologies?.toLowerCase().includes(q);
+        const matchesTech = p.technologies?.toLowerCase().includes(q) ||
+          p.techList?.some((t) => t.toLowerCase().includes(q));
         if (!matchesTitle && !matchesDesc && !matchesTech) return false;
       }
 
-      // Platform filter
-      if (selectedPlatform !== 'All') {
-        const hasPlatform = p.platforms?.some((plat) =>
-          plat.toLowerCase().includes(selectedPlatform.toLowerCase())
-        );
-        if (!hasPlatform) return false;
-      }
-
-      // Tech filter
-      if (selectedTech !== 'All') {
-        const hasTech =
-          p.techList?.some((t) => t.toLowerCase().includes(selectedTech.toLowerCase())) ||
-          p.technologies?.toLowerCase().includes(selectedTech.toLowerCase());
-        if (!hasTech) return false;
-      }
-
-      // Type filter
-      if (selectedType !== 'All') {
-        if (p.type !== selectedType) return false;
-      }
-
-      // Audience focus filter
-      if (activeAudience === 'games') {
-        if (p.type !== 'Game') return false;
-      } else if (activeAudience === 'game-design') {
-        const isDesignProject =
-          p.type === 'Game' ||
-          p.caseStudy?.role?.toLowerCase().includes('designer') ||
-          p.technologies?.toLowerCase().includes('gameplay') ||
-          p.description?.toLowerCase().includes('mechanic') ||
-          p.feature?.some((f) => f.toLowerCase().includes('gameplay') || f.toLowerCase().includes('progression'));
-        if (!isDesignProject) return false;
-      } else if (activeAudience === 'industrial') {
-        if (p.type !== 'Training Simulation') return false;
-      } else if (activeAudience === 'xr') {
-        const isXR =
-          p.platforms?.some((pl) => pl === 'VR' || pl === 'Meta Quest' || pl === 'ARCore') ||
-          p.type?.includes('AR');
-        if (!isXR) return false;
-      }
-
       return true;
-    }).sort((a, b) => {
-      // Featured projects first
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return 0;
     });
-  }, [categoryTab, searchQuery, selectedPlatform, selectedTech, selectedType, activeAudience, skillFilter]);
+  }, [selectedPlatform, skillFilter, searchQuery]);
 
-  // Breakdown for grouped view: Professional NDA vs. Personal Projects
-  const professionalList = useMemo(() => {
-    return filteredProjects.filter((p) => p.isNda || p.category === 'professional');
-  }, [filteredProjects]);
+  const filteredProfessional = useMemo(() => filterList(projects), [filterList]);
+  const filteredPersonal = useMemo(() => filterList(personalProjects), [filterList]);
 
-  const personalList = useMemo(() => {
-    return filteredProjects.filter((p) => !p.isNda && p.category !== 'professional');
-  }, [filteredProjects]);
+  const activeSpotlightProject = filteredProfessional[spotlightIndex] || filteredProfessional[0] || projects[0];
 
   const hasActiveFilters = Boolean(
-    searchQuery ||
     selectedPlatform !== 'All' ||
-    selectedTech !== 'All' ||
-    selectedType !== 'All' ||
-    activeAudience !== 'all' ||
-    categoryTab !== 'all' ||
-    skillFilter
+    searchQuery.trim() ||
+    skillFilter ||
+    activeAudience !== 'all'
   );
 
   const handleResetFilters = () => {
-    setCategoryTab('all');
-    setSearchQuery('');
     setSelectedPlatform('All');
-    setSelectedTech('All');
-    setSelectedType('All');
+    setSearchQuery('');
     if (skillFilter) onClearSkillFilter();
-    if (activeAudience !== 'all') {
-      onSelectAudience('all');
-    }
+    if (activeAudience !== 'all') onSelectAudience('all');
   };
 
   return (
-    <section id="projects" className="projects-section">
-      {/* SECTION HEADER BLOCK */}
-      <div className="projects-header-block reveal-on-scroll">
-        <div className="projects-pretitle-pill">
-          <span className="pulse-indicator"></span>
-          <span>ENGINEERED WORLDS &amp; SYSTEMS</span>
+    <section id="projects" className="projects-section-v2">
+      {/* SECTION HEADER */}
+      <div className="projects-v2-header reveal-on-scroll">
+        <div className="v2-pretitle-pill">
+          <span className="v2-radar-beacon" aria-hidden="true"></span>
+          <span>SPATIAL COMPUTING &amp; GAMEPLAY ARCHITECTURE</span>
         </div>
-        <h2 className="projects-title">FEATURED QUESTS &amp; BUILDS</h2>
-        <p className="projects-subtitle">
-          Explore enterprise industrial VR simulations engineered under client NDA alongside original indie games, physics prototypes, and experimental AR shaders.
+        <h2 className="projects-v2-title">PROJECT PORTFOLIO</h2>
+        <p className="projects-v2-subtitle">
+          Commercial enterprise XR training simulations delivered under client NDA, alongside original playable indie games, physics prototypes, and mobile AR mechanics.
         </p>
-        <div className="projects-title-line"></div>
+        <div className="projects-v2-header-line"></div>
       </div>
 
-      {/* DUAL CATEGORY SEGMENTED SWITCHER (PROFESSIONAL NDA vs PERSONAL PROJECTS) */}
-      <div className="projects-track-switcher reveal-on-scroll reveal-delay-1">
-        <div className="track-switcher-inner" role="tablist" aria-label="Project category filter">
+      {/* MASTER DECK SWITCHER (ENTERPRISE NDA vs INDIE LAB vs COMPLETE) */}
+      <div className="v2-master-deck-switcher reveal-on-scroll reveal-delay-1">
+        <div className="v2-switcher-track" role="tablist" aria-label="Project portfolio sectors">
           <button
             type="button"
             role="tab"
-            aria-selected={categoryTab === 'all'}
-            className={`track-tab-btn ${categoryTab === 'all' ? 'active' : ''}`}
-            onClick={() => setCategoryTab('all')}
+            aria-selected={activeDeck === 'professional'}
+            className={`v2-deck-btn deck-professional ${activeDeck === 'professional' ? 'active' : ''}`}
+            onClick={() => setActiveDeck('professional')}
           >
-            <span className="tab-label">All Works</span>
-            <span className="tab-count">8</span>
+            <div className="deck-btn-indicator"></div>
+            <div className="deck-btn-text">
+              <span className="deck-btn-badge">
+                <span className="icon-lock" aria-hidden="true">🔒</span> CLIENT NDA PROTECTED
+              </span>
+              <span className="deck-btn-name">Professional Work ({projects.length})</span>
+            </div>
           </button>
 
           <button
             type="button"
             role="tab"
-            aria-selected={categoryTab === 'professional'}
-            className={`track-tab-btn tab-professional ${categoryTab === 'professional' ? 'active' : ''}`}
-            onClick={() => setCategoryTab('professional')}
+            aria-selected={activeDeck === 'personal'}
+            className={`v2-deck-btn deck-personal ${activeDeck === 'personal' ? 'active' : ''}`}
+            onClick={() => setActiveDeck('personal')}
           >
-            <span className="tab-lock-icon" aria-hidden="true">🔒</span>
-            <span className="tab-label">Professional (Client NDA)</span>
-            <span className="tab-count">4</span>
+            <div className="deck-btn-indicator"></div>
+            <div className="deck-btn-text">
+              <span className="deck-btn-badge">
+                <span className="icon-game" aria-hidden="true">🎮</span> PLAYABLE BUILDS &amp; GITHUB
+              </span>
+              <span className="deck-btn-name">Personal Projects ({personalProjects.length})</span>
+            </div>
           </button>
 
           <button
             type="button"
             role="tab"
-            aria-selected={categoryTab === 'personal'}
-            className={`track-tab-btn tab-personal ${categoryTab === 'personal' ? 'active' : ''}`}
-            onClick={() => setCategoryTab('personal')}
+            aria-selected={activeDeck === 'all'}
+            className={`v2-deck-btn deck-all ${activeDeck === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveDeck('all')}
           >
-            <span className="tab-game-icon" aria-hidden="true">🎮</span>
-            <span className="tab-label">Personal Projects &amp; Indie Labs</span>
-            <span className="tab-count">4</span>
+            <div className="deck-btn-indicator"></div>
+            <div className="deck-btn-text">
+              <span className="deck-btn-badge">⚡ COMBINED OVERVIEW</span>
+              <span className="deck-btn-name">All Works ({allProjects.length})</span>
+            </div>
           </button>
         </div>
       </div>
 
-      {/* CONTEXT CALLOUT BANNER BASED ON CATEGORY */}
-      {categoryTab === 'professional' && (
-        <div className="nda-context-banner reveal-on-scroll">
-          <div className="nda-banner-icon-box">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-          </div>
-          <div className="nda-banner-content">
-            <div className="nda-banner-heading">
-              <strong>Enterprise Client NDA Notice · Hema Enterprises (HEPL) &amp; Digifox Studio</strong>
-              <span className="nda-badge-pill">PROTECTED WORK</span>
-            </div>
-            <p>
-              These interactive VR &amp; AR applications were built for commercial clients. Proprietary industrial blueprints, enterprise IP, and sensitive schematics are redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures, interaction mechanics, and performance optimizations are presented for technical evaluation.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {categoryTab === 'personal' && (
-        <div className="personal-context-banner reveal-on-scroll">
-          <div className="personal-banner-icon-box" aria-hidden="true">
-            <span>🎮</span>
-          </div>
-          <div className="personal-banner-content">
-            <div className="personal-banner-heading">
-              <strong>Independent Game Development &amp; Spatial Labs</strong>
-              <span className="personal-badge-pill">PLAYABLE &amp; OPEN SOURCE</span>
-            </div>
-            <p>
-              Original gameplay mechanics, modular state machines, responsive physics controllers, and mobile AR shaders built independently. Playable builds are published on itch.io and complete source repositories are available on GitHub.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* ACTIVE AUDIENCE FOCUS BANNER */}
-      {activeAudience !== 'all' && (
-        <div className="active-audience-banner reveal-on-scroll">
-          <span className="banner-prefix">Focus:</span>
-          <strong>{focusLabels[activeAudience]}</strong>
-          <button
-            type="button"
-            className="banner-reset-btn"
-            onClick={() => onSelectAudience('all')}
-            aria-label="Show all projects"
-          >
-            ✕ Show All Projects
-          </button>
-        </div>
-      )}
-
-      {/* ACTIVE SKILL FILTER BANNER */}
-      {skillFilter && (
-        <div className="active-audience-banner active-skill-banner reveal-on-scroll">
-          <span className="banner-prefix">Skill Highlight:</span>
-          <strong>Filtered to projects using &ldquo;{skillFilter}&rdquo;</strong>
-          <button
-            type="button"
-            className="banner-reset-btn"
-            onClick={onClearSkillFilter}
-            aria-label="Clear skill filter"
-          >
-            ✕ Clear Skill
-          </button>
-        </div>
-      )}
-
-      {/* FILTER & SEARCH TOOLBAR */}
-      <div className="projects-toolbar reveal-on-scroll reveal-delay-1">
-        {/* Search input */}
-        <div className="projects-search-wrapper">
-          <span className="search-icon" aria-hidden="true">🔍</span>
+      {/* COMMAND FILTER BAR (STREAMLINED & INTUITIVE) */}
+      <div className="v2-command-filter-bar reveal-on-scroll reveal-delay-1">
+        <div className="v2-search-box">
+          <span className="v2-search-icon" aria-hidden="true">🔍</span>
           <input
             type="text"
-            className="projects-search-input"
-            placeholder="Search by title, tech (Photon, Quest, Shader, Gemini, Physics...)"
+            className="v2-search-input"
+            placeholder="Search systems (Quest, LOTO, Physics, ARCore, Gemini, Shaders...)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search projects by keyword"
@@ -389,7 +153,7 @@ function Projects({
           {searchQuery && (
             <button
               type="button"
-              className="search-clear-btn"
+              className="v2-search-clear"
               onClick={() => setSearchQuery('')}
               aria-label="Clear search"
             >
@@ -398,257 +162,201 @@ function Projects({
           )}
         </div>
 
-        {/* Filter controls row */}
-        <div className="projects-filter-row">
-          {/* Platform chips */}
-          <div className="filter-group">
-            <span className="filter-group-label">Platform:</span>
-            <div className="filter-chips">
-              {PLATFORMS.map((plat) => (
-                <button
-                  key={plat}
-                  type="button"
-                  className={`filter-chip ${selectedPlatform === plat ? 'active' : ''}`}
-                  onClick={() => handleSelectPlatform(plat)}
-                  title={`Filter by ${plat}`}
-                >
-                  <span>{plat}</span>
-                  {plat !== 'All' && <span className="chip-count">({platformCounts[plat]})</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Type chips */}
-          <div className="filter-group">
-            <span className="filter-group-label">Type:</span>
-            <div className="filter-chips">
-              {TYPES.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  className={`filter-chip ${selectedType === type ? 'active' : ''}`}
-                  onClick={() => handleSelectType(type)}
-                  title={`Filter by ${type}`}
-                >
-                  <span>{type}</span>
-                  {type !== 'All' && <span className="chip-count">({typeCounts[type]})</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Tech chips */}
-          <div className="filter-group">
-            <span className="filter-group-label">Tech:</span>
-            <div className="filter-chips">
-              {TECHS.map((tech) => (
-                <button
-                  key={tech}
-                  type="button"
-                  className={`filter-chip ${selectedTech === tech ? 'active' : ''}`}
-                  onClick={() => handleSelectTech(tech)}
-                  title={`Filter by ${tech}`}
-                >
-                  <span>{tech}</span>
-                  {tech !== 'All' && <span className="chip-count">({techCounts[tech]})</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ACTIVE FILTER TAG STRIP (FOR FAST 1-CLICK REMOVAL) */}
-        {hasActiveFilters && (
-          <div className="active-filter-tags-strip">
-            <span className="active-tags-label">Active Filters:</span>
-            <div className="active-tags-list">
-              {categoryTab !== 'all' && (
-                <button
-                  type="button"
-                  className="active-tag-pill"
-                  onClick={() => setCategoryTab('all')}
-                  title="Remove track filter"
-                >
-                  <span>Track: {categoryTab === 'professional' ? 'Professional NDA' : 'Personal'}</span>
-                  <span className="tag-remove-x" aria-hidden="true">✕</span>
-                </button>
-              )}
-              {selectedPlatform !== 'All' && (
-                <button
-                  type="button"
-                  className="active-tag-pill"
-                  onClick={() => setSelectedPlatform('All')}
-                  title="Remove platform filter"
-                >
-                  <span>Platform: {selectedPlatform}</span>
-                  <span className="tag-remove-x" aria-hidden="true">✕</span>
-                </button>
-              )}
-              {selectedType !== 'All' && (
-                <button
-                  type="button"
-                  className="active-tag-pill"
-                  onClick={() => setSelectedType('All')}
-                  title="Remove type filter"
-                >
-                  <span>Type: {selectedType}</span>
-                  <span className="tag-remove-x" aria-hidden="true">✕</span>
-                </button>
-              )}
-              {selectedTech !== 'All' && (
-                <button
-                  type="button"
-                  className="active-tag-pill"
-                  onClick={() => setSelectedTech('All')}
-                  title="Remove tech filter"
-                >
-                  <span>Tech: {selectedTech}</span>
-                  <span className="tag-remove-x" aria-hidden="true">✕</span>
-                </button>
-              )}
-              {searchQuery && (
-                <button
-                  type="button"
-                  className="active-tag-pill"
-                  onClick={() => setSearchQuery('')}
-                  title="Clear search query"
-                >
-                  <span>Search: &ldquo;{searchQuery}&rdquo;</span>
-                  <span className="tag-remove-x" aria-hidden="true">✕</span>
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Results counter and reset */}
-        <div className="projects-meta-bar">
-          <span className="projects-counter">
-            Showing <strong>{filteredProjects.length}</strong> {filteredProjects.length === 1 ? 'project' : 'projects'}
-            {categoryTab === 'professional' && ' in Professional (NDA)'}
-            {categoryTab === 'personal' && ' in Personal Projects'}
-          </span>
-          {hasActiveFilters && (
+        {/* PLATFORM QUICK SELECT PILLS */}
+        <div className="v2-platform-pills">
+          <span className="v2-filter-label">Platform:</span>
+          {PLATFORMS.map((plat) => (
             <button
+              key={plat}
               type="button"
-              className="projects-clear-filters-btn"
-              onClick={handleResetFilters}
+              className={`v2-plat-pill ${selectedPlatform === plat ? 'active' : ''}`}
+              onClick={() => setSelectedPlatform(plat)}
             >
-              Reset All Filters ↺
+              {plat}
             </button>
-          )}
+          ))}
         </div>
-      </div>
 
-      {/* INTERACTIVE PROJECTS DISPLAY */}
-      {filteredProjects.length > 0 ? (
-        categoryTab === 'all' ? (
-          /* ==========================================================
-             TWO-TIER GROUPED VIEW (ALWAYS PRESERVED FOR "ALL WORKS")
-             Never mixes professional NDA and personal builds together!
-          ========================================================== */
-          <div className="projects-grouped-showcase reveal-on-scroll reveal-delay-2">
-            {/* GROUP 1: PROFESSIONAL PROJECTS (CLIENT NDA) */}
-            {professionalList.length > 0 && (
-              <div className="projects-category-group professional-group">
-                <div className="group-header-banner">
-                  <div className="group-title-row">
-                    <span className="group-badge badge-nda">
-                      <span className="lock-icon" aria-hidden="true">🔒</span> ENTERPRISE CLIENT NDA
-                    </span>
-                    <h3 className="group-heading">
-                      Professional Work &amp; Shipped Simulations
-                      <span className="group-count-pill">({professionalList.length})</span>
-                    </h3>
-                  </div>
-                  <p className="group-subtext">
-                    Commercial VR training systems and AR kiosk solutions delivered for Hema Enterprises (HEPL) · Digifox Studio. Proprietary client data anonymized under NDA.
-                  </p>
-                </div>
-
-                <div className="projects-interactive-grid">
-                  {professionalList.map((project) => (
-                    <ProjectCard
-                      key={project.id || project.title}
-                      project={project}
-                      onOpenCaseStudy={setSelectedProject}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* GROUP 2: PERSONAL PROJECTS & INDIE LABS */}
-            {personalList.length > 0 && (
-              <div className="projects-category-group personal-group">
-                <div className="group-header-banner">
-                  <div className="group-title-row">
-                    <span className="group-badge badge-personal">
-                      <span className="game-icon" aria-hidden="true">🎮</span> INDIE LAB &amp; PLAYABLE BUILDS
-                    </span>
-                    <h3 className="group-heading">
-                      Personal Projects, Games &amp; Spatial R&amp;D
-                      <span className="group-count-pill">({personalList.length})</span>
-                    </h3>
-                  </div>
-                  <p className="group-subtext">
-                    Original gameplay systems, mobile AR minigames, and 3D prototypes. Published openly with playable itch.io builds and GitHub source code.
-                  </p>
-                </div>
-
-                <div className="projects-interactive-grid">
-                  {personalList.map((project) => (
-                    <ProjectCard
-                      key={project.id || project.title}
-                      project={project}
-                      onOpenCaseStudy={setSelectedProject}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* SINGLE CATEGORY GRID (WHEN EXPLICITLY FILTERED BY PROFESSIONAL OR PERSONAL TAB) */
-          <div className="projects-interactive-grid reveal-on-scroll reveal-delay-2">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id || project.title}
-                project={project}
-                onOpenCaseStudy={setSelectedProject}
-              />
-            ))}
-          </div>
-        )
-      ) : (
-        /* ENHANCED CYBERPUNK EMPTY STATE WITH INSTANT 1-CLICK RESET */
-        <div className="projects-empty-state">
-          <div className="empty-state-radar-icon" aria-hidden="true">
-            <span className="radar-ping"></span>
-            🔍
-          </div>
-          <h3 className="empty-state-title">No Projects Found for Current Combination</h3>
-          <p className="empty-state-desc">
-            No projects matched the active filters ({[
-              searchQuery && `Search: "${searchQuery}"`,
-              selectedPlatform !== 'All' && `Platform: ${selectedPlatform}`,
-              selectedType !== 'All' && `Type: ${selectedType}`,
-              selectedTech !== 'All' && `Tech: ${selectedTech}`,
-              categoryTab !== 'all' && `Tab: ${categoryTab}`
-            ].filter(Boolean).join(', ')}).
-          </p>
+        {hasActiveFilters && (
           <button
             type="button"
-            className="empty-reset-cta-btn"
+            className="v2-reset-quick-btn"
             onClick={handleResetFilters}
+            title="Reset filters to default"
           >
-            Reset All Filters &amp; Show All Projects ↺
+            Reset Filters ↺
           </button>
+        )}
+      </div>
+
+      {/* ==========================================================
+          SECTOR 1: PROFESSIONAL ENTERPRISE SIMULATIONS (CLIENT NDA)
+      ========================================================== */}
+      {(activeDeck === 'professional' || activeDeck === 'all') && (
+        <div className="v2-sector-container sector-professional reveal-on-scroll reveal-delay-2">
+          {/* SECTOR HEADER & NDA BANNER */}
+          <div className="v2-sector-header nda-themed">
+            <div className="v2-sector-title-row">
+              <span className="v2-sector-pill nda-pill">
+                <span className="pulse-dot-amber"></span>
+                <span>COMMERCIAL XR DEPLOYMENTS</span>
+              </span>
+              <h3 className="v2-sector-heading">
+                Professional Work &amp; Shipped Simulations
+              </h3>
+            </div>
+            <div className="v2-nda-compliance-notice">
+              <div className="notice-lock-icon" aria-hidden="true">🔒</div>
+              <div className="notice-text">
+                <strong>Enterprise Client NDA Compliance Notice:</strong> Engineered for commercial clients at <strong>Hema Enterprises (HEPL) · Digifox Studio</strong>. Proprietary CAD drawings, client blueprints, and manufacturing schematics have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
+              </div>
+            </div>
+          </div>
+
+          {filteredProfessional.length > 0 ? (
+            <>
+              {/* INTERACTIVE SPOTLIGHT SHOWCASE (FEATURED DOSSIER) */}
+              {activeSpotlightProject && (
+                <div className="v2-spotlight-dossier">
+                  <div className="spotlight-viewport-wrapper">
+                    <img
+                      src={activeSpotlightProject.image}
+                      alt={activeSpotlightProject.title}
+                      className="spotlight-viewport-img"
+                    />
+                    <div className="spotlight-viewport-overlay">
+                      <div className="spotlight-tag-left">
+                        <span className="spotlight-nda-tag">🔒 CLIENT NDA</span>
+                        <span className="spotlight-studio-tag">{activeSpotlightProject.studio}</span>
+                      </div>
+                      <div className="spotlight-tag-right">
+                        <span className="spotlight-type-tag">{activeSpotlightProject.type}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="spotlight-details-panel">
+                    <div className="spotlight-platforms">
+                      {activeSpotlightProject.platforms?.map((p) => (
+                        <span key={p} className="spotlight-plat-badge">{p}</span>
+                      ))}
+                    </div>
+
+                    <h4 className="spotlight-project-title">{activeSpotlightProject.title}</h4>
+                    <p className="spotlight-lead-desc">{activeSpotlightProject.description}</p>
+
+                    {/* TELEMETRY SPECS */}
+                    <div className="spotlight-telemetry-grid">
+                      <div className="telemetry-item">
+                        <span className="telemetry-label">Engineering Role</span>
+                        <span className="telemetry-value">{activeSpotlightProject.caseStudy?.role || 'Lead VR Interaction Engineer'}</span>
+                      </div>
+                      <div className="telemetry-item">
+                        <span className="telemetry-label">Core Tech Stack</span>
+                        <span className="telemetry-value">{activeSpotlightProject.techList?.join(' · ') || 'Unity · C# · Meta SDK'}</span>
+                      </div>
+                      <div className="telemetry-item full-span">
+                        <span className="telemetry-label">Architectural Challenge &amp; Solution</span>
+                        <span className="telemetry-value-desc">{activeSpotlightProject.caseStudy?.challenge || activeSpotlightProject.caseStudy?.problem}</span>
+                      </div>
+                    </div>
+
+                    {/* ACTIONS */}
+                    <div className="spotlight-actions-row">
+                      <button
+                        type="button"
+                        className="spotlight-inspect-btn"
+                        onClick={() => setSelectedProject(activeSpotlightProject)}
+                      >
+                        Inspect Architecture &amp; Case Study ➜
+                      </button>
+                      <span className="spotlight-confidential-note">
+                        🔒 Production deployment verified on hardware
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SIMULATION SELECTOR RACK */}
+              <div className="v2-selector-rack-header">
+                <span className="rack-label">All Shipped Commercial Simulations ({filteredProfessional.length}):</span>
+              </div>
+              <div className="v2-cards-grid">
+                {filteredProfessional.map((proj, idx) => (
+                  <div
+                    key={proj.id}
+                    className={`v2-rack-card ${activeSpotlightProject?.id === proj.id ? 'is-active-spotlight' : ''}`}
+                    onClick={() => {
+                      setSpotlightIndex(idx);
+                      setSelectedProject(proj);
+                    }}
+                  >
+                    <ProjectCard
+                      project={proj}
+                      onOpenCaseStudy={setSelectedProject}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="v2-empty-sector">
+              <p>No professional simulations match the current &ldquo;{selectedPlatform}&rdquo; filter.</p>
+              <button type="button" className="v2-reset-btn" onClick={handleResetFilters}>
+                Clear Platform Filter ↺
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-      {/* QUICK CATEGORY HUB ARCHIVE LINKS */}
+      {/* ==========================================================
+          SECTOR 2: INDIE GAMES & PLAYABLE LABS (ITCH.IO / GITHUB)
+      ========================================================== */}
+      {(activeDeck === 'personal' || activeDeck === 'all') && (
+        <div className="v2-sector-container sector-personal reveal-on-scroll reveal-delay-2">
+          {/* SECTOR HEADER */}
+          <div className="v2-sector-header personal-themed">
+            <div className="v2-sector-title-row">
+              <span className="v2-sector-pill personal-pill">
+                <span className="pulse-dot-cyan"></span>
+                <span>OPEN ARCHITECTURE &amp; BUILDS</span>
+              </span>
+              <h3 className="v2-sector-heading">
+                Personal Projects, Games &amp; Spatial R&amp;D
+              </h3>
+            </div>
+            <div className="v2-personal-banner-notice">
+              <div className="notice-game-icon" aria-hidden="true">🎮</div>
+              <div className="notice-text">
+                <strong>Playable Builds &amp; Source Repositories:</strong> Original games, mobile AR minigames, kinematic controllers, and custom URP shaders developed end-to-end. Available directly to play on <strong>itch.io</strong> and inspect on <strong>GitHub</strong>.
+              </div>
+            </div>
+          </div>
+
+          {filteredPersonal.length > 0 ? (
+            <div className="v2-cards-grid">
+              {filteredPersonal.map((proj) => (
+                <ProjectCard
+                  key={proj.id}
+                  project={proj}
+                  onOpenCaseStudy={setSelectedProject}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="v2-empty-sector">
+              <p>No personal projects match the current &ldquo;{selectedPlatform}&rdquo; filter.</p>
+              <button type="button" className="v2-reset-btn" onClick={handleResetFilters}>
+                Clear Platform Filter ↺
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* QUICK CATEGORY ARCHIVE HUBS */}
       <div className="projects-category-hub reveal-on-scroll reveal-delay-3">
         <h3 className="hub-heading">Explore Dedicated Category Archives</h3>
         <div className="hub-links-grid">
