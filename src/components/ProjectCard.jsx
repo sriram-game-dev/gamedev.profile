@@ -129,7 +129,7 @@ function ProjectCard({ project, onOpenCaseStudy }) {
           {isNda ? (
             <span className="card-context-pill professional-pill">
               <span className="status-dot dot-amber"></span>
-              HEPL · Digifox Studio
+              Commercial Production
             </span>
           ) : (
             <span className="card-context-pill personal-pill">
