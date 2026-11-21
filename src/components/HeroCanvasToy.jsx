@@ -57,13 +57,13 @@ function HeroCanvasToy() {
       radius: 120
     };
 
-    // Low-poly floating geometric bodies
+    // Low-poly floating geometric bodies (60-30-10 palette)
     const types = ['cube', 'triangle', 'diamond', 'ring'];
     const colors = [
-      { fill: 'rgba(245, 158, 11, 0.15)', stroke: 'rgba(245, 158, 11, 0.7)', glow: 'rgba(245, 158, 11, 0.3)' },
-      { fill: 'rgba(139, 92, 246, 0.15)', stroke: 'rgba(139, 92, 246, 0.7)', glow: 'rgba(139, 92, 246, 0.3)' },
-      { fill: 'rgba(56, 189, 248, 0.15)', stroke: 'rgba(56, 189, 248, 0.7)', glow: 'rgba(56, 189, 248, 0.3)' },
-      { fill: 'rgba(52, 211, 153, 0.15)', stroke: 'rgba(52, 211, 153, 0.7)', glow: 'rgba(52, 211, 153, 0.3)' }
+      { fill: 'rgba(21, 88, 201, 0.18)', stroke: 'rgba(21, 88, 201, 0.8)', glow: 'rgba(21, 88, 201, 0.45)' }, // Electric Cobalt Blue (30%)
+      { fill: 'rgba(212, 255, 36, 0.16)', stroke: 'rgba(212, 255, 36, 0.85)', glow: 'rgba(212, 255, 36, 0.4)' }, // Acid Lime (10%)
+      { fill: 'rgba(45, 116, 247, 0.16)', stroke: 'rgba(45, 116, 247, 0.75)', glow: 'rgba(45, 116, 247, 0.35)' },
+      { fill: 'rgba(21, 88, 201, 0.22)', stroke: 'rgba(96, 165, 250, 0.8)', glow: 'rgba(21, 88, 201, 0.4)' }
     ];
 
     const count = window.innerWidth < 640 ? 12 : 22;
@@ -94,7 +94,7 @@ function HeroCanvasToy() {
         radius: 10,
         maxRadius: 160,
         opacity: 0.9,
-        color: 'rgba(245, 158, 11, '
+        color: 'rgba(212, 255, 36, '
       });
 
       // Spawn spark particles
@@ -108,7 +108,7 @@ function HeroCanvasToy() {
           vy: Math.sin(angle) * speed,
           life: 1,
           decay: 0.02 + Math.random() * 0.03,
-          color: Math.random() > 0.5 ? '#f59e0b' : '#c084fc'
+          color: Math.random() > 0.4 ? '#D4FF24' : '#1558C9'
         });
       }
 
@@ -172,13 +172,13 @@ function HeroCanvasToy() {
       // Draw subtle interactive crosshair ring at cursor if active
       if (pointer.active && pointer.x > 0 && pointer.y > 0) {
         ctx.save();
-        ctx.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+        ctx.strokeStyle = 'rgba(212, 255, 36, 0.45)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(pointer.x, pointer.y, 22, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.strokeStyle = 'rgba(139, 92, 246, 0.3)';
+        ctx.strokeStyle = 'rgba(21, 88, 201, 0.4)';
         ctx.beginPath();
         ctx.arc(pointer.x, pointer.y, 44, 0, Math.PI * 2);
         ctx.stroke();
@@ -310,7 +310,7 @@ function HeroCanvasToy() {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 110) {
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - dist / 110)})`;
+            ctx.strokeStyle = `rgba(21, 88, 201, ${0.2 * (1 - dist / 110)})`;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);

@@ -73,13 +73,13 @@ function Contact() {
             display: 'flex',
             alignItems: 'center',
             gap: '16px',
-            background: 'rgba(15, 23, 42, 0.6)',
+            background: 'rgba(8, 14, 28, 0.65)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
-            border: '1px solid rgba(139, 92, 246, 0.4)',
+            border: '1px solid rgba(21, 88, 201, 0.4)',
             borderRadius: '12px',
             padding: '12px 24px',
-            boxShadow: '0 8px 32px rgba(139, 92, 246, 0.15)'
+            boxShadow: '0 8px 32px rgba(21, 88, 201, 0.18)'
           }}
         >
           <a
@@ -92,7 +92,7 @@ function Contact() {
               textDecoration: 'none',
               transition: 'color 0.2s ease'
             }}
-            onMouseOver={(e) => e.target.style.color = '#f59e0b'}
+            onMouseOver={(e) => e.target.style.color = '#D4FF24'}
             onMouseOut={(e) => e.target.style.color = '#f8fafc'}
           >
             {email}
@@ -103,10 +103,10 @@ function Contact() {
             type="button"
             aria-label="Copy email address"
             style={{
-              background: copyStatus === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.15)',
-              border: copyStatus === 'error' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(245, 158, 11, 0.3)',
+              background: copyStatus === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(212, 255, 36, 0.15)',
+              border: copyStatus === 'error' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(212, 255, 36, 0.35)',
               borderRadius: '6px',
-              color: copyStatus === 'error' ? '#ef4444' : '#f59e0b',
+              color: copyStatus === 'error' ? '#ef4444' : '#D4FF24',
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '0.75rem',
               fontWeight: '600',
@@ -115,11 +115,11 @@ function Contact() {
               transition: 'all 0.2s ease'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = copyStatus === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(245, 158, 11, 0.25)';
+              e.currentTarget.style.background = copyStatus === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(212, 255, 36, 0.25)';
               e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.background = copyStatus === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.15)';
+              e.currentTarget.style.background = copyStatus === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(212, 255, 36, 0.15)';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >

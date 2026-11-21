@@ -1,23 +1,42 @@
 :root {
-  /* Indie Game Developer Theme Color Palette */
-  --bg-dark: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.72);
-  --bg-card-hover: rgba(26, 35, 62, 0.85);
-  --bg-glass: rgba(15, 23, 42, 0.65);
+  /* 60-30-10 Futuristic Palette:
+     Midnight Black: #030407 (60%)
+     Electric Cobalt Blue: #1558C9 (30%)
+     Acid Lime: #D4FF24 (10%)
+  */
+  --bg-dark: #030407;
+  --bg-card: rgba(8, 14, 28, 0.72);
+  --bg-card-hover: rgba(14, 24, 48, 0.85);
+  --bg-glass: rgba(8, 14, 28, 0.65);
   
-  --amber-primary: #f59e0b;
-  --amber-glow: rgba(245, 158, 11, 0.4);
-  --amber-soft: rgba(245, 158, 11, 0.12);
-  --amber-border: rgba(245, 158, 11, 0.35);
+  /* 10% Accent: Acid Lime */
+  --accent-lime: #D4FF24;
+  --accent-lime-hover: #e2ff54;
+  --accent-lime-glow: rgba(212, 255, 36, 0.45);
+  --accent-lime-soft: rgba(212, 255, 36, 0.14);
+  --accent-lime-border: rgba(212, 255, 36, 0.4);
 
-  --purple-primary: #8b5cf6;
-  --purple-glow: rgba(139, 92, 246, 0.45);
-  --purple-soft: rgba(139, 92, 246, 0.14);
-  --purple-border: rgba(139, 92, 246, 0.35);
+  /* 30% Structural: Electric Cobalt Blue */
+  --cobalt-primary: #1558C9;
+  --cobalt-bright: #2d74f7;
+  --cobalt-glow: rgba(21, 88, 201, 0.45);
+  --cobalt-soft: rgba(21, 88, 201, 0.16);
+  --cobalt-border: rgba(21, 88, 201, 0.38);
+
+  /* Backward-compatible token aliases mapped to the new palette */
+  --amber-primary: #D4FF24;
+  --amber-glow: rgba(212, 255, 36, 0.45);
+  --amber-soft: rgba(212, 255, 36, 0.14);
+  --amber-border: rgba(212, 255, 36, 0.4);
+
+  --purple-primary: #1558C9;
+  --purple-glow: rgba(21, 88, 201, 0.45);
+  --purple-soft: rgba(21, 88, 201, 0.16);
+  --purple-border: rgba(21, 88, 201, 0.38);
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --text-dim: #94a3b8;
+  --text-dim: #64748b;
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-glass: rgba(255, 255, 255, 0.12);
 
@@ -25,19 +44,19 @@
      FUTURISTIC GAMING UI + GLASSMORPHISM DESIGN TOKENS
      Translucent surfaces, frosted-glass blurs, specular edges, and ambient glows
      ========================================================================== */
-  --glass-surface-base: rgba(15, 23, 42, 0.68);
-  --glass-surface-elevated: rgba(26, 35, 62, 0.58);
-  --glass-surface-subtle: rgba(15, 23, 42, 0.44);
-  --glass-surface-hover: rgba(30, 41, 59, 0.76);
-  --glass-surface-modal: rgba(15, 23, 42, 0.90);
+  --glass-surface-base: rgba(8, 14, 28, 0.65);
+  --glass-surface-elevated: rgba(14, 24, 48, 0.62);
+  --glass-surface-subtle: rgba(3, 4, 7, 0.55);
+  --glass-surface-hover: rgba(21, 88, 201, 0.22);
+  --glass-surface-modal: rgba(3, 4, 7, 0.94);
 
   /* Thin luminous glass borders */
   --glass-border: 1px solid rgba(255, 255, 255, 0.12);
   --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.08);
   --glass-border-bright: 1px solid rgba(255, 255, 255, 0.22);
-  --glass-border-amber: 1px solid rgba(245, 158, 11, 0.45);
-  --glass-border-violet: 1px solid rgba(139, 92, 246, 0.42);
-  --glass-border-cyan: 1px solid rgba(56, 189, 248, 0.4);
+  --glass-border-amber: 1px solid rgba(212, 255, 36, 0.45);
+  --glass-border-violet: 1px solid rgba(21, 88, 201, 0.45);
+  --glass-border-cyan: 1px solid rgba(21, 88, 201, 0.4);
 
   /* Specular rim reflections (gives real physical glass refraction depth) */
   --glass-specular-top: inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
@@ -54,14 +73,14 @@
   --glass-shadow-sm: 0 4px 18px rgba(0, 0, 0, 0.35);
   --glass-shadow-md: 0 12px 34px rgba(0, 0, 0, 0.45);
   --glass-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
-  --glass-shadow-amber: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(245, 158, 11, 0.22);
-  --glass-shadow-violet: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(139, 92, 246, 0.25);
-  --glass-shadow-cyan: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(56, 189, 248, 0.22);
+  --glass-shadow-amber: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(212, 255, 36, 0.25);
+  --glass-shadow-violet: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(21, 88, 201, 0.28);
+  --glass-shadow-cyan: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(21, 88, 201, 0.22);
 
   /* Subtle ambient glow gradients behind glass panels */
-  --ambient-glow-amber: rgba(245, 158, 11, 0.12);
-  --ambient-glow-violet: rgba(139, 92, 246, 0.14);
-  --ambient-glow-cyan: rgba(56, 189, 248, 0.12);
+  --ambient-glow-amber: rgba(212, 255, 36, 0.14);
+  --ambient-glow-violet: rgba(21, 88, 201, 0.18);
+  --ambient-glow-cyan: rgba(21, 88, 201, 0.15);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
@@ -185,19 +204,23 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #0f172a;
-  /* Ambient Volumetric Lighting & Low-Poly Geometric Background Texture */
+  background-color: #030407;
+  /* 60-30-10 Ambient Volumetric Lighting:
+     60% Midnight Black (#030407)
+     30% Electric Cobalt Blue (#1558C9)
+     10% Acid Lime (#D4FF24)
+  */
   background-image: 
-    /* Sunset Amber ambient volumetric glow top-right */
-    radial-gradient(ellipse 65% 50% at 90% -5%, rgba(245, 158, 11, 0.16) 0%, transparent 70%),
-    /* Electric Purple ambient volumetric glow top-left */
-    radial-gradient(ellipse 60% 55% at 5% 15%, rgba(139, 92, 246, 0.19) 0%, transparent 70%),
-    /* Subtle Cyan XR ambient depth aura center-right */
-    radial-gradient(ellipse 60% 45% at 85% 42%, rgba(56, 189, 248, 0.08) 0%, transparent 70%),
-    /* Secondary purple depth aura center-left */
-    radial-gradient(circle 700px at 20% 60%, rgba(139, 92, 246, 0.10) 0%, transparent 75%),
-    /* Amber warm aura lower section */
-    radial-gradient(circle 550px at 75% 85%, rgba(245, 158, 11, 0.09) 0%, transparent 75%),
+    /* Electric Cobalt Blue atmospheric volumetric glow top-left (30%) */
+    radial-gradient(ellipse 65% 55% at 5% 10%, rgba(21, 88, 201, 0.24) 0%, transparent 70%),
+    /* Acid Lime energetic rim accent aura top-right (10%) */
+    radial-gradient(ellipse 55% 45% at 92% -5%, rgba(212, 255, 36, 0.14) 0%, transparent 65%),
+    /* Electric Cobalt Blue central depth aura (30%) */
+    radial-gradient(ellipse 70% 50% at 85% 42%, rgba(21, 88, 201, 0.20) 0%, transparent 70%),
+    /* Mid-body cobalt aura */
+    radial-gradient(circle 750px at 15% 65%, rgba(21, 88, 201, 0.16) 0%, transparent 75%),
+    /* Acid Lime subtle accent aura lower-right (10%) */
+    radial-gradient(circle 500px at 80% 88%, rgba(212, 255, 36, 0.09) 0%, transparent 75%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' opacity='0.035'%3E%3Cpolygon points='0,0 60,0 30,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,0 120,0 90,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,0 30,50 0,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='30,50 60,0 90,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='90,50 120,0 120,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='30,50 90,50 60,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,100 30,50 60,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,100 90,50 120,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,100 60,100 30,120' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,100 120,100 90,120' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3C/svg%3E");
   background-attachment: fixed;
   background-repeat: repeat;
@@ -229,8 +252,8 @@ p {
 }
 
 ::selection {
-  background: rgba(245, 158, 11, 0.35);
-  color: #ffffff;
+  background: rgba(212, 255, 36, 0.35);
+  color: #030407;
 }
 
 /* Custom modern scrollbar */
@@ -239,18 +262,18 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: #030407;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #0b152d;
   border-radius: 4px;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(21, 88, 201, 0.4);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
-  border-color: var(--amber-primary);
+  background: #1558C9;
+  border-color: #D4FF24;
 }
 
 /* Code Editor Syntax Styling Components */
@@ -267,9 +290,9 @@ code {
   font-size: 13.5px;
   line-height: 140%;
   padding: 3px 8px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  color: #38bdf8;
+  background: rgba(3, 4, 7, 0.85);
+  border: 1px solid rgba(21, 88, 201, 0.4);
+  color: #D4FF24;
 }
 
 .syntax-keyword {

@@ -103,7 +103,7 @@ function Home() {
           }}
         >
           <span>Explore Quests</span>
-          <span style={{ color: '#0f172a' }}>→</span>
+          <span style={{ color: '#030407' }}>→</span>
         </a>
         <a
           href={route('/#contact')}
@@ -113,7 +113,7 @@ function Home() {
           }}
         >
           <span>Connect</span>
-          <span style={{ color: '#8b5cf6' }}>✦</span>
+          <span style={{ color: '#1558C9' }}>✦</span>
         </a>
       </div>
 
