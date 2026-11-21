@@ -8,6 +8,10 @@ export const projects = [
     image: asset('/projects/loto-vr.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/loto-vr.mp4
     featured: true,
+    category: 'professional',
+    isNda: true,
+    ndaBadge: 'CLIENT NDA',
+    studio: 'HEPL · Digifox Studio',
     platforms: ['Meta Quest', 'VR'],
     techList: ['Unity', 'C#', 'Meta SDK'],
     type: 'Training Simulation',
@@ -64,6 +68,10 @@ export const projects = [
     image: asset('/projects/hose-manufacturing.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/hose-manufacturing.mp4
     featured: false,
+    category: 'professional',
+    isNda: true,
+    ndaBadge: 'CLIENT NDA',
+    studio: 'HEPL · Digifox Studio',
     platforms: ['Meta Quest', 'VR'],
     techList: ['Unity', 'C#', 'Meta SDK'],
     type: 'Training Simulation',
@@ -131,6 +139,10 @@ export const projects = [
     image: asset('/projects/ai-virtual-tryon.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/ai-virtual-tryon.mp4
     featured: false,
+    category: 'professional',
+    isNda: true,
+    ndaBadge: 'CLIENT NDA',
+    studio: 'HEPL · Digifox Studio',
     platforms: ['PC', 'Kiosk'],
     techList: ['Unity', 'C#', 'AR', 'Google Gemini API'],
     type: 'AR Experience',
@@ -192,6 +204,10 @@ export const projects = [
     image: asset('/projects/industrial-safety.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/industrial-safety.mp4
     featured: true,
+    category: 'professional',
+    isNda: true,
+    ndaBadge: 'CLIENT NDA',
+    studio: 'HEPL · Digifox Studio',
     platforms: ['Meta Quest', 'VR'],
     techList: ['Unity', 'C#', 'Meta SDK'],
     type: 'Training Simulation',
@@ -263,6 +279,9 @@ export const personalProjects = [
     image: asset('/projects/game-project.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/fly-away.mp4
     featured: true,
+    category: 'personal',
+    isNda: false,
+    studio: 'Personal Project · Solo Indie Dev',
     platforms: ['WebGL', 'PC', 'Android'],
     techList: ['Unity 2D', 'C#', 'Object Pooling'],
     type: 'Game',
@@ -326,6 +345,9 @@ export const personalProjects = [
     image: asset('/projects/blitz-arena.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/the-blitz-arena.mp4
     featured: true,
+    category: 'personal',
+    isNda: false,
+    studio: 'Personal Project · Mobile AR R&D',
     platforms: ['Android', 'ARCore'],
     techList: ['Unity', 'C#', 'AR Foundation', 'Shader Graph', 'URP'],
     type: 'Game',
@@ -384,6 +406,9 @@ export const personalProjects = [
     image: asset('/projects/vr-paint.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/vr-paint.mp4
     featured: false,
+    category: 'personal',
+    isNda: false,
+    studio: 'Personal Project · VR Prototype',
     platforms: ['Meta Quest', 'VR'],
     techList: ['Unity', 'C#', 'XR', 'Meta Quest'],
     type: 'Virtual Showroom',
@@ -434,6 +459,9 @@ export const personalProjects = [
     image: asset('/projects/f1-showroom.jpg'),
     video: null, // TODO: Add 5-10s looping MP4 clip to public/videos/f1-showroom.mp4
     featured: false,
+    category: 'personal',
+    isNda: false,
+    studio: 'Personal Project · 3D Showcase',
     platforms: ['PC', 'VR', 'XR'],
     techList: ['Unity', 'C#', 'XR'],
     type: 'Virtual Showroom',

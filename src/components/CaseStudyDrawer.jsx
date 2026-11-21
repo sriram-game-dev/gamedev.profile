@@ -71,6 +71,16 @@ function CaseStudyDrawer({ project, onClose }) {
             alt={project.title}
             className="case-study-hero-img"
           />
+
+          {project.isNda && (
+            <div className="drawer-nda-disclaimer">
+              <span className="drawer-nda-icon">🔒</span>
+              <div>
+                <strong>Client NDA Protected:</strong> Commercial VR training application delivered for Hema Enterprises (HEPL) · Digifox Studio. Proprietary machinery schematics have been redacted or anonymized in compliance with enterprise NDAs.
+              </div>
+            </div>
+          )}
+
           <h2 id="case-study-title" className="case-study-title">
             {project.title}
           </h2>

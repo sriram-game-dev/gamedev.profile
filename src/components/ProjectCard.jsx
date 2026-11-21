@@ -5,6 +5,8 @@ function ProjectCard({ project, onOpenCaseStudy }) {
   const cardRef = useRef(null);
   const videoRef = useRef(null);
 
+  const isNda = project.isNda || project.category === 'professional';
+
   // Play video on scroll-into-view (or tap on mobile)
   useEffect(() => {
     const el = cardRef.current;
@@ -51,7 +53,7 @@ function ProjectCard({ project, onOpenCaseStudy }) {
   return (
     <article
       ref={cardRef}
-      className={`project-interactive-card ${project.featured ? 'is-featured' : ''}`}
+      className={`project-interactive-card ${isNda ? 'is-professional-nda' : 'is-personal-project'} ${project.featured ? 'is-featured' : ''}`}
       tabIndex={0}
       role="button"
       aria-label={`Open case study for ${project.title}`}
@@ -65,6 +67,7 @@ function ProjectCard({ project, onOpenCaseStudy }) {
         }
       }}
     >
+      {/* CARD MEDIA HEADER */}
       <div className="card-media-wrapper">
         <img
           src={project.image}
@@ -85,37 +88,107 @@ function ProjectCard({ project, onOpenCaseStudy }) {
           />
         )}
 
+        {/* OVERLAY BADGES */}
         <div className="card-media-overlay">
-          {project.featured && (
-            <span className="card-featured-badge">★ FEATURED</span>
-          )}
-          {project.type && (
-            <span className="card-type-badge">{project.type}</span>
-          )}
+          <div className="card-overlay-left-badges">
+            {isNda ? (
+              <span className="card-nda-badge" title="Professional project delivered under Enterprise Client NDA">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
+                  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                </svg>
+                CLIENT NDA
+              </span>
+            ) : (
+              <span className="card-personal-badge" title="Original personal project & indie prototype">
+                <span className="game-badge-icon" aria-hidden="true">🎮</span>
+                PERSONAL PROJECT
+              </span>
+            )}
+            {project.featured && (
+              <span className="card-featured-badge">★ FEATURED</span>
+            )}
+          </div>
+
+          <div className="card-overlay-right-badges">
+            {project.type && (
+              <span className="card-type-badge">{project.type}</span>
+            )}
+          </div>
         </div>
 
+        {/* QUICK INSPECT BAR */}
         <div className="card-quick-inspect">
-          <span>Inspect Case Study ➜</span>
+          <span>{isNda ? 'Inspect Architecture & Case Study ➜' : 'Inspect Prototype & Systems ➜'}</span>
         </div>
       </div>
 
+      {/* CARD BODY */}
       <div className="card-body">
-        <div className="card-platforms-row">
-          {project.platforms?.map((plat) => (
-            <span key={plat} className="card-platform-pill">{plat}</span>
-          ))}
+        {/* CONTEXT & STUDIO TAG */}
+        <div className="card-context-row">
+          {isNda ? (
+            <span className="card-context-pill professional-pill">
+              <span className="status-dot dot-amber"></span>
+              HEPL · Digifox Studio
+            </span>
+          ) : (
+            <span className="card-context-pill personal-pill">
+              <span className="status-dot dot-cyan"></span>
+              Solo Dev · Indie Lab
+            </span>
+          )}
+
+          <div className="card-platforms-row">
+            {project.platforms?.map((plat) => (
+              <span key={plat} className="card-platform-pill">{plat}</span>
+            ))}
+          </div>
         </div>
 
+        {/* TITLE */}
         <h3 className="card-title">{project.title}</h3>
 
+        {/* DESCRIPTION */}
         <p className="card-desc">{project.description}</p>
 
+        {/* DIRECT ACTION LINKS FOR PERSONAL PROJECTS (itch.io / GitHub) */}
+        {!isNda && project.links && project.links.length > 0 && (
+          <div className="card-external-links-row" onClick={(e) => e.stopPropagation()}>
+            {project.links.map((link) => (
+              <a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`card-ext-pill ${link.type === 'itch' ? 'ext-itch' : 'ext-github'}`}
+                title={`Open ${link.label}`}
+              >
+                {link.type === 'itch' ? '🕹️ Playable on itch.io ↗' : '📦 View on GitHub ↗'}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {/* TECH STACK CHIPS */}
         <div className="card-tech-chips">
-          {project.techList?.slice(0, 3).map((tech) => (
+          {project.techList?.slice(0, 4).map((tech) => (
             <span key={tech} className="card-tech-chip">{tech}</span>
           ))}
-          {project.techList && project.techList.length > 3 && (
-            <span className="card-tech-chip more">+{project.techList.length - 3}</span>
+          {project.techList && project.techList.length > 4 && (
+            <span className="card-tech-chip more">+{project.techList.length - 4}</span>
+          )}
+        </div>
+
+        {/* CARD FOOTER NOTICE */}
+        <div className="card-bottom-indicator">
+          {isNda ? (
+            <span className="card-nda-footer-note">
+              <span className="lock-glyph">🔒</span> Enterprise Production · Sensitive Schematics Anonymized
+            </span>
+          ) : (
+            <span className="card-personal-footer-note">
+              <span className="sparkle-glyph">✨</span> Playable Build &amp; Open Architecture
+            </span>
           )}
         </div>
       </div>
@@ -124,4 +197,3 @@ function ProjectCard({ project, onOpenCaseStudy }) {
 }
 
 export default ProjectCard;
-
