@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { normalizePath, route } from '../utils/asset';
 
-function NavBar({
-  theme = 'dark',
-  onToggleTheme = () => {}
-}) {
+function NavBar() {
   const [showGoTop, setShowGoTop] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -198,16 +195,6 @@ function NavBar({
 
         {/* RIGHT SIDE: TACTICAL GAME DEVELOPER CTA BUTTON & MOBILE TOGGLE */}
         <div className="navbar-right">
-          <button
-            type="button"
-            className="nav-theme-toggle"
-            onClick={onToggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-          >
-            <span aria-hidden="true">{theme === 'dark' ? '☀️' : '🌙'}</span>
-          </button>
-
           <a
             href={route('/#projects')}
             onClick={(event) => handleSectionClick(event, 'projects')}
@@ -304,17 +291,6 @@ function NavBar({
               <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>
           </a>
-
-          <div className="mobile-theme-row">
-            <button
-              type="button"
-              className="mobile-theme-btn"
-              onClick={onToggleTheme}
-            >
-              <span>{theme === 'dark' ? '☀️' : '🌙'}</span>
-              <span>{theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
-            </button>
-          </div>
 
           <div className="mobile-cta-wrapper">
             <button

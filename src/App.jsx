@@ -28,29 +28,18 @@ function App() {
     normalizePath(window.location.pathname)
   );
   const [skillFilter, setSkillFilter] = useState('');
-  const [theme, setTheme] = useState(() => {
-    try {
-      return localStorage.getItem('portfolio-theme') || 'dark';
-    } catch {
-      return 'dark';
-    }
-  });
 
   useScrollReveal(path);
 
-  // Apply theme to document root
+  // Always lock default dark theme and clear any legacy saved theme
   useEffect(() => {
     try {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('portfolio-theme', theme);
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.removeItem('portfolio-theme');
     } catch {
       // ignore in sandboxed / private storage environments
     }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
+  }, []);
 
 
   // ========================================
@@ -107,10 +96,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
-        <NavBar
-          theme={theme}
-          onToggleTheme={toggleTheme}
-        />
+        <NavBar />
         <ProfessionalProjects />
         <Footer />
         <KonamiEasterEgg />
@@ -127,10 +113,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
-        <NavBar
-          theme={theme}
-          onToggleTheme={toggleTheme}
-        />
+        <NavBar />
         <PersonalProjects />
         <Footer />
         <KonamiEasterEgg />
@@ -157,10 +140,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
-        <NavBar
-          theme={theme}
-          onToggleTheme={toggleTheme}
-        />
+        <NavBar />
         <ProjectDetails
           project={project}
         />
@@ -179,10 +159,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
-        <NavBar
-          theme={theme}
-          onToggleTheme={toggleTheme}
-        />
+        <NavBar />
 
         <main>
           <Home />
@@ -217,10 +194,7 @@ function App() {
   return (
     <>
       <ScrollProgressBar />
-      <NavBar
-        theme={theme}
-        onToggleTheme={toggleTheme}
-      />
+      <NavBar />
 
       <main
         className="not-found-page"
