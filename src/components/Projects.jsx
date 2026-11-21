@@ -14,7 +14,6 @@ function Projects({
   const [activeDeck, setActiveDeck] = useState('all'); // 'all' | 'professional' | 'personal'
   const [selectedPlatform, setSelectedPlatform] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
 
   // Filter logic across projects
@@ -54,8 +53,6 @@ function Projects({
 
   const filteredProfessional = useMemo(() => filterList(projects), [filterList]);
   const filteredPersonal = useMemo(() => filterList(personalProjects), [filterList]);
-
-  const activeSpotlightProject = filteredProfessional[spotlightIndex] || filteredProfessional[0] || projects[0];
 
   const hasActiveFilters = Boolean(
     selectedPlatform !== 'All' ||
@@ -245,92 +242,15 @@ function Projects({
           </div>
 
           {filteredProfessional.length > 0 ? (
-            <>
-              {/* INTERACTIVE SPOTLIGHT SHOWCASE (FEATURED DOSSIER) */}
-              {activeSpotlightProject && (
-                <div className="v2-spotlight-dossier">
-                  <div className="spotlight-viewport-wrapper">
-                    <img
-                      src={activeSpotlightProject.image}
-                      alt={activeSpotlightProject.title}
-                      className="spotlight-viewport-img"
-                    />
-                    <div className="spotlight-viewport-overlay">
-                      <div className="spotlight-tag-left">
-                        <span className="spotlight-nda-tag">🔒 CLIENT NDA</span>
-                        <span className="spotlight-studio-tag">{activeSpotlightProject.studio}</span>
-                      </div>
-                      <div className="spotlight-tag-right">
-                        <span className="spotlight-type-tag">{activeSpotlightProject.type}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="spotlight-details-panel">
-                    <div className="spotlight-platforms">
-                      {activeSpotlightProject.platforms?.map((p) => (
-                        <span key={p} className="spotlight-plat-badge">{p}</span>
-                      ))}
-                    </div>
-
-                    <h4 className="spotlight-project-title">{activeSpotlightProject.title}</h4>
-                    <p className="spotlight-lead-desc">{activeSpotlightProject.description}</p>
-
-                    {/* TELEMETRY SPECS */}
-                    <div className="spotlight-telemetry-grid">
-                      <div className="telemetry-item">
-                        <span className="telemetry-label">Engineering Role</span>
-                        <span className="telemetry-value">{activeSpotlightProject.caseStudy?.role || 'Lead VR Interaction Engineer'}</span>
-                      </div>
-                      <div className="telemetry-item">
-                        <span className="telemetry-label">Core Tech Stack</span>
-                        <span className="telemetry-value">{activeSpotlightProject.techList?.join(' · ') || 'Unity · C# · Meta SDK'}</span>
-                      </div>
-                      <div className="telemetry-item full-span">
-                        <span className="telemetry-label">Architectural Challenge &amp; Solution</span>
-                        <span className="telemetry-value-desc">{activeSpotlightProject.caseStudy?.challenge || activeSpotlightProject.caseStudy?.problem}</span>
-                      </div>
-                    </div>
-
-                    {/* ACTIONS */}
-                    <div className="spotlight-actions-row">
-                      <button
-                        type="button"
-                        className="spotlight-inspect-btn"
-                        onClick={() => setSelectedProject(activeSpotlightProject)}
-                      >
-                        Inspect Architecture &amp; Case Study ➜
-                      </button>
-                      <span className="spotlight-confidential-note">
-                        🔒 Production deployment verified on hardware
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* SIMULATION SELECTOR RACK */}
-              <div className="v2-selector-rack-header">
-                <span className="rack-label">All Shipped Commercial Simulations ({filteredProfessional.length}):</span>
-              </div>
-              <div className="v2-cards-grid">
-                {filteredProfessional.map((proj, idx) => (
-                  <div
-                    key={proj.id}
-                    className={`v2-rack-card ${activeSpotlightProject?.id === proj.id ? 'is-active-spotlight' : ''}`}
-                    onClick={() => {
-                      setSpotlightIndex(idx);
-                      setSelectedProject(proj);
-                    }}
-                  >
-                    <ProjectCard
-                      project={proj}
-                      onOpenCaseStudy={setSelectedProject}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
+            <div className="v2-cards-grid">
+              {filteredProfessional.map((proj) => (
+                <ProjectCard
+                  key={proj.id}
+                  project={proj}
+                  onOpenCaseStudy={setSelectedProject}
+                />
+              ))}
+            </div>
           ) : (
             <div className="v2-empty-sector">
               <p>No professional simulations match the current &ldquo;{selectedPlatform}&rdquo; filter.</p>
