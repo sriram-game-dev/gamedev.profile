@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback } from 'react';
-import { route, navigateTo } from '../utils/asset';
 import { projects, personalProjects, allProjects } from '../data/projectsData';
 import ProjectCard from './ProjectCard';
 import CaseStudyDrawer from './CaseStudyDrawer';
@@ -384,46 +383,6 @@ function Projects({
           )}
         </div>
       )}
-
-      {/* QUICK CATEGORY ARCHIVE HUBS */}
-      <div className="projects-category-hub">
-        <h3 className="hub-heading">Explore Dedicated Category Archives</h3>
-        <div className="hub-links-grid">
-          <a
-            href={route('/professional')}
-            className="hub-card hub-card-professional"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo('/professional');
-            }}
-          >
-            <div className="hub-card-top-tag">
-              <span className="hub-lock-icon">🔒</span> CLIENT NDA PROTECTED
-            </div>
-            <div className="hub-card-title">Professional Projects Archive ➜</div>
-            <p className="hub-card-desc">
-              Industrial LOTO &amp; manufacturing VR training simulations under enterprise NDA for Hema Enterprises (HEPL) · Digifox Studio.
-            </p>
-          </a>
-
-          <a
-            href={route('/personal')}
-            className="hub-card hub-card-personal"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo('/personal');
-            }}
-          >
-            <div className="hub-card-top-tag">
-              <span className="hub-game-icon">🎮</span> PLAYABLE &amp; OPEN SOURCE
-            </div>
-            <div className="hub-card-title">Sidequests &amp; Indie Games Archive ➜</div>
-            <p className="hub-card-desc">
-              Playable WebGL builds, mobile AR minigames, custom URP shaders, and C# game mechanics R&amp;D on itch.io &amp; GitHub.
-            </p>
-          </a>
-        </div>
-      </div>
 
       {/* CASE STUDY DRAWER MODAL */}
       {selectedProject && (
