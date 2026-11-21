@@ -11,7 +11,7 @@ function Projects({
   skillFilter = '',
   onClearSkillFilter = () => {}
 }) {
-  const [activeDeck, setActiveDeck] = useState('professional'); // 'professional' | 'personal' | 'all'
+  const [activeDeck, setActiveDeck] = useState('all'); // 'all' | 'professional' | 'personal'
   const [selectedPlatform, setSelectedPlatform] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [spotlightIndex, setSpotlightIndex] = useState(0);
@@ -115,9 +115,25 @@ function Projects({
         <div className="projects-v2-header-line"></div>
       </div>
 
-      {/* MASTER DECK SWITCHER (ENTERPRISE NDA vs INDIE LAB vs COMPLETE) */}
+      {/* MASTER DECK SWITCHER (COMPLETE vs ENTERPRISE NDA vs INDIE LAB) */}
       <div className="v2-master-deck-switcher">
         <div className="v2-switcher-track" role="tablist" aria-label="Project portfolio sectors">
+          {/* 1. ALL WORKS (FIRST) */}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeDeck === 'all'}
+            className={`v2-deck-btn deck-all ${activeDeck === 'all' ? 'active' : ''}`}
+            onClick={() => handleSelectDeck('all')}
+          >
+            <div className="deck-btn-indicator"></div>
+            <div className="deck-btn-text">
+              <span className="deck-btn-badge">⚡ COMBINED OVERVIEW</span>
+              <span className="deck-btn-name">All Works ({allProjects.length})</span>
+            </div>
+          </button>
+
+          {/* 2. PROFESSIONAL WORK (SECOND) */}
           <button
             type="button"
             role="tab"
@@ -134,6 +150,7 @@ function Projects({
             </div>
           </button>
 
+          {/* 3. PERSONAL PROJECTS (THIRD) */}
           <button
             type="button"
             role="tab"
@@ -147,20 +164,6 @@ function Projects({
                 <span className="icon-game" aria-hidden="true">🎮</span> PLAYABLE BUILDS &amp; GITHUB
               </span>
               <span className="deck-btn-name">Personal Projects ({personalProjects.length})</span>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            role="tab"
-            aria-selected={activeDeck === 'all'}
-            className={`v2-deck-btn deck-all ${activeDeck === 'all' ? 'active' : ''}`}
-            onClick={() => handleSelectDeck('all')}
-          >
-            <div className="deck-btn-indicator"></div>
-            <div className="deck-btn-text">
-              <span className="deck-btn-badge">⚡ COMBINED OVERVIEW</span>
-              <span className="deck-btn-name">All Works ({allProjects.length})</span>
             </div>
           </button>
         </div>
