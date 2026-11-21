@@ -197,45 +197,11 @@ section {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   transition: transform 0.2s ease;
-}
-
-.brand-logo-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
-  background: rgba(21, 88, 201, 0.1);
-  border: 1px solid rgba(21, 88, 201, 0.32);
-  box-shadow: 0 0 16px rgba(21, 88, 201, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.brand-logo-img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(212, 255, 36, 0.45));
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
 }
 
 .gerlogu-brand:hover {
   transform: translateY(-1px);
-}
-
-.gerlogu-brand:hover .brand-logo-wrapper {
-  border-color: rgba(212, 255, 36, 0.6);
-  background: rgba(21, 88, 201, 0.18);
-  box-shadow: 0 0 20px rgba(212, 255, 36, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.gerlogu-brand:hover .brand-logo-img {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 8px rgba(212, 255, 36, 0.8));
 }
 
 .brand-name {
@@ -5965,55 +5931,12 @@ section {
 footer {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 24px 60px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 40px;
+
+/*  border-top: 1px solid #1e293b;*/
+
   color: #64748b;
-  font-size: 0.82rem;
-}
-
-.footer-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.footer-logo-img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  opacity: 0.85;
-  filter: drop-shadow(0 0 6px rgba(21, 88, 201, 0.4));
-  transition: opacity 0.2s ease, filter 0.2s ease;
-}
-
-.footer-brand:hover .footer-logo-img {
-  opacity: 1;
-  filter: drop-shadow(0 0 8px rgba(212, 255, 36, 0.6));
-}
-
-.footer-brand-name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-  color: #94a3b8;
-}
-
-.footer-brand-name strong {
-  font-weight: 700;
-  color: #f1f5f9;
-}
-
-.footer-copy {
-  color: #64748b;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 /* ========================================
    MOBILE
