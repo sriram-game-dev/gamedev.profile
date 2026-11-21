@@ -28,6 +28,115 @@ function Projects({
     industrial: 'Industrial Training Simulations & Enterprise LOTO'
   };
 
+  // Base counts for filter chips
+  const platformCounts = useMemo(() => {
+    const counts = { All: allProjects.length };
+    PLATFORMS.forEach((plat) => {
+      if (plat === 'All') return;
+      counts[plat] = allProjects.filter((p) =>
+        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase()))
+      ).length;
+    });
+    return counts;
+  }, []);
+
+  const typeCounts = useMemo(() => {
+    const counts = { All: allProjects.length };
+    TYPES.forEach((type) => {
+      if (type === 'All') return;
+      counts[type] = allProjects.filter((p) => p.type === type).length;
+    });
+    return counts;
+  }, []);
+
+  const techCounts = useMemo(() => {
+    const counts = { All: allProjects.length };
+    TECHS.forEach((tech) => {
+      if (tech === 'All') return;
+      counts[tech] = allProjects.filter((p) =>
+        p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
+        p.technologies?.toLowerCase().includes(tech.toLowerCase())
+      ).length;
+    });
+    return counts;
+  }, []);
+
+  // SMART AUTO-RECONCILING HANDLERS
+  // When a user selects a chip that would conflict with current selections,
+  // automatically reconcile the conflicting other row to 'All' rather than stranding the user on 0 results.
+  const handleSelectPlatform = (plat) => {
+    if (plat === selectedPlatform) {
+      setSelectedPlatform('All');
+      return;
+    }
+    setSelectedPlatform(plat);
+    if (plat !== 'All') {
+      // If current type has 0 matches with this new platform, reset type to 'All'
+      const hasTypeMatch = selectedType === 'All' || allProjects.some((p) =>
+        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase())) &&
+        p.type === selectedType
+      );
+      if (!hasTypeMatch) setSelectedType('All');
+
+      // If current tech has 0 matches with this new platform, reset tech to 'All'
+      const hasTechMatch = selectedTech === 'All' || allProjects.some((p) =>
+        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase())) &&
+        (p.techList?.some((t) => t.toLowerCase().includes(selectedTech.toLowerCase())) ||
+         p.technologies?.toLowerCase().includes(selectedTech.toLowerCase()))
+      );
+      if (!hasTechMatch) setSelectedTech('All');
+    }
+  };
+
+  const handleSelectType = (type) => {
+    if (type === selectedType) {
+      setSelectedType('All');
+      return;
+    }
+    setSelectedType(type);
+    if (type !== 'All') {
+      // If current platform has 0 matches with this new type, reset platform to 'All'
+      const hasPlatMatch = selectedPlatform === 'All' || allProjects.some((p) =>
+        p.type === type &&
+        p.platforms?.some((pl) => pl.toLowerCase().includes(selectedPlatform.toLowerCase()))
+      );
+      if (!hasPlatMatch) setSelectedPlatform('All');
+
+      // If current tech has 0 matches with this new type, reset tech to 'All'
+      const hasTechMatch = selectedTech === 'All' || allProjects.some((p) =>
+        p.type === type &&
+        (p.techList?.some((t) => t.toLowerCase().includes(selectedTech.toLowerCase())) ||
+         p.technologies?.toLowerCase().includes(selectedTech.toLowerCase()))
+      );
+      if (!hasTechMatch) setSelectedTech('All');
+    }
+  };
+
+  const handleSelectTech = (tech) => {
+    if (tech === selectedTech) {
+      setSelectedTech('All');
+      return;
+    }
+    setSelectedTech(tech);
+    if (tech !== 'All') {
+      // If current platform has 0 matches with this new tech, reset platform to 'All'
+      const hasPlatMatch = selectedPlatform === 'All' || allProjects.some((p) =>
+        (p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
+         p.technologies?.toLowerCase().includes(tech.toLowerCase())) &&
+        p.platforms?.some((pl) => pl.toLowerCase().includes(selectedPlatform.toLowerCase()))
+      );
+      if (!hasPlatMatch) setSelectedPlatform('All');
+
+      // If current type has 0 matches with this new tech, reset type to 'All'
+      const hasTypeMatch = selectedType === 'All' || allProjects.some((p) =>
+        (p.techList?.some((t) => t.toLowerCase().includes(tech.toLowerCase())) ||
+         p.technologies?.toLowerCase().includes(tech.toLowerCase())) &&
+        p.type === selectedType
+      );
+      if (!hasTypeMatch) setSelectedType('All');
+    }
+  };
+
   // Reordering & filtering pipeline
   const filteredProjects = useMemo(() => {
     return allProjects.filter((p) => {
@@ -108,7 +217,7 @@ function Projects({
     });
   }, [categoryTab, searchQuery, selectedPlatform, selectedTech, selectedType, activeAudience, skillFilter]);
 
-  // Breakdown for grouped view when "all" is active
+  // Breakdown for grouped view: Professional NDA vs. Personal Projects
   const professionalList = useMemo(() => {
     return filteredProjects.filter((p) => p.isNda || p.category === 'professional');
   }, [filteredProjects]);
@@ -116,6 +225,16 @@ function Projects({
   const personalList = useMemo(() => {
     return filteredProjects.filter((p) => !p.isNda && p.category !== 'professional');
   }, [filteredProjects]);
+
+  const hasActiveFilters = Boolean(
+    searchQuery ||
+    selectedPlatform !== 'All' ||
+    selectedTech !== 'All' ||
+    selectedType !== 'All' ||
+    activeAudience !== 'all' ||
+    categoryTab !== 'all' ||
+    skillFilter
+  );
 
   const handleResetFilters = () => {
     setCategoryTab('all');
@@ -290,9 +409,11 @@ function Projects({
                   key={plat}
                   type="button"
                   className={`filter-chip ${selectedPlatform === plat ? 'active' : ''}`}
-                  onClick={() => setSelectedPlatform(plat)}
+                  onClick={() => handleSelectPlatform(plat)}
+                  title={`Filter by ${plat}`}
                 >
-                  {plat}
+                  <span>{plat}</span>
+                  {plat !== 'All' && <span className="chip-count">({platformCounts[plat]})</span>}
                 </button>
               ))}
             </div>
@@ -307,9 +428,11 @@ function Projects({
                   key={type}
                   type="button"
                   className={`filter-chip ${selectedType === type ? 'active' : ''}`}
-                  onClick={() => setSelectedType(type)}
+                  onClick={() => handleSelectType(type)}
+                  title={`Filter by ${type}`}
                 >
-                  {type}
+                  <span>{type}</span>
+                  {type !== 'All' && <span className="chip-count">({typeCounts[type]})</span>}
                 </button>
               ))}
             </div>
@@ -324,14 +447,80 @@ function Projects({
                   key={tech}
                   type="button"
                   className={`filter-chip ${selectedTech === tech ? 'active' : ''}`}
-                  onClick={() => setSelectedTech(tech)}
+                  onClick={() => handleSelectTech(tech)}
+                  title={`Filter by ${tech}`}
                 >
-                  {tech}
+                  <span>{tech}</span>
+                  {tech !== 'All' && <span className="chip-count">({techCounts[tech]})</span>}
                 </button>
               ))}
             </div>
           </div>
         </div>
+
+        {/* ACTIVE FILTER TAG STRIP (FOR FAST 1-CLICK REMOVAL) */}
+        {hasActiveFilters && (
+          <div className="active-filter-tags-strip">
+            <span className="active-tags-label">Active Filters:</span>
+            <div className="active-tags-list">
+              {categoryTab !== 'all' && (
+                <button
+                  type="button"
+                  className="active-tag-pill"
+                  onClick={() => setCategoryTab('all')}
+                  title="Remove track filter"
+                >
+                  <span>Track: {categoryTab === 'professional' ? 'Professional NDA' : 'Personal'}</span>
+                  <span className="tag-remove-x" aria-hidden="true">✕</span>
+                </button>
+              )}
+              {selectedPlatform !== 'All' && (
+                <button
+                  type="button"
+                  className="active-tag-pill"
+                  onClick={() => setSelectedPlatform('All')}
+                  title="Remove platform filter"
+                >
+                  <span>Platform: {selectedPlatform}</span>
+                  <span className="tag-remove-x" aria-hidden="true">✕</span>
+                </button>
+              )}
+              {selectedType !== 'All' && (
+                <button
+                  type="button"
+                  className="active-tag-pill"
+                  onClick={() => setSelectedType('All')}
+                  title="Remove type filter"
+                >
+                  <span>Type: {selectedType}</span>
+                  <span className="tag-remove-x" aria-hidden="true">✕</span>
+                </button>
+              )}
+              {selectedTech !== 'All' && (
+                <button
+                  type="button"
+                  className="active-tag-pill"
+                  onClick={() => setSelectedTech('All')}
+                  title="Remove tech filter"
+                >
+                  <span>Tech: {selectedTech}</span>
+                  <span className="tag-remove-x" aria-hidden="true">✕</span>
+                </button>
+              )}
+              {searchQuery && (
+                <button
+                  type="button"
+                  className="active-tag-pill"
+                  onClick={() => setSearchQuery('')}
+                  title="Clear search query"
+                >
+                  <span>Search: &ldquo;{searchQuery}&rdquo;</span>
+                  <span className="tag-remove-x" aria-hidden="true">✕</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Results counter and reset */}
         <div className="projects-meta-bar">
@@ -340,7 +529,7 @@ function Projects({
             {categoryTab === 'professional' && ' in Professional (NDA)'}
             {categoryTab === 'personal' && ' in Personal Projects'}
           </span>
-          {(searchQuery || selectedPlatform !== 'All' || selectedTech !== 'All' || selectedType !== 'All' || activeAudience !== 'all' || categoryTab !== 'all') && (
+          {hasActiveFilters && (
             <button
               type="button"
               className="projects-clear-filters-btn"
@@ -354,61 +543,74 @@ function Projects({
 
       {/* INTERACTIVE PROJECTS DISPLAY */}
       {filteredProjects.length > 0 ? (
-        categoryTab === 'all' && !searchQuery && selectedPlatform === 'All' && selectedTech === 'All' && selectedType === 'All' && activeAudience === 'all' && !skillFilter ? (
-          /* GROUPED TWO-TIER VIEW FOR "ALL WORKS" */
+        categoryTab === 'all' ? (
+          /* ==========================================================
+             TWO-TIER GROUPED VIEW (ALWAYS PRESERVED FOR "ALL WORKS")
+             Never mixes professional NDA and personal builds together!
+          ========================================================== */
           <div className="projects-grouped-showcase reveal-on-scroll reveal-delay-2">
             {/* GROUP 1: PROFESSIONAL PROJECTS (CLIENT NDA) */}
-            <div className="projects-category-group professional-group">
-              <div className="group-header-banner">
-                <div className="group-title-row">
-                  <span className="group-badge badge-nda">
-                    <span className="lock-icon" aria-hidden="true">🔒</span> ENTERPRISE CLIENT NDA
-                  </span>
-                  <h3 className="group-heading">Professional Work &amp; Shipped Simulations</h3>
+            {professionalList.length > 0 && (
+              <div className="projects-category-group professional-group">
+                <div className="group-header-banner">
+                  <div className="group-title-row">
+                    <span className="group-badge badge-nda">
+                      <span className="lock-icon" aria-hidden="true">🔒</span> ENTERPRISE CLIENT NDA
+                    </span>
+                    <h3 className="group-heading">
+                      Professional Work &amp; Shipped Simulations
+                      <span className="group-count-pill">({professionalList.length})</span>
+                    </h3>
+                  </div>
+                  <p className="group-subtext">
+                    Commercial VR training systems and AR kiosk solutions delivered for Hema Enterprises (HEPL) · Digifox Studio. Proprietary client data anonymized under NDA.
+                  </p>
                 </div>
-                <p className="group-subtext">
-                  Commercial VR training systems and AR kiosk solutions delivered for Hema Enterprises (HEPL) · Digifox Studio. Proprietary client data anonymized under NDA.
-                </p>
-              </div>
 
-              <div className="projects-interactive-grid">
-                {professionalList.map((project) => (
-                  <ProjectCard
-                    key={project.id || project.title}
-                    project={project}
-                    onOpenCaseStudy={setSelectedProject}
-                  />
-                ))}
+                <div className="projects-interactive-grid">
+                  {professionalList.map((project) => (
+                    <ProjectCard
+                      key={project.id || project.title}
+                      project={project}
+                      onOpenCaseStudy={setSelectedProject}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* GROUP 2: PERSONAL PROJECTS & INDIE LABS */}
-            <div className="projects-category-group personal-group">
-              <div className="group-header-banner">
-                <div className="group-title-row">
-                  <span className="group-badge badge-personal">
-                    <span className="game-icon" aria-hidden="true">🎮</span> INDIE LAB &amp; PLAYABLE BUILDS
-                  </span>
-                  <h3 className="group-heading">Personal Projects, Games &amp; Spatial R&amp;D</h3>
+            {personalList.length > 0 && (
+              <div className="projects-category-group personal-group">
+                <div className="group-header-banner">
+                  <div className="group-title-row">
+                    <span className="group-badge badge-personal">
+                      <span className="game-icon" aria-hidden="true">🎮</span> INDIE LAB &amp; PLAYABLE BUILDS
+                    </span>
+                    <h3 className="group-heading">
+                      Personal Projects, Games &amp; Spatial R&amp;D
+                      <span className="group-count-pill">({personalList.length})</span>
+                    </h3>
+                  </div>
+                  <p className="group-subtext">
+                    Original gameplay systems, mobile AR minigames, and 3D prototypes. Published openly with playable itch.io builds and GitHub source code.
+                  </p>
                 </div>
-                <p className="group-subtext">
-                  Original gameplay systems, mobile AR minigames, and 3D prototypes. Published openly with playable itch.io builds and GitHub source code.
-                </p>
-              </div>
 
-              <div className="projects-interactive-grid">
-                {personalList.map((project) => (
-                  <ProjectCard
-                    key={project.id || project.title}
-                    project={project}
-                    onOpenCaseStudy={setSelectedProject}
-                  />
-                ))}
+                <div className="projects-interactive-grid">
+                  {personalList.map((project) => (
+                    <ProjectCard
+                      key={project.id || project.title}
+                      project={project}
+                      onOpenCaseStudy={setSelectedProject}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ) : (
-          /* SINGLE FILTERED GRID */
+          /* SINGLE CATEGORY GRID (WHEN EXPLICITLY FILTERED BY PROFESSIONAL OR PERSONAL TAB) */
           <div className="projects-interactive-grid reveal-on-scroll reveal-delay-2">
             {filteredProjects.map((project) => (
               <ProjectCard
@@ -420,14 +622,28 @@ function Projects({
           </div>
         )
       ) : (
+        /* ENHANCED CYBERPUNK EMPTY STATE WITH INSTANT 1-CLICK RESET */
         <div className="projects-empty-state">
-          <p>No projects match your current filter criteria.</p>
+          <div className="empty-state-radar-icon" aria-hidden="true">
+            <span className="radar-ping"></span>
+            🔍
+          </div>
+          <h3 className="empty-state-title">No Projects Found for Current Combination</h3>
+          <p className="empty-state-desc">
+            No projects matched the active filters ({[
+              searchQuery && `Search: "${searchQuery}"`,
+              selectedPlatform !== 'All' && `Platform: ${selectedPlatform}`,
+              selectedType !== 'All' && `Type: ${selectedType}`,
+              selectedTech !== 'All' && `Tech: ${selectedTech}`,
+              categoryTab !== 'all' && `Tab: ${categoryTab}`
+            ].filter(Boolean).join(', ')}).
+          </p>
           <button
             type="button"
-            className="nav-game-button"
+            className="empty-reset-cta-btn"
             onClick={handleResetFilters}
           >
-            Clear Filters
+            Reset All Filters &amp; Show All Projects ↺
           </button>
         </div>
       )}
