@@ -34,14 +34,13 @@ function ProjectDetails({ project }) {
   }, [prevProject, nextProject]);
 
   const handleBack = () => {
-    if (window.history.length > 2) {
-      window.history.back();
-    } else {
-      // Fallback if accessed directly via URL
-      const isProfessional = projects.some((p) => p.link === project.link);
-      const target = isProfessional ? '/professional' : '/personal';
-      navigateTo(target);
-    }
+    navigateTo('/#projects');
+    setTimeout(() => {
+      const el = document.getElementById('projects');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150);
   };
 
   const renderList = (items) => {

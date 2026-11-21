@@ -65,5 +65,7 @@ export function navigateTo(targetPath) {
   const fullPath = route(targetPath);
   window.history.pushState(null, '', fullPath);
   window.dispatchEvent(new PopStateEvent('popstate'));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!targetPath.includes('#')) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
