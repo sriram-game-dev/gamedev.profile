@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { normalizePath, route } from '../utils/asset';
+import { normalizePath, route, asset } from '../utils/asset';
 
 function NavBar() {
   const [showGoTop, setShowGoTop] = useState(false);
@@ -120,6 +120,15 @@ function NavBar() {
             className="logo gerlogu-brand"
             onClick={handleLogoClick}
           >
+            <div className="brand-logo-wrapper">
+              <img
+                src={asset('/images/logo.svg')}
+                alt="SR Logo"
+                className="brand-logo-img"
+                width="34"
+                height="34"
+              />
+            </div>
             <span className="brand-name">
               <strong>Sriram</strong> S
             </span>
