@@ -76,7 +76,7 @@ function CaseStudyDrawer({ project, onClose }) {
             <div className="drawer-nda-disclaimer">
               <span className="drawer-nda-icon">🔒</span>
               <div>
-                Client NDA Notice: Proprietary machinery schematics, CAD models, and sensitive client data have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
+                Certain professional projects were developed under Non-Disclosure Agreements (NDAs). Details, source code, and assets are shared only to the extent permitted by confidentiality agreements.
               </div>
             </div>
           )}

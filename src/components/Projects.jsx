@@ -239,7 +239,7 @@ function Projects({
             <div className="v2-nda-compliance-notice">
               <div className="notice-lock-icon" aria-hidden="true">🔒</div>
               <div className="notice-text">
-                Client NDA Notice: Proprietary CAD drawings, blueprints, and manufacturing schematics have been redacted or anonymized in compliance with Non-Disclosure Agreements. System architectures and interaction mechanics are showcased for technical evaluation.
+                Certain professional projects were developed under Non-Disclosure Agreements (NDAs). Details, source code, and assets are shared only to the extent permitted by confidentiality agreements.
               </div>
             </div>
           </div>
