@@ -2448,6 +2448,18 @@ section {
   flex-direction: column;
   gap: 28px;
   margin-bottom: 56px;
+  animation: v2SectorFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes v2SectorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .v2-sector-header {
@@ -4953,7 +4965,7 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 9999px;
   padding: 8px 22px;
-  color: #0b1120;
+  color: #0b1120 !important;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
@@ -4977,11 +4989,12 @@ section {
 .backstory-rayen-btn .btn-icon {
   display: inline-flex;
   align-items: center;
-  color: #0b1120;
+  color: #0b1120 !important;
   transition: opacity 0.2s ease;
 }
 
-.backstory-rayen-btn .btn-text {
+.backstory-rayen-btn .btn-text,
+.backstory-rayen-btn .backstory-btn-text {
   color: #0b1120 !important;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.76rem;
@@ -5001,7 +5014,7 @@ section {
 .backstory-rayen-btn:hover {
   background: #14b8a6;
   border-color: #2dd4bf;
-  color: #ffffff;
+  color: #ffffff !important;
   box-shadow: 0 6px 22px rgba(20, 184, 166, 0.55);
   transform: translateY(-2px) scale(1.02);
 }
@@ -5010,7 +5023,8 @@ section {
   display: none;
 }
 
-.backstory-rayen-btn:hover .btn-text {
+.backstory-rayen-btn:hover .btn-text,
+.backstory-rayen-btn:hover .backstory-btn-text {
   color: #ffffff !important;
 }
 

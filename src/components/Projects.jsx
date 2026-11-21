@@ -72,10 +72,39 @@ function Projects({
     if (activeAudience !== 'all') onSelectAudience('all');
   };
 
+  const handleSelectDeck = (deck) => {
+    setActiveDeck(deck);
+    setSelectedPlatform('All');
+  };
+
+  const handleSelectPlatform = (plat) => {
+    if (plat === selectedPlatform) {
+      setSelectedPlatform('All');
+      return;
+    }
+    setSelectedPlatform(plat);
+
+    // Smart auto-deck switch: If clicked platform exists only in the other track, switch to it
+    if (plat !== 'All') {
+      const existsInProfessional = projects.some((p) =>
+        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase()))
+      );
+      const existsInPersonal = personalProjects.some((p) =>
+        p.platforms?.some((pl) => pl.toLowerCase().includes(plat.toLowerCase()))
+      );
+
+      if (activeDeck === 'professional' && !existsInProfessional && existsInPersonal) {
+        setActiveDeck('personal');
+      } else if (activeDeck === 'personal' && !existsInPersonal && existsInProfessional) {
+        setActiveDeck('professional');
+      }
+    }
+  };
+
   return (
     <section id="projects" className="projects-section-v2">
       {/* SECTION HEADER */}
-      <div className="projects-v2-header reveal-on-scroll">
+      <div className="projects-v2-header">
         <div className="v2-pretitle-pill">
           <span className="v2-radar-beacon" aria-hidden="true"></span>
           <span>SPATIAL COMPUTING &amp; GAMEPLAY ARCHITECTURE</span>
@@ -88,14 +117,14 @@ function Projects({
       </div>
 
       {/* MASTER DECK SWITCHER (ENTERPRISE NDA vs INDIE LAB vs COMPLETE) */}
-      <div className="v2-master-deck-switcher reveal-on-scroll reveal-delay-1">
+      <div className="v2-master-deck-switcher">
         <div className="v2-switcher-track" role="tablist" aria-label="Project portfolio sectors">
           <button
             type="button"
             role="tab"
             aria-selected={activeDeck === 'professional'}
             className={`v2-deck-btn deck-professional ${activeDeck === 'professional' ? 'active' : ''}`}
-            onClick={() => setActiveDeck('professional')}
+            onClick={() => handleSelectDeck('professional')}
           >
             <div className="deck-btn-indicator"></div>
             <div className="deck-btn-text">
@@ -111,7 +140,7 @@ function Projects({
             role="tab"
             aria-selected={activeDeck === 'personal'}
             className={`v2-deck-btn deck-personal ${activeDeck === 'personal' ? 'active' : ''}`}
-            onClick={() => setActiveDeck('personal')}
+            onClick={() => handleSelectDeck('personal')}
           >
             <div className="deck-btn-indicator"></div>
             <div className="deck-btn-text">
@@ -127,7 +156,7 @@ function Projects({
             role="tab"
             aria-selected={activeDeck === 'all'}
             className={`v2-deck-btn deck-all ${activeDeck === 'all' ? 'active' : ''}`}
-            onClick={() => setActiveDeck('all')}
+            onClick={() => handleSelectDeck('all')}
           >
             <div className="deck-btn-indicator"></div>
             <div className="deck-btn-text">
@@ -139,7 +168,7 @@ function Projects({
       </div>
 
       {/* COMMAND FILTER BAR (STREAMLINED & INTUITIVE) */}
-      <div className="v2-command-filter-bar reveal-on-scroll reveal-delay-1">
+      <div className="v2-command-filter-bar">
         <div className="v2-search-box">
           <span className="v2-search-icon" aria-hidden="true">🔍</span>
           <input
@@ -170,7 +199,7 @@ function Projects({
               key={plat}
               type="button"
               className={`v2-plat-pill ${selectedPlatform === plat ? 'active' : ''}`}
-              onClick={() => setSelectedPlatform(plat)}
+              onClick={() => handleSelectPlatform(plat)}
             >
               {plat}
             </button>
@@ -193,7 +222,7 @@ function Projects({
           SECTOR 1: PROFESSIONAL ENTERPRISE SIMULATIONS (CLIENT NDA)
       ========================================================== */}
       {(activeDeck === 'professional' || activeDeck === 'all') && (
-        <div className="v2-sector-container sector-professional reveal-on-scroll reveal-delay-2">
+        <div className="v2-sector-container sector-professional">
           {/* SECTOR HEADER & NDA BANNER */}
           <div className="v2-sector-header nda-themed">
             <div className="v2-sector-title-row">
@@ -315,7 +344,7 @@ function Projects({
           SECTOR 2: INDIE GAMES & PLAYABLE LABS (ITCH.IO / GITHUB)
       ========================================================== */}
       {(activeDeck === 'personal' || activeDeck === 'all') && (
-        <div className="v2-sector-container sector-personal reveal-on-scroll reveal-delay-2">
+        <div className="v2-sector-container sector-personal">
           {/* SECTOR HEADER */}
           <div className="v2-sector-header personal-themed">
             <div className="v2-sector-title-row">
@@ -357,7 +386,7 @@ function Projects({
       )}
 
       {/* QUICK CATEGORY ARCHIVE HUBS */}
-      <div className="projects-category-hub reveal-on-scroll reveal-delay-3">
+      <div className="projects-category-hub">
         <h3 className="hub-heading">Explore Dedicated Category Archives</h3>
         <div className="hub-links-grid">
           <a
