@@ -2679,18 +2679,16 @@ section {
 }
 
 .project-interactive-card {
-  background: linear-gradient(150deg, rgba(26, 35, 62, 0.52) 0%, rgba(15, 23, 42, 0.75) 100%);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  background: #090e18;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 
-    0 12px 34px rgba(0, 0, 0, 0.42),
+    0 14px 38px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
   position: relative;
 }
@@ -2791,7 +2789,32 @@ section {
 .card-overlay-right-badges {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+}
+
+.card-spatial-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.project-interactive-card:hover .card-spatial-arrow {
+  background: rgba(245, 158, 11, 0.35);
+  border-color: #f59e0b;
+  color: #ffffff;
+  transform: scale(1.12) rotate(45deg);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
 }
 
 .card-nda-badge {
@@ -2883,11 +2906,25 @@ section {
 }
 
 .card-body {
-  padding: 22px;
+  margin: 10px 12px 12px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(26, 35, 62, 0.55) 0%, rgba(15, 23, 42, 0.8) 100%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   display: flex;
   flex-direction: column;
   flex: 1;
   text-align: left;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-interactive-card:hover .card-body {
+  background: linear-gradient(150deg, rgba(30, 42, 74, 0.68) 0%, rgba(18, 26, 48, 0.88) 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .card-context-row {
