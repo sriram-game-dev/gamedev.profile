@@ -38,49 +38,50 @@
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(255, 255, 255, 0.16);
 
   /* ==========================================================================
      FUTURISTIC GAMING UI + GLASSMORPHISM DESIGN TOKENS
      Translucent surfaces, frosted-glass blurs, specular edges, and ambient glows
+     Inspired by the reference design style
      ========================================================================== */
-  --glass-surface-base: rgba(8, 14, 28, 0.65);
-  --glass-surface-elevated: rgba(14, 24, 48, 0.62);
-  --glass-surface-subtle: rgba(3, 4, 7, 0.55);
-  --glass-surface-hover: rgba(21, 88, 201, 0.22);
-  --glass-surface-modal: rgba(3, 4, 7, 0.94);
+  --glass-surface-base: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(8, 14, 28, 0.58) 100%);
+  --glass-surface-elevated: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, rgba(12, 22, 44, 0.65) 100%);
+  --glass-surface-subtle: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(3, 4, 7, 0.50) 100%);
+  --glass-surface-hover: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(21, 88, 201, 0.28) 100%);
+  --glass-surface-modal: linear-gradient(150deg, rgba(255, 255, 255, 0.10) 0%, rgba(8, 14, 28, 0.88) 100%);
 
-  /* Thin luminous glass borders */
-  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
-  --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.08);
-  --glass-border-bright: 1px solid rgba(255, 255, 255, 0.22);
+  /* Thin luminous glass borders with specular rim */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.16);
+  --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.10);
+  --glass-border-bright: 1px solid rgba(255, 255, 255, 0.26);
   --glass-border-amber: 1px solid rgba(212, 255, 36, 0.45);
-  --glass-border-violet: 1px solid rgba(21, 88, 201, 0.45);
-  --glass-border-cyan: 1px solid rgba(21, 88, 201, 0.4);
+  --glass-border-violet: 1px solid rgba(139, 92, 246, 0.45);
+  --glass-border-cyan: 1px solid rgba(56, 189, 248, 0.40);
 
   /* Specular rim reflections (gives real physical glass refraction depth) */
-  --glass-specular-top: inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
-  --glass-specular-soft: inset 0 1px 0 0 rgba(255, 255, 255, 0.10);
-  --glass-specular-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.28);
+  --glass-specular-top: inset 0 1px 1px 0 rgba(255, 255, 255, 0.30);
+  --glass-specular-soft: inset 0 1px 1px 0 rgba(255, 255, 255, 0.18);
+  --glass-specular-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.38), inset 0 0 20px 0 rgba(255, 255, 255, 0.03);
 
   /* Optical blur tiers */
-  --glass-blur-sm: blur(8px);
-  --glass-blur-md: blur(16px);
-  --glass-blur-lg: blur(24px);
-  --glass-blur-hero: blur(20px);
+  --glass-blur-sm: blur(10px) saturate(150%);
+  --glass-blur-md: blur(18px) saturate(160%);
+  --glass-blur-lg: blur(26px) saturate(175%);
+  --glass-blur-hero: blur(24px) saturate(170%);
 
   /* Depth shadows with rim lighting */
-  --glass-shadow-sm: 0 4px 18px rgba(0, 0, 0, 0.35);
-  --glass-shadow-md: 0 12px 34px rgba(0, 0, 0, 0.45);
-  --glass-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
-  --glass-shadow-amber: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(212, 255, 36, 0.25);
-  --glass-shadow-violet: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(21, 88, 201, 0.28);
-  --glass-shadow-cyan: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(21, 88, 201, 0.22);
+  --glass-shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  --glass-shadow-md: 0 14px 40px rgba(0, 0, 0, 0.50), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  --glass-shadow-lg: 0 22px 55px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.30);
+  --glass-shadow-amber: 0 16px 45px rgba(0, 0, 0, 0.55), 0 0 28px rgba(212, 255, 36, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.30);
+  --glass-shadow-violet: 0 16px 45px rgba(0, 0, 0, 0.55), 0 0 28px rgba(139, 92, 246, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.30);
+  --glass-shadow-cyan: 0 16px 45px rgba(0, 0, 0, 0.55), 0 0 28px rgba(56, 189, 248, 0.26), inset 0 1px 1px rgba(255, 255, 255, 0.30);
 
   /* Subtle ambient glow gradients behind glass panels */
-  --ambient-glow-amber: rgba(212, 255, 36, 0.14);
-  --ambient-glow-violet: rgba(21, 88, 201, 0.18);
-  --ambient-glow-cyan: rgba(21, 88, 201, 0.15);
+  --ambient-glow-amber: rgba(212, 255, 36, 0.16);
+  --ambient-glow-violet: rgba(139, 92, 246, 0.20);
+  --ambient-glow-cyan: rgba(56, 189, 248, 0.18);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
@@ -344,5 +345,179 @@ textarea:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   AMBIENT GLOWING GRADIENT SPHERES & LIGHTING SYSTEM (BEHIND GLASS PANELS)
+   Creates the optical refraction, depth, and vibrant color gradients visible
+   through translucent frosted-glass panels (inspired by the reference style).
+   ========================================================================== */
+.ambient-backdrop-system {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  -webkit-filter: blur(95px);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* 1. Hero: Vibrant Cyan / Turquoise */
+.ambient-orb--hero-cyan {
+  width: 650px;
+  height: 650px;
+  top: -120px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.26) 0%, rgba(6, 182, 212, 0.15) 45%, transparent 70%);
+  animation: ambientFloat1 18s ease-in-out infinite alternate;
+}
+
+/* 2. Hero: Electric Cobalt Blue */
+.ambient-orb--hero-cobalt {
+  width: 750px;
+  height: 750px;
+  top: 50px;
+  right: -140px;
+  background: radial-gradient(circle, rgba(21, 88, 201, 0.30) 0%, rgba(37, 99, 235, 0.14) 50%, transparent 70%);
+  animation: ambientFloat2 22s ease-in-out infinite alternate;
+}
+
+/* 3. About: Soft Violet / Purple Glow */
+.ambient-orb--about-violet {
+  width: 700px;
+  height: 700px;
+  top: 22%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(168, 85, 247, 0.12) 48%, transparent 70%);
+  animation: ambientFloat3 24s ease-in-out infinite alternate;
+}
+
+.ambient-orb--about-cyan {
+  width: 600px;
+  height: 600px;
+  top: 28%;
+  left: -100px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.20) 0%, rgba(21, 88, 201, 0.12) 50%, transparent 70%);
+  animation: ambientFloat1 20s ease-in-out infinite alternate;
+}
+
+/* 4. Experience: Turquoise & Electric Cobalt */
+.ambient-orb--exp-turquoise {
+  width: 700px;
+  height: 700px;
+  top: 44%;
+  left: 8%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.22) 0%, rgba(6, 182, 212, 0.12) 50%, transparent 70%);
+  animation: ambientFloat2 26s ease-in-out infinite alternate;
+}
+
+.ambient-orb--exp-cobalt {
+  width: 750px;
+  height: 750px;
+  top: 48%;
+  right: -80px;
+  background: radial-gradient(circle, rgba(21, 88, 201, 0.26) 0%, rgba(139, 92, 246, 0.14) 50%, transparent 70%);
+  animation: ambientFloat3 22s ease-in-out infinite alternate;
+}
+
+/* 5. Projects: Royal Violet, Amber Accent & Cyan */
+.ambient-orb--projects-violet {
+  width: 850px;
+  height: 850px;
+  top: 60%;
+  left: -120px;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.22) 0%, rgba(21, 88, 201, 0.15) 50%, transparent 70%);
+  animation: ambientFloat1 28s ease-in-out infinite alternate;
+}
+
+.ambient-orb--projects-amber {
+  width: 650px;
+  height: 650px;
+  top: 65%;
+  right: 8%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(212, 255, 36, 0.08) 45%, transparent 70%);
+  animation: ambientFloat2 20s ease-in-out infinite alternate;
+}
+
+.ambient-orb--projects-cyan {
+  width: 700px;
+  height: 700px;
+  top: 72%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.20) 0%, rgba(37, 99, 235, 0.12) 50%, transparent 70%);
+  animation: ambientFloat3 25s ease-in-out infinite alternate;
+}
+
+/* 6. Skills: Electric Cobalt & Cyber Sky */
+.ambient-orb--skills-cyan {
+  width: 650px;
+  height: 650px;
+  top: 80%;
+  right: -60px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(21, 88, 201, 0.14) 50%, transparent 70%);
+  animation: ambientFloat1 21s ease-in-out infinite alternate;
+}
+
+.ambient-orb--skills-cobalt {
+  width: 700px;
+  height: 700px;
+  top: 84%;
+  left: -80px;
+  background: radial-gradient(circle, rgba(21, 88, 201, 0.26) 0%, rgba(139, 92, 246, 0.14) 50%, transparent 70%);
+  animation: ambientFloat2 23s ease-in-out infinite alternate;
+}
+
+/* 7. Contact: Cyan & Deep Violet */
+.ambient-orb--contact-cyan {
+  width: 750px;
+  height: 750px;
+  top: 91%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.24) 0%, rgba(6, 182, 212, 0.14) 48%, transparent 70%);
+  animation: ambientFloat3 26s ease-in-out infinite alternate;
+}
+
+.ambient-orb--contact-violet {
+  width: 700px;
+  height: 700px;
+  top: 94%;
+  right: -80px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(21, 88, 201, 0.16) 50%, transparent 70%);
+  animation: ambientFloat1 24s ease-in-out infinite alternate;
+}
+
+@keyframes ambientFloat1 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(35px, 25px, 0) scale(1.06); }
+  100% { transform: translate3d(-20px, 40px, 0) scale(0.96); }
+}
+
+@keyframes ambientFloat2 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-30px, -20px, 0) scale(1.08); }
+  100% { transform: translate3d(25px, 30px, 0) scale(0.94); }
+}
+
+@keyframes ambientFloat3 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(25px, -35px, 0) scale(1.05); }
+  100% { transform: translate3d(-35px, 15px, 0) scale(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb {
+    animation: none !important;
   }
 }

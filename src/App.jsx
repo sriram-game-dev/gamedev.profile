@@ -18,6 +18,7 @@ import ProjectDetails from './components/ProjectDetails';
 import { projects, personalProjects } from './data/projectsData';
 import { normalizePath, navigateTo } from './utils/asset';
 import ScrollProgressBar from './components/ScrollProgressBar';
+import AmbientBackdrop from './components/AmbientBackdrop';
 import KonamiEasterEgg from './components/KonamiEasterEgg';
 import { useScrollReveal } from './utils/useScrollReveal';
 
@@ -96,6 +97,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
+        <AmbientBackdrop />
         <NavBar />
         <ProfessionalProjects />
         <Footer />
@@ -113,6 +115,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
+        <AmbientBackdrop />
         <NavBar />
         <PersonalProjects />
         <Footer />
@@ -140,6 +143,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
+        <AmbientBackdrop />
         <NavBar />
         <ProjectDetails
           project={project}
@@ -159,6 +163,7 @@ function App() {
     return (
       <>
         <ScrollProgressBar />
+        <AmbientBackdrop />
         <NavBar />
 
         <main>
@@ -194,6 +199,7 @@ function App() {
   return (
     <>
       <ScrollProgressBar />
+      <AmbientBackdrop />
       <NavBar />
 
       <main
