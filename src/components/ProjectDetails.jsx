@@ -1,4 +1,3 @@
-import NavBar from './NavBar';
 import './ProjectDetails.css';
 import { navigateTo } from '../utils/asset';
 import { projects } from '../data/projectsData';
@@ -27,10 +26,7 @@ function ProjectDetails({ project }) {
   };
 
   return (
-    <>
-      <NavBar />
-
-      <main className="project-details-page">
+    <main className="project-details-page">
 
         {/* PROJECT IMAGE */}
 
@@ -199,7 +195,6 @@ function ProjectDetails({ project }) {
         </section>
 
       </main>
-    </>
   );
 }
 
