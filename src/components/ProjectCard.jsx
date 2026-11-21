@@ -124,20 +124,8 @@ function ProjectCard({ project, onOpenCaseStudy }) {
 
       {/* CARD BODY */}
       <div className="card-body">
-        {/* CONTEXT & STUDIO TAG */}
+        {/* PLATFORMS ROW */}
         <div className="card-context-row">
-          {isNda ? (
-            <span className="card-context-pill professional-pill">
-              <span className="status-dot dot-amber"></span>
-              Commercial Production
-            </span>
-          ) : (
-            <span className="card-context-pill personal-pill">
-              <span className="status-dot dot-cyan"></span>
-              Solo Dev · Indie Lab
-            </span>
-          )}
-
           <div className="card-platforms-row">
             {project.platforms?.map((plat) => (
               <span key={plat} className="card-platform-pill">{plat}</span>

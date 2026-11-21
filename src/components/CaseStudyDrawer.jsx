@@ -1,8 +1,25 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { navigateTo } from '../utils/asset';
 
-function CaseStudyDrawer({ project, onClose }) {
+function CaseStudyDrawer({ project, onClose, onSelectProject, projectsList = [] }) {
   const drawerRef = useRef(null);
+
+  const currentIndex = projectsList.findIndex((p) => p.id === project?.id);
+  const hasMultiple = projectsList.length > 1;
+  const prevProject = hasMultiple
+    ? (currentIndex > 0 ? projectsList[currentIndex - 1] : projectsList[projectsList.length - 1])
+    : null;
+  const nextProject = hasMultiple
+    ? (currentIndex >= 0 && currentIndex < projectsList.length - 1 ? projectsList[currentIndex + 1] : projectsList[0])
+    : null;
+
+  const handleNavProject = useCallback((targetProj) => {
+    if (!targetProj || !onSelectProject) return;
+    onSelectProject(targetProj);
+    if (drawerRef.current) {
+      drawerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [onSelectProject]);
 
   useEffect(() => {
     if (!project) return;
@@ -12,6 +29,10 @@ function CaseStudyDrawer({ project, onClose }) {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         onClose();
+      } else if (e.key === 'ArrowLeft' && prevProject && onSelectProject) {
+        handleNavProject(prevProject);
+      } else if (e.key === 'ArrowRight' && nextProject && onSelectProject) {
+        handleNavProject(nextProject);
       }
     };
 
@@ -20,7 +41,7 @@ function CaseStudyDrawer({ project, onClose }) {
       document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [project, onClose]);
+  }, [project, onClose, prevProject, nextProject, onSelectProject, handleNavProject]);
 
   if (!project) return null;
 
@@ -54,14 +75,42 @@ function CaseStudyDrawer({ project, onClose }) {
             </span>
           </div>
 
-          <button
-            type="button"
-            className="case-study-close-btn"
-            onClick={onClose}
-            aria-label="Close case study panel"
-          >
-            ×
-          </button>
+          <div className="drawer-header-actions">
+            {hasMultiple && onSelectProject && (
+              <div className="drawer-nav-quick-group" role="group" aria-label="Project navigation">
+                <button
+                  type="button"
+                  className="drawer-nav-arrow-btn"
+                  onClick={() => handleNavProject(prevProject)}
+                  aria-label={`Previous project: ${prevProject?.title}`}
+                  title={`Previous project: ${prevProject?.title} (Left Arrow)`}
+                >
+                  ← Prev
+                </button>
+                <span className="drawer-nav-counter">
+                  {currentIndex >= 0 ? currentIndex + 1 : 1} / {projectsList.length}
+                </span>
+                <button
+                  type="button"
+                  className="drawer-nav-arrow-btn"
+                  onClick={() => handleNavProject(nextProject)}
+                  aria-label={`Next project: ${nextProject?.title}`}
+                  title={`Next project: ${nextProject?.title} (Right Arrow)`}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="case-study-close-btn"
+              onClick={onClose}
+              aria-label="Close case study panel"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         {/* HERO TITLE & IMAGE */}
@@ -149,6 +198,31 @@ function CaseStudyDrawer({ project, onClose }) {
             <p>{caseStudy.result}</p>
           </section>
         </div>
+
+        {/* BOTTOM PREV & NEXT NAVIGATION CARDS */}
+        {hasMultiple && onSelectProject && prevProject && nextProject && (
+          <div className="drawer-bottom-project-nav">
+            <button
+              type="button"
+              className="drawer-project-nav-card prev"
+              onClick={() => handleNavProject(prevProject)}
+              aria-label={`Go to previous project: ${prevProject.title}`}
+            >
+              <span className="nav-card-dir">← Previous Project</span>
+              <span className="nav-card-name">{prevProject.title}</span>
+            </button>
+
+            <button
+              type="button"
+              className="drawer-project-nav-card next"
+              onClick={() => handleNavProject(nextProject)}
+              aria-label={`Go to next project: ${nextProject.title}`}
+            >
+              <span className="nav-card-dir">Next Project →</span>
+              <span className="nav-card-name">{nextProject.title}</span>
+            </button>
+          </div>
+        )}
 
         {/* EXTERNAL PLATFORM LINKS OR FULL SPEC */}
         <div className="case-study-actions">

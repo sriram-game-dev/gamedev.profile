@@ -1,8 +1,37 @@
+import { useEffect } from 'react';
 import './ProjectDetails.css';
 import { navigateTo } from '../utils/asset';
-import { projects } from '../data/projectsData';
+import { projects, personalProjects, allProjects } from '../data/projectsData';
 
 function ProjectDetails({ project }) {
+  const projectList = allProjects || [...projects, ...personalProjects];
+  const currentIndex = projectList.findIndex((p) => p.link === project.link);
+  const hasMultiple = projectList.length > 1;
+  const prevProject = hasMultiple
+    ? (currentIndex > 0 ? projectList[currentIndex - 1] : projectList[projectList.length - 1])
+    : null;
+  const nextProject = hasMultiple
+    ? (currentIndex >= 0 && currentIndex < projectList.length - 1 ? projectList[currentIndex + 1] : projectList[0])
+    : null;
+
+  const handleNavigateProject = (targetProj) => {
+    if (!targetProj) return;
+    navigateTo(targetProj.link);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft' && prevProject) {
+        handleNavigateProject(prevProject);
+      } else if (e.key === 'ArrowRight' && nextProject) {
+        handleNavigateProject(nextProject);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [prevProject, nextProject]);
 
   const handleBack = () => {
     if (window.history.length > 2) {
@@ -181,16 +210,41 @@ function ProjectDetails({ project }) {
           )}
 
 
-          {/* BACK BUTTON */}
+          {/* PREVIOUS / NEXT PROJECT NAVIGATION BAR */}
+          <div className="project-details-pagination-bar">
+            {prevProject && (
+              <button
+                type="button"
+                className="project-pagination-card prev"
+                onClick={() => handleNavigateProject(prevProject)}
+                aria-label={`Go to previous project: ${prevProject.title}`}
+              >
+                <span className="pagination-dir-tag">← Previous Project</span>
+                <span className="pagination-proj-title">{prevProject.title}</span>
+              </button>
+            )}
 
-          <button
-            type="button"
-            className="project-back-button"
-            onClick={handleBack}
-            aria-label="Back to projects"
-          >
-            ← Back to Projects
-          </button>
+            <button
+              type="button"
+              className="project-pagination-back-btn"
+              onClick={handleBack}
+              aria-label="Back to projects overview"
+            >
+              <span>Browse All Projects</span>
+            </button>
+
+            {nextProject && (
+              <button
+                type="button"
+                className="project-pagination-card next"
+                onClick={() => handleNavigateProject(nextProject)}
+                aria-label={`Go to next project: ${nextProject.title}`}
+              >
+                <span className="pagination-dir-tag">Next Project →</span>
+                <span className="pagination-proj-title">{nextProject.title}</span>
+              </button>
+            )}
+          </div>
 
         </section>
 

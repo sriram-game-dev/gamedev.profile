@@ -54,6 +54,12 @@ function Projects({
   const filteredProfessional = useMemo(() => filterList(projects), [filterList]);
   const filteredPersonal = useMemo(() => filterList(personalProjects), [filterList]);
 
+  const currentProjectsList = useMemo(() => {
+    if (activeDeck === 'professional') return filteredProfessional;
+    if (activeDeck === 'personal') return filteredPersonal;
+    return [...filteredProfessional, ...filteredPersonal];
+  }, [activeDeck, filteredProfessional, filteredPersonal]);
+
   const hasActiveFilters = Boolean(
     selectedPlatform !== 'All' ||
     searchQuery.trim() ||
@@ -312,6 +318,8 @@ function Projects({
         <CaseStudyDrawer
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
+          onSelectProject={setSelectedProject}
+          projectsList={currentProjectsList}
         />
       )}
     </section>
