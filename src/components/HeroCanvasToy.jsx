@@ -57,13 +57,13 @@ function HeroCanvasToy() {
       radius: 120
     };
 
-    // Low-poly floating geometric bodies (60-30-10 palette)
+    // Low-poly floating geometric bodies matching futuristic glassmorphism reference
     const types = ['cube', 'triangle', 'diamond', 'ring'];
     const colors = [
-      { fill: 'rgba(21, 88, 201, 0.18)', stroke: 'rgba(21, 88, 201, 0.8)', glow: 'rgba(21, 88, 201, 0.45)' }, // Electric Cobalt Blue (30%)
-      { fill: 'rgba(212, 255, 36, 0.16)', stroke: 'rgba(212, 255, 36, 0.85)', glow: 'rgba(212, 255, 36, 0.4)' }, // Acid Lime (10%)
-      { fill: 'rgba(45, 116, 247, 0.16)', stroke: 'rgba(45, 116, 247, 0.75)', glow: 'rgba(45, 116, 247, 0.35)' },
-      { fill: 'rgba(21, 88, 201, 0.22)', stroke: 'rgba(96, 165, 250, 0.8)', glow: 'rgba(21, 88, 201, 0.4)' }
+      { fill: 'rgba(0, 229, 255, 0.12)', stroke: 'rgba(0, 229, 255, 0.95)', glow: 'rgba(0, 229, 255, 0.6)' }, // Neon Cyan
+      { fill: 'rgba(255, 158, 0, 0.12)', stroke: 'rgba(255, 158, 0, 0.95)', glow: 'rgba(255, 158, 0, 0.6)' }, // Radiant Amber / Orange
+      { fill: 'rgba(217, 70, 239, 0.12)', stroke: 'rgba(217, 70, 239, 0.9)', glow: 'rgba(217, 70, 239, 0.6)' }, // Vibrant Magenta / Purple
+      { fill: 'rgba(21, 88, 201, 0.15)', stroke: 'rgba(56, 189, 248, 0.9)', glow: 'rgba(21, 88, 201, 0.5)' }  // Electric Cobalt Blue
     ];
 
     const count = window.innerWidth < 640 ? 12 : 22;
@@ -345,7 +345,11 @@ function HeroCanvasToy() {
       <canvas ref={canvasRef} className="hero-canvas-toy" />
       {!hintDismissed && (
         <div className="hero-canvas-hint">
-          <span className="hint-icon">🎮</span> Click / tap canvas to fire impulse
+          <svg className="hint-mouse-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="6" y="3" width="12" height="18" rx="6" />
+            <line x1="12" y1="7" x2="12" y2="11" />
+          </svg>
+          <span>Click / tap canvas to fire impulse</span>
         </div>
       )}
     </div>

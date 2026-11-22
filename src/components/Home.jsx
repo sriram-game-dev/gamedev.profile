@@ -10,10 +10,10 @@ const WHAT_I_DO = [
 ];
 
 function Home() {
-  const [text, setText] = useState("A Gamer.");
-  const [phase, setPhase] = useState("intro");
-  const [showCursor, setShowCursor] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [text, setText] = useState("Game Developer");
+  const [phase, setPhase] = useState("typing");
+  const [showCursor, setShowCursor] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(3); // Defaults to Industrial Training active as in reference image
 
   // Automatic spotlight cycle through "What I do" specialties
   useEffect(() => {
@@ -25,38 +25,38 @@ function Home() {
 
     const cycleTimer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % WHAT_I_DO.length);
-    }, 2000);
+    }, 3000);
 
     return () => clearInterval(cycleTimer);
   }, []);
 
   useEffect(() => {
-    // Wait for the bottom → center animation
+    // Wait before typing cycle
     const timer = setTimeout(() => {
       setPhase("backspace");
       setShowCursor(true);
-    }, 1200);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (phase === "backspace") {
-      let current = "A Gamer.";
+      let current = "Game Developer";
       let delayTimer;
 
       const timer = setInterval(() => {
         current = current.slice(0, -1);
         setText(current);
 
-        if (current === "A ") {
+        if (current === "") {
           clearInterval(timer);
 
           delayTimer = setTimeout(() => {
             setPhase("typing");
-          }, 1000);
+          }, 800);
         }
-      }, 80);
+      }, 70);
 
       return () => {
         clearInterval(timer);
@@ -65,8 +65,8 @@ function Home() {
     }
 
     if (phase === "typing") {
-      const target = "A Game Developer";
-      let index = 2;
+      const target = "Game Developer";
+      let index = 0;
 
       const timer = setInterval(() => {
         index++;
@@ -75,7 +75,7 @@ function Home() {
         if (index === target.length) {
           clearInterval(timer);
           setPhase("done");
-          setShowCursor(false);
+          setShowCursor(true);
         }
       }, 80);
 
@@ -85,50 +85,74 @@ function Home() {
 
   return (
     <section className="home" id="home">
+      {/* 3D Crescent Rim-lit Spheres (Directly matching reference image) */}
+      <div className="hero-sphere hero-sphere-left" aria-hidden="true" />
+      <div className="hero-sphere hero-sphere-right" aria-hidden="true" />
+      <div className="hero-sphere hero-sphere-bottom" aria-hidden="true" />
+      <div className="hero-ambient-glow hero-ambient-glow--topleft" aria-hidden="true" />
+      <div className="hero-ambient-glow hero-ambient-glow--topright" aria-hidden="true" />
+
+      {/* Interactive Physics & Geometric Particles Canvas */}
       <HeroCanvasToy />
 
-      <h1>SRIRAM S</h1>
+      {/* CENTRAL HOLOGRAPHIC FROSTED GLASS HERO CARD */}
+      <div className="hero-glass-card">
+        <h1 className="hero-card-title">SRIRAM S</h1>
 
-      <p className="home-description">
-        <span className="syntax-fn">player</span>.<span className="syntax-keyword">identity</span> = <span className="syntax-string">&quot;{text.replace(/^A\s+|^An\s+/, '')}&quot;</span>
-        {showCursor && <span className="typing-cursor">_</span>}
-      </p>
+        {/* Code Terminal Identity Pill */}
+        <div className="hero-terminal-pill">
+          <code>
+            <span className="syntax-fn">player</span>.<span className="syntax-keyword">identity</span>=&quot;<span className="syntax-string">{text}</span>&quot;
+            {showCursor && <span className="typing-cursor">|</span>}
+          </code>
+        </div>
 
-      <div className="home-links">
-        <a
-          href={route('/#projects')}
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          <span>Explore Quests</span>
-          <span style={{ color: '#030407' }}>→</span>
-        </a>
-        <a
-          href={route('/#contact')}
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          <span>Connect</span>
-          <span style={{ color: '#1558C9' }}>✦</span>
-        </a>
+        {/* Action Buttons Row */}
+        <div className="hero-card-actions">
+          <a
+            href={route('/#projects')}
+            className="hero-btn-primary"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            <span>Explore Quests</span>
+            <span className="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          <a
+            href={route('/#contact')}
+            className="hero-btn-secondary"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            <span>Connect</span>
+            <span className="btn-sparkle" aria-hidden="true">✦</span>
+          </a>
+        </div>
       </div>
 
-      {/* WHAT I DO AUTO-SHOWCASE */}
-      <div className="audience-switcher" aria-label="What I do">
-        <span className="audience-switcher-label">What I do:</span>
-        <div className="audience-pill-group">
+      {/* WHAT I DO DOCK (Matching Reference Image) */}
+      <div className="what-i-do-container" aria-label="What I do">
+        <div className="what-i-do-divider">
+          <span className="divider-line" aria-hidden="true" />
+          <span className="divider-label">WHAT I DO:</span>
+          <span className="divider-line" aria-hidden="true" />
+        </div>
+        <div className="what-i-do-pills">
           {WHAT_I_DO.map((area, index) => (
-            <div
+            <button
+              type="button"
               key={area.id}
-              className={`audience-pill audience-pill--auto ${activeIndex === index ? 'active' : ''}`}
+              onClick={() => setActiveIndex(index)}
+              className={`what-i-do-pill ${activeIndex === index ? 'active' : ''}`}
+              aria-pressed={activeIndex === index}
             >
-              <span className="audience-icon" aria-hidden="true">{area.icon}</span>
-              <span>{area.label}</span>
-            </div>
+              <span className="pill-icon" aria-hidden="true">{area.icon}</span>
+              <span className="pill-label">{area.label}</span>
+            </button>
           ))}
         </div>
       </div>

@@ -5,6 +5,7 @@ function NavBar() {
   const [showGoTop, setShowGoTop] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const [currentPath, setCurrentPath] = useState(
     normalizePath(window.location.pathname)
   );
@@ -20,7 +21,7 @@ function NavBar() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  /* Scroll handling */
+  /* Scroll handling & active section detection */
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 25);
@@ -30,9 +31,22 @@ function NavBar() {
         document.documentElement.scrollHeight - 200;
 
       setShowGoTop(nearBottom);
+
+      const sections = ['home', 'about', 'experience', 'skills', 'resume', 'contact'];
+      for (const s of sections) {
+        const el = document.getElementById(s);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200 && rect.bottom >= 150) {
+            setActiveSection(s);
+            break;
+          }
+        }
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -113,7 +127,7 @@ function NavBar() {
     <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar-inner">
 
-        {/* LOGO (GERLOGU STYLE: bold first name, clean studio branding) */}
+        {/* LOGO (Matching Reference: "Sriram S" + glowing "DEV_READY" pill) */}
         <div className="logo-container">
           <a
             href={route('/')}
@@ -121,63 +135,63 @@ function NavBar() {
             onClick={handleLogoClick}
           >
             <span className="brand-name">
-              <strong>Sriram</strong> S
+              Sriram S
             </span>
           </a>
-          <div className="studio-status-pill" title="Indie Game Dev - Ready for Opportunities">
+          <div className="studio-status-pill" title="Game Developer - Ready for Opportunities">
             <span className="status-dot"></span>
-            <span>DEV.READY</span>
+            <span>DEV_READY</span>
           </div>
         </div>
 
-        {/* DESKTOP NAV LINKS (CENTERED, CLEAN TYPOGRAPHY WITH GROW UNDERLINE) */}
+        {/* DESKTOP NAV LINKS (CENTERED, CLEAN TYPOGRAPHY WITH ORANGE ACTIVE UNDERLINE) */}
         <nav className="nav-links desktop-nav" aria-label="Primary navigation">
           <a
             href={route('/#home')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'home' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'home')}
           >
-            <span>Home</span>
+            <span>HOME</span>
           </a>
 
           <a
             href={route('/#about')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'about' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'about')}
           >
-            <span>About</span>
+            <span>ABOUT</span>
           </a>
 
           <a
             href={route('/#experience')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'experience' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'experience')}
           >
-            <span>Experience</span>
+            <span>EXPERIENCE</span>
           </a>
 
           <a
             href={route('/#skills')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'skills' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'skills')}
           >
-            <span>Skills</span>
+            <span>SKILLS</span>
           </a>
 
           <a
             href={route('/#resume')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'resume' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'resume')}
           >
-            <span>Resume</span>
+            <span>RESUME</span>
           </a>
 
           <a
             href={route('/#contact')}
-            className="nav-item"
+            className={`nav-item ${activeSection === 'contact' ? 'nav-item--active' : ''}`}
             onClick={(event) => handleSectionClick(event, 'contact')}
           >
-            <span>Contact</span>
+            <span>CONTACT</span>
           </a>
 
           <a
@@ -186,30 +200,25 @@ function NavBar() {
             rel="noopener noreferrer"
             className="nav-item nav-item--external"
           >
-            <span>GitHub</span>
+            <span>GITHUB</span>
             <svg className="external-arrow" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
               <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>
           </a>
         </nav>
 
-        {/* RIGHT SIDE: TACTICAL GAME DEVELOPER CTA BUTTON & MOBILE TOGGLE */}
+        {/* RIGHT SIDE: GLOWING AMBER/ORANGE PORTFOLIO BUTTON & MOBILE TOGGLE */}
         <div className="navbar-right">
           <a
             href={route('/#projects')}
             onClick={(event) => handleSectionClick(event, 'projects')}
-            className="nav-game-button nav-cta-link"
+            className="nav-portfolio-pill"
             aria-label="Explore Portfolio"
           >
-            <span className="btn-shape">
-              <span className="btn-skew-slide"></span>
-              <span className="btn-text">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style={{ marginRight: '6px' }} aria-hidden="true">
-                  <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-                </svg>
-                PORTFOLIO
-              </span>
-            </span>
+            <svg className="nav-portfolio-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+            </svg>
+            <span>PORTFOLIO</span>
           </a>
 
           {/* HAMBURGER TOGGLE FOR MOBILE/TABLET */}
