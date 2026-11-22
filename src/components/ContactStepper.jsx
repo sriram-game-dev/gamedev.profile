@@ -28,10 +28,10 @@ const INTENT_OPTIONS = [
 ];
 
 const TEMPLATES = {
-  'fulltime': 'Hi Sriram,\n\nWe came across your portfolio and would love to discuss an open Game / XR Developer opportunity at our team.\n\nKey details:\n- Role:\n- Location / Remote:\n- Tech Stack:',
-  'xr-contract': 'Hi Sriram,\n\nWe have an XR / industrial simulation project and would like to explore working together.\n\nProject Scope:\n- Platform (Meta Quest, PC VR, etc.):\n- Timeline:\n- Key requirements:',
-  'game-collab': 'Hi Sriram,\n\nI saw your Unity projects and want to discuss collaborating on a game project.\n\nProject Overview:\n- Genre / Platform:\n- Current stage:',
-  'general': 'Hi Sriram,\n\nWanted to reach out after checking out your work in Unity and XR.'
+  'fulltime': 'Hi Sriram S,\n\nWe came across your portfolio and would love to discuss an open Game / XR Developer opportunity at our team.\n\nKey details:\n- Role:\n- Location / Remote:\n- Tech Stack:',
+  'xr-contract': 'Hi Sriram S,\n\nWe have an XR / industrial simulation project and would like to explore working together.\n\nProject Scope:\n- Platform (Meta Quest, PC VR, etc.):\n- Timeline:\n- Key requirements:',
+  'game-collab': 'Hi Sriram S,\n\nI saw your Unity projects and want to discuss collaborating on a game project.\n\nProject Overview:\n- Genre / Platform:\n- Current stage:',
+  'general': 'Hi Sriram S,\n\nWanted to reach out after checking out your work in Unity and XR.'
 };
 
 export default function ContactStepper() {
@@ -106,7 +106,7 @@ export default function ContactStepper() {
     e.preventDefault();
     if (!validateStep3()) return;
 
-    const subject = encodeURIComponent(`[Portfolio Contact] ${selectedIntentObj.label} - ${formData.name}`);
+    const subject = encodeURIComponent(`[Portfolio Contact - Sriram S] ${selectedIntentObj.label} - ${formData.name}`);
     const body = encodeURIComponent(constructPayload());
     const mailtoUrl = `mailto:sriramsridhar29@gmail.com?subject=${subject}&body=${body}`;
 
@@ -348,26 +348,28 @@ export default function ContactStepper() {
               </p>
             </div>
 
-            <div className="form-group">
-              <div className="textarea-header">
-                <label htmlFor="stepper-msg" className="field-label">
-                  Mission Details / Timeline / Tech Needs <span className="req">*</span>
-                </label>
-                <span className="char-count">{formData.message.length} chars</span>
+            <div className="form-fields">
+              <div className="form-group">
+                <div className="textarea-header">
+                  <label htmlFor="stepper-msg" className="field-label">
+                    Mission Details / Timeline / Tech Needs <span className="req">*</span>
+                  </label>
+                  <span className="char-count">{formData.message.length} chars</span>
+                </div>
+                <textarea
+                  id="stepper-msg"
+                  rows="6"
+                  value={formData.message}
+                  onChange={(e) => {
+                    setFormData(prev => ({ ...prev, message: e.target.value }));
+                    if (errors.message) setErrors(prev => ({ ...prev, message: '' }));
+                  }}
+                  className={`stepper-textarea ${errors.message ? 'input-error' : ''}`}
+                  placeholder="Describe your vision, timeline, engine requirements, or questions..."
+                  autoFocus
+                ></textarea>
+                {errors.message && <span className="error-text" role="alert">{errors.message}</span>}
               </div>
-              <textarea
-                id="stepper-msg"
-                rows="6"
-                value={formData.message}
-                onChange={(e) => {
-                  setFormData(prev => ({ ...prev, message: e.target.value }));
-                  if (errors.message) setErrors(prev => ({ ...prev, message: '' }));
-                }}
-                className={`stepper-textarea ${errors.message ? 'input-error' : ''}`}
-                placeholder="Describe your vision, timeline, engine requirements, or questions..."
-                autoFocus
-              ></textarea>
-              {errors.message && <span className="error-text" role="alert">{errors.message}</span>}
             </div>
 
             <div className="stepper-nav-row">

@@ -6000,7 +6000,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .stepper-nav-row.justify-end {
@@ -6012,15 +6013,16 @@ section {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 26px;
-  border-radius: 14px;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.88rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.2s ease;
   min-height: 44px;
+  box-sizing: border-box;
 }
 
 .primary-btn {

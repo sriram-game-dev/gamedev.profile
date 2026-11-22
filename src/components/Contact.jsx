@@ -89,7 +89,7 @@ function Contact() {
         {/* Email Icon */}
         <a
           href={`mailto:${email}`}
-          aria-label="Email Sriram"
+          aria-label="Email Sriram S"
           title="Send Email"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
