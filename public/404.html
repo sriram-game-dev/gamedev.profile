@@ -10,8 +10,8 @@
       // This script takes the current url and converts the path and query
       // into just query strings, and redirects the browser to the new url
       // with only a query string and hash fragment.
-      // If you are deploying the website to https://<username>.github.io, set pathSegmentsToKeep to 0.
-      var pathSegmentsToKeep = 0;
+      // If deploying to https://<username>.github.io/profile/, keep 1 segment; if deploying to root https://<username>.github.io/, keep 0.
+      var pathSegmentsToKeep = window.location.pathname.startsWith('/profile') ? 1 : 0;
 
       var l = window.location;
       l.replace(

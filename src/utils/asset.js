@@ -1,49 +1,55 @@
 /**
  * Base path helper utilities for routing and assets
+ * Supports both custom user root domain (https://<username>.github.io/)
+ * and repository subfolder domain (https://<username>.github.io/profile/).
  */
 
-// Normalized base path without trailing slash: e.g. "/profile" or ""
-export const BASE_PATH = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+function getBasePath() {
+  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/profile')) {
+    return '/profile';
+  }
+  const envBase = import.meta.env.BASE_URL || '/';
+  if (envBase === './' || envBase === '.') return '';
+  return envBase.replace(/\/$/, '');
+}
+
+export const BASE_PATH = getBasePath();
 
 /**
  * Prepends the base path to a relative route.
- * Example: route('/professional') => '/profile/professional'
- * Example: route('/') => '/profile/'
- * Example: route('/#about') => '/profile/#about'
  */
 export function route(path = '') {
+  const base = (typeof window !== 'undefined' && window.location.pathname.startsWith('/profile')) ? '/profile' : '';
   if (!path || path === '/') {
-    return BASE_PATH ? `${BASE_PATH}/` : '/';
+    return base ? `${base}/` : '/';
   }
   if (path.startsWith('/#')) {
-    return BASE_PATH ? `${BASE_PATH}/${path.slice(1)}` : path;
+    return base ? `${base}/${path.slice(1)}` : path;
   }
   if (path.startsWith('#')) {
-    return BASE_PATH ? `${BASE_PATH}/${path}` : `/${path}`;
+    return base ? `${base}/${path}` : `/${path}`;
   }
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${BASE_PATH}${clean}`;
+  return `${base}${clean}`;
 }
 
 /**
  * Returns public asset path with base prepended.
  */
 export function asset(path = '') {
+  const base = (typeof window !== 'undefined' && window.location.pathname.startsWith('/profile')) ? '/profile' : '';
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${BASE_PATH}${clean}`;
+  return `${base}${clean}`;
 }
 
 /**
  * Strips the base path prefix and query string from current window pathname
- * Example on GitHub Pages: '/profile/projects/loto-vr' => '/projects/loto-vr'
- * Example on GitHub Pages root: '/profile/' => '/'
- * Example on local dev root: '/' => '/'
  */
-export function normalizePath(pathname = window.location.pathname) {
+export function normalizePath(pathname = (typeof window !== 'undefined' ? window.location.pathname : '/')) {
   let clean = pathname.split('?')[0].split('#')[0] || '/';
 
-  if (BASE_PATH && clean.startsWith(BASE_PATH)) {
-    clean = clean.slice(BASE_PATH.length);
+  if (clean.startsWith('/profile')) {
+    clean = clean.slice('/profile'.length);
   }
 
   // Remove trailing slashes (except root '/')
