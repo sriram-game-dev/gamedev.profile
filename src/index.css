@@ -209,23 +209,25 @@ body {
   /* 60-30-10 Ambient Volumetric Lighting:
      60% Midnight Black (#030407)
      30% Electric Cobalt Blue (#1558C9)
-     10% Acid Lime (#D4FF24)
+     10% Acid Lime (#D4FF24) + Cyber Cyan (#00e5ff) & Royal Violet (#8b5cf6)
   */
   background-image: 
-    /* Electric Cobalt Blue atmospheric volumetric glow top-left (30%) */
-    radial-gradient(ellipse 65% 55% at 5% 10%, rgba(21, 88, 201, 0.24) 0%, transparent 70%),
+    /* Electric Cobalt atmospheric volumetric glow top-left (30%) */
+    radial-gradient(ellipse 65% 55% at 5% 10%, rgba(21, 88, 201, 0.32) 0%, transparent 70%),
     /* Acid Lime energetic rim accent aura top-right (10%) */
-    radial-gradient(ellipse 55% 45% at 92% -5%, rgba(212, 255, 36, 0.14) 0%, transparent 65%),
-    /* Electric Cobalt Blue central depth aura (30%) */
-    radial-gradient(ellipse 70% 50% at 85% 42%, rgba(21, 88, 201, 0.20) 0%, transparent 70%),
-    /* Mid-body cobalt aura */
-    radial-gradient(circle 750px at 15% 65%, rgba(21, 88, 201, 0.16) 0%, transparent 75%),
-    /* Acid Lime subtle accent aura lower-right (10%) */
-    radial-gradient(circle 500px at 80% 88%, rgba(212, 255, 36, 0.09) 0%, transparent 75%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' opacity='0.035'%3E%3Cpolygon points='0,0 60,0 30,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,0 120,0 90,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,0 30,50 0,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='30,50 60,0 90,50' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='90,50 120,0 120,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='30,50 90,50 60,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,100 30,50 60,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,100 90,50 120,100' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='0,100 60,100 30,120' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3Cpolygon points='60,100 120,100 90,120' fill='none' stroke='%23ffffff' stroke-width='0.8'/%3E%3C/svg%3E");
+    radial-gradient(ellipse 55% 45% at 92% -5%, rgba(212, 255, 36, 0.18) 0%, transparent 65%),
+    /* Royal Violet & Electric Cobalt depth aura */
+    radial-gradient(ellipse 70% 50% at 85% 42%, rgba(139, 92, 246, 0.25) 0%, transparent 70%),
+    /* Mid-body turquoise & cobalt aura */
+    radial-gradient(circle 750px at 15% 65%, rgba(6, 182, 212, 0.22) 0%, transparent 75%),
+    /* Acid Lime & Amber subtle accent aura lower-right */
+    radial-gradient(circle 500px at 80% 88%, rgba(212, 255, 36, 0.15) 0%, transparent 75%),
+    /* Cyber HUD Dot Matrix Grid Texture (Primary & Secondary Frequency) */
+    radial-gradient(circle at center, rgba(21, 88, 201, 0.25) 1.2px, transparent 1.2px),
+    radial-gradient(circle at center, rgba(0, 229, 255, 0.14) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 40px 40px, 160px 160px;
+  background-position: center, center, center, center, center, 0 0, 20px 20px;
   background-attachment: fixed;
-  background-repeat: repeat;
-  background-position: center;
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -363,161 +365,137 @@ textarea:focus-visible {
   overflow: hidden;
 }
 
-.ambient-orb {
+/* 1. Cyber HUD Digital Matrix Grid Layer */
+.ambient-cyber-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at center, rgba(21, 88, 201, 0.28) 1.2px, transparent 1.2px),
+    radial-gradient(circle at center, rgba(0, 229, 255, 0.16) 1px, transparent 1px);
+  background-size: 38px 38px, 152px 152px;
+  background-position: 0 0, 19px 19px;
+  opacity: 0.65;
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 50%, black 50%, transparent 98%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 50%, black 50%, transparent 98%);
+  pointer-events: none;
+}
+
+/* 2. Radiant Aurora Fluid Nebulae (High Radiance for Frosted Glass Refraction) */
+.ambient-nebula {
   position: absolute;
   border-radius: 50%;
-  filter: blur(95px);
-  -webkit-filter: blur(95px);
-  opacity: 0.85;
+  filter: blur(85px);
+  -webkit-filter: blur(85px);
   mix-blend-mode: screen;
   will-change: transform;
   pointer-events: none;
 }
 
-/* 1. Hero: Vibrant Cyan / Turquoise */
-.ambient-orb--hero-cyan {
-  width: 650px;
-  height: 650px;
-  top: -120px;
-  left: -80px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.26) 0%, rgba(6, 182, 212, 0.15) 45%, transparent 70%);
-  animation: ambientFloat1 18s ease-in-out infinite alternate;
+/* Top-Left Electric Cobalt & Cyan Nebula */
+.ambient-nebula--top-left {
+  top: -10%;
+  left: -8%;
+  width: 820px;
+  height: 820px;
+  background: radial-gradient(circle, rgba(21, 88, 201, 0.48) 0%, rgba(0, 229, 255, 0.28) 45%, transparent 70%);
+  animation: nebulaDrift1 22s ease-in-out infinite alternate;
 }
 
-/* 2. Hero: Electric Cobalt Blue */
-.ambient-orb--hero-cobalt {
-  width: 750px;
-  height: 750px;
-  top: 50px;
-  right: -140px;
-  background: radial-gradient(circle, rgba(21, 88, 201, 0.30) 0%, rgba(37, 99, 235, 0.14) 50%, transparent 70%);
-  animation: ambientFloat2 22s ease-in-out infinite alternate;
+/* Top-Right Vivid Royal Violet & Magenta Nebula */
+.ambient-nebula--top-right {
+  top: 4%;
+  right: -8%;
+  width: 780px;
+  height: 780px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.40) 0%, rgba(217, 70, 239, 0.24) 48%, transparent 70%);
+  animation: nebulaDrift2 26s ease-in-out infinite alternate;
 }
 
-/* 3. About: Soft Violet / Purple Glow */
-.ambient-orb--about-violet {
-  width: 700px;
-  height: 700px;
-  top: 22%;
-  right: 5%;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(168, 85, 247, 0.12) 48%, transparent 70%);
-  animation: ambientFloat3 24s ease-in-out infinite alternate;
+/* Mid-Left Deep Turquoise & Cyan Nebula */
+.ambient-nebula--mid-left {
+  top: 36%;
+  left: -10%;
+  width: 740px;
+  height: 740px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(21, 88, 201, 0.24) 50%, transparent 70%);
+  animation: nebulaDrift3 24s ease-in-out infinite alternate;
 }
 
-.ambient-orb--about-cyan {
-  width: 600px;
-  height: 600px;
-  top: 28%;
-  left: -100px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.20) 0%, rgba(21, 88, 201, 0.12) 50%, transparent 70%);
-  animation: ambientFloat1 20s ease-in-out infinite alternate;
-}
-
-/* 4. Experience: Turquoise & Electric Cobalt */
-.ambient-orb--exp-turquoise {
-  width: 700px;
-  height: 700px;
+/* Mid-Right Warm Golden Amber & Royal Violet Aura */
+.ambient-nebula--mid-right {
   top: 44%;
-  left: 8%;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.22) 0%, rgba(6, 182, 212, 0.12) 50%, transparent 70%);
-  animation: ambientFloat2 26s ease-in-out infinite alternate;
+  right: -6%;
+  width: 760px;
+  height: 760px;
+  background: radial-gradient(circle, rgba(255, 140, 0, 0.30) 0%, rgba(147, 51, 234, 0.22) 50%, transparent 70%);
+  animation: nebulaDrift1 28s ease-in-out infinite alternate;
 }
 
-.ambient-orb--exp-cobalt {
-  width: 750px;
-  height: 750px;
-  top: 48%;
-  right: -80px;
-  background: radial-gradient(circle, rgba(21, 88, 201, 0.26) 0%, rgba(139, 92, 246, 0.14) 50%, transparent 70%);
-  animation: ambientFloat3 22s ease-in-out infinite alternate;
-}
-
-/* 5. Projects: Royal Violet, Amber Accent & Cyan */
-.ambient-orb--projects-violet {
-  width: 850px;
-  height: 850px;
-  top: 60%;
-  left: -120px;
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.22) 0%, rgba(21, 88, 201, 0.15) 50%, transparent 70%);
-  animation: ambientFloat1 28s ease-in-out infinite alternate;
-}
-
-.ambient-orb--projects-amber {
-  width: 650px;
-  height: 650px;
-  top: 65%;
-  right: 8%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(212, 255, 36, 0.08) 45%, transparent 70%);
-  animation: ambientFloat2 20s ease-in-out infinite alternate;
-}
-
-.ambient-orb--projects-cyan {
-  width: 700px;
-  height: 700px;
-  top: 72%;
+/* Bottom Center Acid Lime & Electric Cobalt Radiant Pool */
+.ambient-nebula--bottom {
+  bottom: -15%;
   left: 20%;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.20) 0%, rgba(37, 99, 235, 0.12) 50%, transparent 70%);
-  animation: ambientFloat3 25s ease-in-out infinite alternate;
+  width: 880px;
+  height: 880px;
+  background: radial-gradient(circle, rgba(21, 88, 201, 0.42) 0%, rgba(212, 255, 36, 0.20) 45%, transparent 70%);
+  animation: nebulaDrift2 25s ease-in-out infinite alternate;
 }
 
-/* 6. Skills: Electric Cobalt & Cyber Sky */
-.ambient-orb--skills-cyan {
-  width: 650px;
-  height: 650px;
-  top: 80%;
-  right: -60px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(21, 88, 201, 0.14) 50%, transparent 70%);
-  animation: ambientFloat1 21s ease-in-out infinite alternate;
+/* 3. Floating Geometric HUD Particle Nodes */
+.ambient-particles-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.ambient-orb--skills-cobalt {
-  width: 700px;
-  height: 700px;
-  top: 84%;
-  left: -80px;
-  background: radial-gradient(circle, rgba(21, 88, 201, 0.26) 0%, rgba(139, 92, 246, 0.14) 50%, transparent 70%);
-  animation: ambientFloat2 23s ease-in-out infinite alternate;
+.ambient-particle-node {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation-name: ambientParticleDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform;
 }
 
-/* 7. Contact: Cyan & Deep Violet */
-.ambient-orb--contact-cyan {
-  width: 750px;
-  height: 750px;
-  top: 91%;
-  left: 15%;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.24) 0%, rgba(6, 182, 212, 0.14) 48%, transparent 70%);
-  animation: ambientFloat3 26s ease-in-out infinite alternate;
+@keyframes ambientParticleDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(22px, -28px, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(-18px, 24px, 0) scale(0.95);
+  }
 }
 
-.ambient-orb--contact-violet {
-  width: 700px;
-  height: 700px;
-  top: 94%;
-  right: -80px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(21, 88, 201, 0.16) 50%, transparent 70%);
-  animation: ambientFloat1 24s ease-in-out infinite alternate;
-}
-
-@keyframes ambientFloat1 {
+@keyframes nebulaDrift1 {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(35px, 25px, 0) scale(1.06); }
-  100% { transform: translate3d(-20px, 40px, 0) scale(0.96); }
+  50% { transform: translate3d(40px, 30px, 0) scale(1.08); }
+  100% { transform: translate3d(-25px, 45px, 0) scale(0.95); }
 }
 
-@keyframes ambientFloat2 {
+@keyframes nebulaDrift2 {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-30px, -20px, 0) scale(1.08); }
-  100% { transform: translate3d(25px, 30px, 0) scale(0.94); }
+  50% { transform: translate3d(-35px, -25px, 0) scale(1.10); }
+  100% { transform: translate3d(30px, 35px, 0) scale(0.92); }
 }
 
-@keyframes ambientFloat3 {
+@keyframes nebulaDrift3 {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(25px, -35px, 0) scale(1.05); }
-  100% { transform: translate3d(-35px, 15px, 0) scale(0.97); }
+  50% { transform: translate3d(30px, -40px, 0) scale(1.06); }
+  100% { transform: translate3d(-40px, 20px, 0) scale(0.96); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ambient-orb {
+  .ambient-nebula,
+  .ambient-particle-node {
     animation: none !important;
   }
 }

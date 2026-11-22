@@ -1,39 +1,177 @@
 /**
  * AmbientBackdrop Component
  * 
- * Renders soft, glowing abstract gradient light spheres behind the glass panels
- * across the website (Cyan/Turquoise, Electric Cobalt Blue, Royal Violet, and Amber).
- * These luminous background elements provide the optical refraction and rich color
- * gradients that shine through frosted-glass surfaces (backdrop-filter: blur) 
- * matching the reference aesthetic without obscuring content or adding DOM overhead.
+ * Renders a vibrant, multi-layered Futuristic Cyber & Glassmorphism atmospheric system:
+ * 1. Cyber HUD Digital Matrix Grid (fine-pitch dot & coordinate matrix texture)
+ * 2. Multi-point Radiant Aurora Nebulae (Electric Cobalt, Cyber Cyan, Royal Violet, Amber, and Acid Lime)
+ * 3. Floating Geometric HUD Particle Nodes (neon squares, diamonds, rings, triangles, crosshairs)
+ * 
+ * Inspired directly by the reference visual aesthetics to ensure the website background
+ * feels active, deep, and luminous behind all frosted-glass surfaces.
  */
+
+const PARTICLES = [
+  // Upper / Hero & About Viewport Region
+  { id: 1, type: 'diamond', x: '6%', y: '12%', size: 24, color: '#00e5ff', rot: 45, dur: '22s', delay: '0s', opacity: 0.75 },
+  { id: 2, type: 'square', x: '88%', y: '15%', size: 22, color: '#ff9e00', rot: 15, dur: '18s', delay: '-3s', opacity: 0.8 },
+  { id: 3, type: 'triangle', x: '14%', y: '26%', size: 20, color: '#D4FF24', rot: 0, dur: '20s', delay: '-7s', opacity: 0.7 },
+  { id: 4, type: 'ring', x: '92%', y: '30%', size: 28, color: '#c084fc', rot: 0, dur: '24s', delay: '-2s', opacity: 0.75 },
+  { id: 5, type: 'crosshair', x: '4%', y: '40%', size: 18, color: '#38bdf8', rot: 0, dur: '16s', delay: '-9s', opacity: 0.65 },
+
+  // Center / Experience & Projects Viewport Region
+  { id: 6, type: 'square', x: '94%', y: '46%', size: 26, color: '#ff9e00', rot: -25, dur: '21s', delay: '-4s', opacity: 0.75 },
+  { id: 7, type: 'diamond', x: '10%', y: '54%', size: 24, color: '#00e5ff', rot: 45, dur: '23s', delay: '-1s', opacity: 0.8 },
+  { id: 8, type: 'ring', x: '86%', y: '62%', size: 30, color: '#D4FF24', rot: 0, dur: '19s', delay: '-8s', opacity: 0.7 },
+  { id: 9, type: 'triangle', x: '7%', y: '68%', size: 22, color: '#c084fc', rot: 180, dur: '25s', delay: '-5s', opacity: 0.75 },
+  { id: 10, type: 'crosshair', x: '93%', y: '72%', size: 18, color: '#38bdf8', rot: 0, dur: '17s', delay: '-10s', opacity: 0.65 },
+
+  // Lower / Skills, Resume & Contact Region
+  { id: 11, type: 'diamond', x: '12%', y: '80%', size: 26, color: '#ff9e00', rot: 45, dur: '22s', delay: '-6s', opacity: 0.8 },
+  { id: 12, type: 'square', x: '86%', y: '85%', size: 22, color: '#00e5ff', rot: 30, dur: '18s', delay: '-3s', opacity: 0.75 },
+  { id: 13, type: 'triangle', x: '5%', y: '90%', size: 22, color: '#D4FF24', rot: 60, dur: '24s', delay: '-11s', opacity: 0.7 },
+  { id: 14, type: 'ring', x: '92%', y: '94%', size: 28, color: '#c084fc', rot: 0, dur: '20s', delay: '-4s', opacity: 0.8 },
+  { id: 15, type: 'crosshair', x: '16%', y: '6%', size: 16, color: '#ff9e00', rot: 0, dur: '17s', delay: '-8s', opacity: 0.6 },
+  { id: 16, type: 'crosshair', x: '82%', y: '5%', size: 18, color: '#00e5ff', rot: 0, dur: '19s', delay: '-2s', opacity: 0.65 }
+];
+
+function ParticleShape({ type, size, color }) {
+  switch (type) {
+    case 'square':
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <rect
+            x="2"
+            y="2"
+            width={size - 4}
+            height={size - 4}
+            rx="4"
+            fill="none"
+            stroke={color}
+            strokeWidth="1.6"
+            strokeOpacity="0.85"
+          />
+        </svg>
+      );
+    case 'diamond': {
+      const half = size / 2;
+      const inner = size * 0.35;
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <rect
+            x={half - inner}
+            y={half - inner}
+            width={inner * 2}
+            height={inner * 2}
+            rx="3"
+            fill="none"
+            stroke={color}
+            strokeWidth="1.6"
+            strokeOpacity="0.85"
+            transform={`rotate(45 ${half} ${half})`}
+          />
+        </svg>
+      );
+    }
+    case 'triangle':
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <polygon
+            points={`${size / 2},3 3,${size - 3} ${size - 3},${size - 3}`}
+            fill="none"
+            stroke={color}
+            strokeWidth="1.6"
+            strokeOpacity="0.85"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case 'ring':
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={size / 2 - 2}
+            fill="none"
+            stroke={color}
+            strokeWidth="1.5"
+            strokeOpacity="0.8"
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r="2.5"
+            fill={color}
+            fillOpacity="0.9"
+          />
+        </svg>
+      );
+    case 'crosshair':
+    default:
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <line
+            x1={size / 2}
+            y1="0"
+            x2={size / 2}
+            y2={size}
+            stroke={color}
+            strokeWidth="1.4"
+            strokeOpacity="0.75"
+          />
+          <line
+            x1="0"
+            y1={size / 2}
+            x2={size}
+            y2={size / 2}
+            stroke={color}
+            strokeWidth="1.4"
+            strokeOpacity="0.75"
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r="2"
+            fill={color}
+            fillOpacity="0.85"
+          />
+        </svg>
+      );
+  }
+}
+
 function AmbientBackdrop() {
   return (
     <div className="ambient-backdrop-system" aria-hidden="true">
-      {/* Hero / Top Section: Vibrant Cyan & Electric Cobalt illumination */}
-      <div className="ambient-orb ambient-orb--hero-cyan" />
-      <div className="ambient-orb ambient-orb--hero-cobalt" />
+      {/* 1. Cyber HUD Digital Matrix Grid Layer */}
+      <div className="ambient-cyber-grid" />
 
-      {/* About Section: Electric Blue & Soft Violet glow */}
-      <div className="ambient-orb ambient-orb--about-violet" />
-      <div className="ambient-orb ambient-orb--about-cyan" />
+      {/* 2. Multi-point Radiant Aurora Nebulae */}
+      <div className="ambient-nebula ambient-nebula--top-left" />
+      <div className="ambient-nebula ambient-nebula--top-right" />
+      <div className="ambient-nebula ambient-nebula--mid-left" />
+      <div className="ambient-nebula ambient-nebula--mid-right" />
+      <div className="ambient-nebula ambient-nebula--bottom" />
 
-      {/* Experience Section: Deep Turquoise & Neon Amber hint */}
-      <div className="ambient-orb ambient-orb--exp-turquoise" />
-      <div className="ambient-orb ambient-orb--exp-cobalt" />
-
-      {/* Projects Section: Rich Royal Violet & Luminous Amber accent */}
-      <div className="ambient-orb ambient-orb--projects-violet" />
-      <div className="ambient-orb ambient-orb--projects-amber" />
-      <div className="ambient-orb ambient-orb--projects-cyan" />
-
-      {/* Skills Section: Electric Cobalt & Cyber Sky */}
-      <div className="ambient-orb ambient-orb--skills-cyan" />
-      <div className="ambient-orb ambient-orb--skills-cobalt" />
-
-      {/* Contact Section: Luminous Cyan & Deep Blue immersion */}
-      <div className="ambient-orb ambient-orb--contact-cyan" />
-      <div className="ambient-orb ambient-orb--contact-violet" />
+      {/* 3. Floating Geometric HUD Particle Nodes */}
+      <div className="ambient-particles-layer">
+        {PARTICLES.map((p) => (
+          <div
+            key={p.id}
+            className="ambient-particle-node"
+            style={{
+              top: p.y,
+              left: p.x,
+              opacity: p.opacity,
+              animationDuration: p.dur,
+              animationDelay: p.delay,
+              transform: `rotate(${p.rot}deg)`
+            }}
+          >
+            <ParticleShape type={p.type} size={p.size} color={p.color} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
