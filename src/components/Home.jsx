@@ -9,19 +9,20 @@ const WHAT_I_DO = [
   { id: 'industrial', label: 'Industrial Training', icon: '🏭' }
 ];
 
+const checkReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function Home() {
-  const [text, setText] = useState("Game Developer");
-  const [phase, setPhase] = useState("typing");
+  const isReduced = checkReducedMotion();
+  const [text, setText] = useState(() => (isReduced ? "Game Developer" : "Gamer"));
+  const [phase, setPhase] = useState(() => (isReduced ? "done" : "idle"));
   const [showCursor, setShowCursor] = useState(true);
   const [activeIndex, setActiveIndex] = useState(3); // Defaults to Industrial Training active as in reference image
 
   // Automatic spotlight cycle through "What I do" specialties
   useEffect(() => {
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) return;
+    if (checkReducedMotion()) return;
 
     const cycleTimer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % WHAT_I_DO.length);
@@ -31,18 +32,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // Wait before typing cycle
-    const timer = setTimeout(() => {
-      setPhase("backspace");
-      setShowCursor(true);
-    }, 2500);
+    if (checkReducedMotion()) return;
 
-    return () => clearTimeout(timer);
+    // Initial pause showing "Gamer" before starting transition
+    const initialTimer = setTimeout(() => {
+      setPhase("backspace");
+    }, 1800);
+
+    return () => clearTimeout(initialTimer);
   }, []);
 
   useEffect(() => {
     if (phase === "backspace") {
-      let current = "Game Developer";
+      let current = "Gamer";
       let delayTimer;
 
       const timer = setInterval(() => {
@@ -54,9 +56,9 @@ function Home() {
 
           delayTimer = setTimeout(() => {
             setPhase("typing");
-          }, 800);
+          }, 450);
         }
-      }, 70);
+      }, 75);
 
       return () => {
         clearInterval(timer);
@@ -77,7 +79,7 @@ function Home() {
           setPhase("done");
           setShowCursor(true);
         }
-      }, 80);
+      }, 70);
 
       return () => clearInterval(timer);
     }
@@ -99,7 +101,7 @@ function Home() {
         {/* Code Terminal Identity Pill */}
         <div className="hero-terminal-pill">
           <code>
-            <span className="syntax-fn">player</span>.<span className="syntax-keyword">identity</span>=&quot;<span className="syntax-string">{text}</span>&quot;
+            <span className="syntax-fn">player</span>.<span className="syntax-keyword">identity</span><span className="syntax-op"> = </span>&quot;<span className="syntax-string">{text}</span>&quot;
             {showCursor && <span className="typing-cursor">|</span>}
           </code>
         </div>

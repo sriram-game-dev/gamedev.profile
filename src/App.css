@@ -734,6 +734,11 @@ section {
   color: #60a5fa;
 }
 
+.hero-terminal-pill .syntax-op {
+  color: #38bdf8;
+  margin: 0 1px;
+}
+
 .hero-terminal-pill .syntax-string {
   color: #e2e8f0;
 }
