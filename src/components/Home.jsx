@@ -85,10 +85,7 @@ function Home() {
 
   return (
     <section className="home" id="home">
-      {/* 3D Crescent Rim-lit Spheres (Directly matching reference image) */}
-      <div className="hero-sphere hero-sphere-left" aria-hidden="true" />
-      <div className="hero-sphere hero-sphere-right" aria-hidden="true" />
-      <div className="hero-sphere hero-sphere-bottom" aria-hidden="true" />
+      {/* Ambient Lighting Accents */}
       <div className="hero-ambient-glow hero-ambient-glow--topleft" aria-hidden="true" />
       <div className="hero-ambient-glow hero-ambient-glow--topright" aria-hidden="true" />
 
