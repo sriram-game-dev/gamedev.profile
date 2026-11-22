@@ -388,7 +388,7 @@ textarea:focus-visible {
   border-radius: 50%;
   filter: blur(85px);
   -webkit-filter: blur(85px);
-  mix-blend-mode: screen;
+  opacity: 0.92;
   will-change: transform;
   pointer-events: none;
 }

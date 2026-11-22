@@ -11,27 +11,26 @@
  */
 
 const PARTICLES = [
-  // Upper / Hero & About Viewport Region
-  { id: 1, type: 'diamond', x: '6%', y: '12%', size: 24, color: '#00e5ff', rot: 45, dur: '22s', delay: '0s', opacity: 0.75 },
-  { id: 2, type: 'square', x: '88%', y: '15%', size: 22, color: '#ff9e00', rot: 15, dur: '18s', delay: '-3s', opacity: 0.8 },
-  { id: 3, type: 'triangle', x: '14%', y: '26%', size: 20, color: '#D4FF24', rot: 0, dur: '20s', delay: '-7s', opacity: 0.7 },
-  { id: 4, type: 'ring', x: '92%', y: '30%', size: 28, color: '#c084fc', rot: 0, dur: '24s', delay: '-2s', opacity: 0.75 },
-  { id: 5, type: 'crosshair', x: '4%', y: '40%', size: 18, color: '#38bdf8', rot: 0, dur: '16s', delay: '-9s', opacity: 0.65 },
+  // Distributed naturally across viewport widths and heights
+  { id: 1, type: 'diamond', x: '8%', y: '16%', size: 22, color: '#00e5ff', rot: 45, dur: '22s', delay: '0s', opacity: 0.75 },
+  { id: 2, type: 'square', x: '25%', y: '8%', size: 20, color: '#ff9e00', rot: 15, dur: '18s', delay: '-3s', opacity: 0.8 },
+  { id: 3, type: 'ring', x: '44%', y: '12%', size: 24, color: '#38bdf8', rot: 0, dur: '24s', delay: '-5s', opacity: 0.7 },
+  { id: 4, type: 'triangle', x: '72%', y: '10%', size: 18, color: '#D4FF24', rot: 0, dur: '20s', delay: '-7s', opacity: 0.7 },
+  { id: 5, type: 'square', x: '91%', y: '16%', size: 24, color: '#ff9e00', rot: -20, dur: '21s', delay: '-2s', opacity: 0.8 },
 
-  // Center / Experience & Projects Viewport Region
-  { id: 6, type: 'square', x: '94%', y: '46%', size: 26, color: '#ff9e00', rot: -25, dur: '21s', delay: '-4s', opacity: 0.75 },
-  { id: 7, type: 'diamond', x: '10%', y: '54%', size: 24, color: '#00e5ff', rot: 45, dur: '23s', delay: '-1s', opacity: 0.8 },
-  { id: 8, type: 'ring', x: '86%', y: '62%', size: 30, color: '#D4FF24', rot: 0, dur: '19s', delay: '-8s', opacity: 0.7 },
-  { id: 9, type: 'triangle', x: '7%', y: '68%', size: 22, color: '#c084fc', rot: 180, dur: '25s', delay: '-5s', opacity: 0.75 },
-  { id: 10, type: 'crosshair', x: '93%', y: '72%', size: 18, color: '#38bdf8', rot: 0, dur: '17s', delay: '-10s', opacity: 0.65 },
+  { id: 6, type: 'crosshair', x: '5%', y: '36%', size: 16, color: '#38bdf8', rot: 0, dur: '16s', delay: '-9s', opacity: 0.65 },
+  { id: 7, type: 'diamond', x: '95%', y: '36%', size: 22, color: '#00e5ff', rot: 45, dur: '23s', delay: '-4s', opacity: 0.75 },
+  { id: 8, type: 'ring', x: '12%', y: '52%', size: 26, color: '#c084fc', rot: 0, dur: '25s', delay: '-1s', opacity: 0.75 },
+  { id: 9, type: 'triangle', x: '88%', y: '50%', size: 20, color: '#D4FF24', rot: 180, dur: '19s', delay: '-8s', opacity: 0.7 },
 
-  // Lower / Skills, Resume & Contact Region
-  { id: 11, type: 'diamond', x: '12%', y: '80%', size: 26, color: '#ff9e00', rot: 45, dur: '22s', delay: '-6s', opacity: 0.8 },
-  { id: 12, type: 'square', x: '86%', y: '85%', size: 22, color: '#00e5ff', rot: 30, dur: '18s', delay: '-3s', opacity: 0.75 },
-  { id: 13, type: 'triangle', x: '5%', y: '90%', size: 22, color: '#D4FF24', rot: 60, dur: '24s', delay: '-11s', opacity: 0.7 },
-  { id: 14, type: 'ring', x: '92%', y: '94%', size: 28, color: '#c084fc', rot: 0, dur: '20s', delay: '-4s', opacity: 0.8 },
-  { id: 15, type: 'crosshair', x: '16%', y: '6%', size: 16, color: '#ff9e00', rot: 0, dur: '17s', delay: '-8s', opacity: 0.6 },
-  { id: 16, type: 'crosshair', x: '82%', y: '5%', size: 18, color: '#00e5ff', rot: 0, dur: '19s', delay: '-2s', opacity: 0.65 }
+  { id: 10, type: 'square', x: '28%', y: '65%', size: 22, color: '#ff9e00', rot: 30, dur: '20s', delay: '-6s', opacity: 0.75 },
+  { id: 11, type: 'crosshair', x: '74%', y: '62%', size: 16, color: '#38bdf8', rot: 0, dur: '17s', delay: '-10s', opacity: 0.65 },
+  { id: 12, type: 'ring', x: '6%', y: '74%', size: 24, color: '#D4FF24', rot: 0, dur: '22s', delay: '-3s', opacity: 0.75 },
+  { id: 13, type: 'diamond', x: '92%', y: '72%', size: 24, color: '#00e5ff', rot: 45, dur: '21s', delay: '-7s', opacity: 0.8 },
+
+  { id: 14, type: 'triangle', x: '18%', y: '88%', size: 22, color: '#c084fc', rot: 45, dur: '24s', delay: '-11s', opacity: 0.7 },
+  { id: 15, type: 'square', x: '48%', y: '84%', size: 20, color: '#ff9e00', rot: -15, dur: '18s', delay: '-4s', opacity: 0.75 },
+  { id: 16, type: 'crosshair', x: '84%', y: '90%', size: 18, color: '#38bdf8', rot: 0, dur: '19s', delay: '-2s', opacity: 0.65 }
 ];
 
 function ParticleShape({ type, size, color }) {
@@ -164,11 +163,12 @@ function AmbientBackdrop() {
               left: p.x,
               opacity: p.opacity,
               animationDuration: p.dur,
-              animationDelay: p.delay,
-              transform: `rotate(${p.rot}deg)`
+              animationDelay: p.delay
             }}
           >
-            <ParticleShape type={p.type} size={p.size} color={p.color} />
+            <div style={{ transform: `rotate(${p.rot}deg)` }}>
+              <ParticleShape type={p.type} size={p.size} color={p.color} />
+            </div>
           </div>
         ))}
       </div>
