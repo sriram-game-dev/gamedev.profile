@@ -21,7 +21,7 @@ function Resume() {
         <div className="resume-links">
 
           <a
-            href={route('/resume.pdf')}
+            href={route('/resume.pdf?v=2')}
             target="_blank"
             rel="noopener noreferrer"
             className="resume-button primary"
@@ -30,7 +30,7 @@ function Resume() {
           </a>
 
           <a
-            href={route('/resume.pdf')}
+            href={route('/resume.pdf?v=2')}
             download="Sriram_S_Resume.pdf"
             className="resume-button secondary"
           >

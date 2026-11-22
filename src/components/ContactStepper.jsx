@@ -49,12 +49,25 @@ export default function ContactStepper() {
 
   const selectedIntentObj = INTENT_OPTIONS.find(o => o.id === formData.intent) || INTENT_OPTIONS[1];
 
+  const isDefaultTemplate = (msg) => {
+    if (!msg) return true;
+    if (Object.values(TEMPLATES).includes(msg)) return true;
+    // Also match older legacy templates without the 'S' suffix
+    const legacyTemplates = [
+      'Hi Sriram,\n\nWe came across your portfolio and would love to discuss an open Game / XR Developer opportunity at our team.\n\nKey details:\n- Role:\n- Location / Remote:\n- Tech Stack:',
+      'Hi Sriram,\n\nWe have an XR / industrial simulation project and would like to explore working together.\n\nProject Scope:\n- Platform (Meta Quest, PC VR, etc.):\n- Timeline:\n- Key requirements:',
+      'Hi Sriram,\n\nI saw your Unity projects and want to discuss collaborating on a game project.\n\nProject Overview:\n- Genre / Platform:\n- Current stage:',
+      'Hi Sriram,\n\nWanted to reach out after checking out your work in Unity and XR.'
+    ];
+    return legacyTemplates.includes(msg);
+  };
+
   const handleIntentChange = (intentId) => {
     setFormData(prev => ({
       ...prev,
       intent: intentId,
-      // Auto-update message if previous message was empty or was the default template
-      message: (!prev.message || Object.values(TEMPLATES).includes(prev.message))
+      // Auto-update message if previous message was empty or was any default template (new or legacy)
+      message: isDefaultTemplate(prev.message)
         ? (TEMPLATES[intentId] || '')
         : prev.message
     }));

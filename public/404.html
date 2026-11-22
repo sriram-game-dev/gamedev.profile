@@ -11,7 +11,10 @@
       // into just query strings, and redirects the browser to the new url
       // with only a query string and hash fragment.
       // For GitHub Pages subfolder repositories like /gamedev.profile/
-      var pathSegmentsToKeep = 1;
+      var isSubfolder = window.location.pathname.startsWith('/gamedev.profile') ||
+                        window.location.pathname.startsWith('/sriram-gamedev.github.io') ||
+                        window.location.pathname.startsWith('/profile');
+      var pathSegmentsToKeep = isSubfolder ? 1 : 0;
 
       var l = window.location;
       l.replace(
