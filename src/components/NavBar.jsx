@@ -237,6 +237,15 @@ function NavBar() {
 
       </div>
 
+      {/* MOBILE BACKDROP OVERLAY */}
+      {menuOpen && (
+        <div
+          className="mobile-nav-backdrop"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* MOBILE DROPDOWN DRAWER */}
       <div className={`mobile-nav-drawer ${menuOpen ? 'drawer-open' : ''}`}>
         <nav className="mobile-nav-links" aria-label="Mobile navigation">

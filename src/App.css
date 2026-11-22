@@ -490,25 +490,41 @@ section {
    MOBILE DROPDOWN DRAWER
 ======================================== */
 
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 7, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 998;
+  pointer-events: auto;
+}
+
 .mobile-nav-drawer {
   display: none;
   width: 100%;
   max-height: 0;
   overflow: hidden;
-  background: rgba(15, 23, 42, 0.90);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 14, 28, 0.95);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  margin-top: 10px;
   box-shadow: 
-    0 20px 45px rgba(0, 0, 0, 0.75),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 24px 55px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1px rgba(255, 255, 255, 0.16);
   transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   opacity: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 999;
 }
 
 .mobile-nav-drawer.drawer-open {
-  max-height: 540px;
+  max-height: 560px;
   opacity: 1;
+  pointer-events: auto;
 }
 
 .mobile-nav-links {
@@ -606,6 +622,7 @@ section {
   width: 100%;
   height: 100%;
   pointer-events: auto;
+  touch-action: pan-y;
   z-index: 0;
   overflow: hidden;
 }
@@ -617,6 +634,7 @@ section {
   width: 100%;
   height: 100%;
   cursor: crosshair;
+  touch-action: pan-y;
 }
 
 /* Bottom Right Interactive Canvas Hint Capsule */
@@ -943,12 +961,49 @@ section {
   }
 
   .hero-terminal-pill {
-    padding: 10px 18px;
+    padding: 8px 14px;
     margin-bottom: 24px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-terminal-pill code {
-    font-size: 0.9rem;
+    font-size: clamp(0.68rem, 3.4vw, 0.88rem);
+    white-space: nowrap;
+  }
+
+  .hero-terminal-pill .syntax-op {
+    margin: 0 1px;
+  }
+
+  .what-i-do-container {
+    margin-top: 28px;
+    padding: 0 8px;
+  }
+
+  .what-i-do-divider {
+    max-width: 280px;
+    gap: 10px;
+  }
+
+  .what-i-do-divider .divider-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .what-i-do-pills {
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .what-i-do-pill {
+    padding: 7px 14px;
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+
+  .what-i-do-pill .pill-icon {
+    font-size: 0.88rem;
   }
 
   .hero-card-actions {
@@ -2162,9 +2217,24 @@ section {
 @media (max-width: 480px) {
 
   .about-layout {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
+  .about-counter,
+  .about-card-icon-box {
+    width: 190px;
+    height: 115px;
+    border-radius: 18px;
+  }
+
+  .about-counter-number {
+    font-size: 3.4rem;
+  }
+
+  .about-svg-icon {
+    width: 42px;
+    height: 42px;
+  }
 
   .about-highlight img {
     width: 190px;
@@ -2177,6 +2247,16 @@ section {
     width: 190px;
 
     font-size: 0.72rem;
+  }
+
+  .about-text h1,
+  .about-text h2.about-name-heading {
+    font-size: clamp(2rem, 8.5vw, 2.6rem);
+    word-break: break-word;
+  }
+
+  .about-subheading {
+    font-size: 0.85rem;
   }
 
 
@@ -2746,13 +2826,69 @@ section {
   .v2-command-filter-bar {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    padding: 16px 14px;
+  }
+
+  .v2-cards-grid,
+  .projects-interactive-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .v2-platform-pills {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .v2-plat-pill {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
+
+  .v2-filter-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-v2-header .projects-v2-title {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .v2-pretitle-pill {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .v2-sector-header .v2-sector-heading {
+    font-size: 1.3rem;
+  }
+
+  .v2-nda-compliance-notice {
+    padding: 12px 14px;
+    font-size: 0.78rem;
+  }
+
+  .v2-deck-btn {
+    padding: 12px 14px;
+  }
+
+  .deck-btn-name {
+    font-size: 0.92rem;
   }
 }
 
 /* Interactive Projects Grid */
 .projects-interactive-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 32px;
   margin-bottom: 60px;
 }
@@ -3659,6 +3795,36 @@ section {
 .case-study-action-btn.secondary:hover {
   border-color: #1558C9;
   background: rgba(21, 88, 201, 0.15);
+}
+
+@media (max-width: 640px) {
+  .case-study-drawer {
+    width: 100%;
+    max-width: 100%;
+    padding: 22px 16px;
+    border-left: none;
+    gap: 18px;
+  }
+
+  .case-study-header {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .drawer-header-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .case-study-close-btn {
+    align-self: flex-end;
+  }
+
+  .drawer-bottom-project-nav {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 /* ========================================
@@ -5434,24 +5600,40 @@ section {
 @media (max-width: 768px) {
 
   .resume {
-    padding: 100px 0;
+    padding: 80px 0;
   }
 
   .resume-header {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
   }
 
   .resume-header h2 {
-    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    font-size: clamp(2.3rem, 10vw, 3.2rem);
+  }
+
+  .resume-content {
+    padding: 32px 20px;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .resume-content p {
+    font-size: 0.95rem;
+    line-height: 1.7;
   }
 
   .resume-links {
+    width: 100%;
     flex-direction: column;
     align-items: center;
+    gap: 12px;
+    margin-top: 24px;
   }
 
   .resume-button {
-    width: 220px;
+    width: 100%;
+    max-width: 250px;
     justify-content: center;
   }
 }
@@ -5992,6 +6174,93 @@ section {
   .success-actions {
     flex-direction: column;
   }
+}
+
+/* Direct Contact Email Card & Capsule */
+.contact-direct-card {
+  margin-top: 32px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-email-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(8, 14, 28, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(21, 88, 201, 0.45);
+  border-radius: 14px;
+  padding: 10px 20px;
+  box-shadow: 0 8px 32px rgba(21, 88, 201, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.contact-email-link {
+  color: #f8fafc;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.82rem, 3.6vw, 1rem);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  word-break: break-all;
+}
+
+.contact-email-link:hover {
+  color: #D4FF24;
+}
+
+.contact-copy-btn {
+  background: rgba(212, 255, 36, 0.15);
+  border: 1px solid rgba(212, 255, 36, 0.35);
+  border-radius: 6px;
+  color: #D4FF24;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.contact-copy-btn:hover {
+  background: rgba(212, 255, 36, 0.25);
+  transform: translateY(-1px);
+}
+
+.contact-copy-btn.is-error {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.contact-copy-btn.is-copied {
+  background: rgba(212, 255, 36, 0.25);
+  border-color: #D4FF24;
+  color: #D4FF24;
+}
+
+.contact-quick-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  color: #94a3b8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  margin-top: 4px;
 }
 
 .contact-links {
@@ -6563,16 +6832,22 @@ footer {
 @media (max-width: 480px) {
 
   .navbar-inner {
-    padding: 0 16px;
-    height: 68px;
+    padding: 0 14px;
+    height: 64px;
   }
 
   .brand-name {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
 
   .studio-status-pill {
     display: none;
+  }
+
+  .nav-portfolio-pill {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    gap: 6px;
   }
 
   main {
