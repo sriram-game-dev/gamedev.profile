@@ -571,7 +571,7 @@ section {
   align-items: center;
   padding: 100px 20px 80px;
   text-align: center;
-  overflow: visible;
+  overflow: clip; /* Cleanly clip all background 3D spheres & glows within hero bounds */
 }
 
 /* ========================================
@@ -619,7 +619,7 @@ section {
 
 /* Bottom sphere with vivid magenta/purple crescent rim lighting */
 .hero-sphere-bottom {
-  bottom: -240px;
+  bottom: -320px;
   left: 50%;
   transform: translateX(-50%);
   width: 580px;
@@ -695,7 +695,7 @@ section {
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   pointer-events: none;
-  z-index: 3;
+  z-index: 1;
 }
 
 .hint-mouse-icon {
@@ -1047,6 +1047,13 @@ section {
     transform: scale(0.7);
   }
 
+  .hero-sphere-bottom {
+    width: 380px;
+    height: 380px;
+    bottom: -220px;
+    opacity: 0.65;
+  }
+
   .hero-canvas-hint {
     display: none;
   }
@@ -1123,6 +1130,9 @@ section {
   width: 100%;
   min-height: 100vh;
   padding: 100px 0;
+  position: relative;
+  z-index: 5;
+  background: var(--bg-primary, #030407);
 }
 
 

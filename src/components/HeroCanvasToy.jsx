@@ -152,9 +152,16 @@ function HeroCanvasToy() {
       pointer.targetY = -1000;
     };
 
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setHintDismissed(true);
+      }
+    };
+
     container.addEventListener('pointerdown', handlePointerDown);
     container.addEventListener('pointermove', handlePointerMove);
     container.addEventListener('pointerleave', handlePointerLeave);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Animation Loop
     const draw = () => {
@@ -330,6 +337,7 @@ function HeroCanvasToy() {
       cancelAnimationFrame(animId);
       observer.disconnect();
       window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', handleScroll);
       container.removeEventListener('pointerdown', handlePointerDown);
       container.removeEventListener('pointermove', handlePointerMove);
       container.removeEventListener('pointerleave', handlePointerLeave);
