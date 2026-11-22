@@ -10,8 +10,8 @@
       // This script takes the current url and converts the path and query
       // into just query strings, and redirects the browser to the new url
       // with only a query string and hash fragment.
-      var isSubfolder = window.location.pathname.startsWith('/profile') || window.location.pathname.startsWith('/sriram-gamedev.github.io');
-      var pathSegmentsToKeep = isSubfolder ? 1 : 0;
+      // For GitHub Pages subfolder repositories like /gamedev.profile/
+      var pathSegmentsToKeep = 1;
 
       var l = window.location;
       l.replace(

@@ -1,57 +1,43 @@
 /**
  * Base path helper utilities for routing and assets
- * Supports both custom user root domain (https://<username>.github.io/)
- * and repository subfolder domain (https://<username>.github.io/profile/).
  */
 
 function getBasePath() {
-  if (typeof window !== 'undefined') {
-    if (window.location.pathname.startsWith('/profile')) {
-      return '/profile';
-    }
-    if (window.location.pathname.startsWith('/sriram-gamedev.github.io')) {
-      return '/sriram-gamedev.github.io';
-    }
+  const envBase = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+  if (envBase && envBase !== '.' && envBase !== './') {
+    return envBase;
   }
-  const envBase = import.meta.env.BASE_URL || '/';
-  if (envBase === './' || envBase === '.') return '';
-  return envBase.replace(/\/$/, '');
+  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/gamedev.profile')) {
+    return '/gamedev.profile';
+  }
+  return '';
 }
 
 export const BASE_PATH = getBasePath();
-
-function getActiveSubfolder() {
-  if (typeof window === 'undefined') return '';
-  if (window.location.pathname.startsWith('/profile')) return '/profile';
-  if (window.location.pathname.startsWith('/sriram-gamedev.github.io')) return '/sriram-gamedev.github.io';
-  return '';
-}
 
 /**
  * Prepends the base path to a relative route.
  */
 export function route(path = '') {
-  const base = getActiveSubfolder();
   if (!path || path === '/') {
-    return base ? `${base}/` : '/';
+    return BASE_PATH ? `${BASE_PATH}/` : '/';
   }
   if (path.startsWith('/#')) {
-    return base ? `${base}/${path.slice(1)}` : path;
+    return BASE_PATH ? `${BASE_PATH}/${path.slice(1)}` : path;
   }
   if (path.startsWith('#')) {
-    return base ? `${base}/${path}` : `/${path}`;
+    return BASE_PATH ? `${BASE_PATH}/${path}` : `/${path}`;
   }
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${base}${clean}`;
+  return `${BASE_PATH}${clean}`;
 }
 
 /**
  * Returns public asset path with base prepended.
  */
 export function asset(path = '') {
-  const base = getActiveSubfolder();
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${base}${clean}`;
+  return `${BASE_PATH}${clean}`;
 }
 
 /**
@@ -60,11 +46,10 @@ export function asset(path = '') {
 export function normalizePath(pathname = (typeof window !== 'undefined' ? window.location.pathname : '/')) {
   let clean = pathname.split('?')[0].split('#')[0] || '/';
 
-  if (clean.startsWith('/profile')) {
-    clean = clean.slice('/profile'.length);
-  }
-  if (clean.startsWith('/sriram-gamedev.github.io')) {
-    clean = clean.slice('/sriram-gamedev.github.io'.length);
+  if (BASE_PATH && clean.startsWith(BASE_PATH)) {
+    clean = clean.slice(BASE_PATH.length);
+  } else if (clean.startsWith('/gamedev.profile')) {
+    clean = clean.slice('/gamedev.profile'.length);
   }
 
   // Remove trailing slashes (except root '/')
