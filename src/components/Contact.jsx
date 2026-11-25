@@ -81,6 +81,15 @@ function Contact() {
         <div className="contact-quick-stats">
           <span>📱 +91 8072938627</span>
           <span>📍 Tamil Nadu, India</span>
+          <a
+            href="https://sriram-game-dev.itch.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-stat-link"
+            title="Browse Playable Games on itch.io"
+          >
+            <span>🎮 sriram-game-dev.itch.io ↗</span>
+          </a>
         </div>
       </div>
 
@@ -94,6 +103,19 @@ function Contact() {
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 5h18v14H3V5zm2 2v.5l7 5 7-5V7l-7 5-7-5z" />
+          </svg>
+        </a>
+
+        {/* itch.io */}
+        <a
+          href="https://sriram-game-dev.itch.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="itch.io Game Portfolio"
+          title="itch.io Profile & Games"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2.5 5.5C2.1 6.1 2 7 2 8.3v7.4c0 1.5.8 2.8 2 2.8 1.4 0 2.2-1.2 2.7-2.3.6-1.3 1.2-2.7 1.8-2.7.6 0 1.2 1.4 1.8 2.7.5 1.1 1.3 2.3 2.7 2.3s2.2-1.2 2.7-2.3c.6-1.3 1.2-2.7 1.8-2.7.6 0 1.2 1.4 1.8 2.7.5 1.1 1.3 2.3 2.7 2.3 1.2 0 2-1.3 2-2.8V8.3c0-1.3-.1-2.2-.5-2.8-.7-.9-2.1-.9-3.3-.9H4.8c-1.2 0-1.6 0-2.3.9zM8 8.8c.7 0 1.2.6 1.2 1.2 0 .7-.6 1.2-1.2 1.2s-1.2-.5-1.2-1.2c0-.6.5-1.2 1.2-1.2zm8 0c.7 0 1.2.6 1.2 1.2 0 .7-.5 1.2-1.2 1.2s-1.2-.5-1.2-1.2c0-.6.5-1.2 1.2-1.2z" />
           </svg>
         </a>
 

@@ -205,6 +205,18 @@ function NavBar() {
               <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>
           </a>
+
+          <a
+            href="https://sriram-game-dev.itch.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-item nav-item--external"
+          >
+            <span>ITCH.IO</span>
+            <svg className="external-arrow" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </a>
         </nav>
 
         {/* RIGHT SIDE: GLOWING AMBER/ORANGE PORTFOLIO BUTTON & MOBILE TOGGLE */}
@@ -305,6 +317,17 @@ function NavBar() {
             className="mobile-nav-item mobile-nav-item--external"
           >
             <span>GitHub</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </a>
+          <a
+            href="https://sriram-game-dev.itch.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-nav-item mobile-nav-item--external"
+          >
+            <span>itch.io</span>
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>

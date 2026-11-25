@@ -287,7 +287,7 @@ function Projects({
             <div className="v2-personal-banner-notice">
               <div className="notice-game-icon" aria-hidden="true">🎮</div>
               <div className="notice-text">
-                <strong>Playable Builds &amp; Source Repositories:</strong> Original games, mobile AR minigames, kinematic controllers, and custom URP shaders developed end-to-end. Available directly to play on <strong>itch.io</strong> and inspect on <strong>GitHub</strong>.
+                <strong>Playable Builds &amp; Source Repositories:</strong> Original games, mobile AR minigames, kinematic controllers, and custom URP shaders developed end-to-end. Available directly to play on <a href="https://sriram-game-dev.itch.io/" target="_blank" rel="noopener noreferrer" className="inline-itch-link"><strong>itch.io ↗</strong></a> and inspect on <a href="https://github.com/sriram-game-dev" target="_blank" rel="noopener noreferrer" className="inline-itch-link"><strong>GitHub ↗</strong></a>.
               </div>
             </div>
           </div>
