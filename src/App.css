@@ -1098,7 +1098,6 @@ section {
   position: relative;
   z-index: 2;
   background: transparent;
-  overflow: clip;
 }
 
 /* Volumetric ambient glow accents for About Section */
@@ -1106,7 +1105,7 @@ section {
   content: '';
   position: absolute;
   top: 15%;
-  left: -60px;
+  left: 0;
   width: 580px;
   height: 580px;
   border-radius: 50%;
@@ -1120,7 +1119,7 @@ section {
   content: '';
   position: absolute;
   bottom: 12%;
-  right: -60px;
+  right: 0;
   width: 540px;
   height: 540px;
   border-radius: 50%;
@@ -2310,7 +2309,7 @@ section {
   content: '';
   position: absolute;
   top: 10%;
-  right: -80px;
+  right: 0;
   width: 720px;
   height: 720px;
   border-radius: 50%;
@@ -2325,7 +2324,7 @@ section {
   content: '';
   position: absolute;
   bottom: 8%;
-  left: -80px;
+  left: 0;
   width: 680px;
   height: 680px;
   border-radius: 50%;
@@ -2343,7 +2342,6 @@ section {
   position: relative;
   z-index: 1;
   padding: 60px 0;
-  overflow: clip;
 }
 
 .projects-v2-header {
@@ -4102,7 +4100,7 @@ section {
   content: '';
   position: absolute;
   top: 10%;
-  right: -80px;
+  right: 0;
   width: 720px;
   height: 720px;
   border-radius: 50%;
@@ -4117,7 +4115,7 @@ section {
   content: '';
   position: absolute;
   bottom: 8%;
-  left: -80px;
+  left: 0;
   width: 680px;
   height: 680px;
   border-radius: 50%;
@@ -4321,21 +4319,18 @@ section {
   min-height: 100vh;
   padding: 120px 60px;
   position: relative;
-  overflow: clip;
 }
 
 /* Ambient glow accent for skills */
 .skills::before {
   content: '';
   position: absolute;
-  top: 30%;
-  left: -8%;
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, rgba(212, 255, 36, 0.22) 0%, rgba(21, 88, 201, 0.25) 45%, transparent 70%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle 500px at 15% 40%, rgba(212, 255, 36, 0.16) 0%, rgba(21, 88, 201, 0.20) 45%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(85px);
 }
 
 
@@ -4487,7 +4482,6 @@ section {
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden;
 }
 
 /* Volumetric ambient background glow */
@@ -5492,7 +5486,6 @@ section {
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: clip;
 }
 
 /* Ambient glow accent for resume */
@@ -5659,7 +5652,6 @@ section {
   text-align: center;
   padding: 120px 0;
   position: relative;
-  overflow: clip;
 }
 
 /* Ambient glow accent for contact */
@@ -6019,7 +6011,10 @@ section {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 0 24px;
+  height: 48px;
+  min-height: 48px;
+  line-height: 1;
   border-radius: 12px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.88rem;
@@ -6027,14 +6022,14 @@ section {
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 44px;
   box-sizing: border-box;
+  vertical-align: middle;
 }
 
 .primary-btn {
   background: linear-gradient(135deg, #D4FF24 0%, #b8e610 100%);
   color: #030407;
-  border: none;
+  border: 1px solid transparent;
   box-shadow: 0 4px 14px rgba(212, 255, 36, 0.3);
 }
 
@@ -6058,7 +6053,7 @@ section {
 .submit-btn {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  border: none;
+  border: 1px solid transparent;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
 }
 
@@ -6406,13 +6401,22 @@ footer {
     opacity: 0.55 !important;
   }
 
-  .about::before { left: -10px !important; }
-  .about::after { right: -10px !important; }
+  .about::before { left: 0 !important; }
+  .about::after { right: 0 !important; }
   #projects.projects-section::before,
-  .projects-section-v2::before { right: -10px !important; }
+  .projects-section-v2::before { right: 0 !important; }
   #projects.projects-section::after,
-  .projects-section-v2::after { left: -10px !important; }
-  .skills::before { left: -10px !important; }
+  .projects-section-v2::after { left: 0 !important; }
+  .skills::before { inset: 0 !important; width: 100% !important; height: 100% !important; left: 0 !important; }
+
+  /* Mobile horizontal containment */
+  .about,
+  .projects-section-v2,
+  .skills,
+  .resume,
+  .contact {
+    overflow-x: clip;
+  }
 
   /* Mobile Hardware Acceleration & Frosted Glass Taming */
   .project-interactive-card {
